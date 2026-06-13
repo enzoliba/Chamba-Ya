@@ -61,7 +61,7 @@
             </div>
             <div class="form_buttons">
                 <button type="submit" name="completarRegistro">Completar Registro</button>
-                <button type="button" onclick="window.location.href='../index.php'">Cancelar</button>
+                <button type="button" onclick="window.location.href='../../index.php'">Cancelar</button>
             </div>
         </form>
     </div>

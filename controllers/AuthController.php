@@ -64,6 +64,82 @@
             }
         }
 
+        public function completeRegister(){
+            session_start();
+
+            if(!isset($_SESSION['registro_email']) || !isset($_SESSION['registro_password'])){
+                header('Location: ../views/auth/login.php');
+                exit();
+            }
+
+            //DATOS DEL PRIMER PASO DE REGISTRO (REGISTER INICIAL)
+            $correo = $_SESSION['registro_email'];
+            $password = $_SESSION['registro_password'];
+
+            //DATOS DEL FORMULARIO
+            $fotoPerfil = $_FILES['fotoPerfil'] ?? null;
+            $descripcionPerfil = $_POST['descripcionPerfil'] ?? '';
+            $nombres = $_POST['nombres'] ?? '';
+            $apellidos = $_POST['apellidos'] ?? '';
+            $telefono = $_POST['telefono'] ?? '';
+            $direccionDomicilio = $_POST['direccionDomicilio'] ?? '';
+            $codigoPostal = $_POST['codigoPostal'] ?? '';
+            $fechaRegistro = date('Y-m-d H:i:s');
+            $estado = 'Activo';
+            $idDistrito = $_POST['distrito'] ?? '';
+
+            //GUARDADO DE LA FOTO DE PERFIL
+
+            $nombreFoto = 'default.png';
+
+            if(isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === 0){
+                $extension = pathinfo($_FILES['fotoPerfil']['name'], PATHINFO_EXTENSION);
+                $permitidos = ['jpg', 'jpeg', 'png'];
+
+                if(!in_array(strtolower($extension), $permitidos)){
+                    die('Formato de imagen no permitido. Solo se permiten JPG, JPEG y PNG.');
+                }
+
+                $nombreFoto = uniqid() . '.' . $extension;
+
+                $rutaDestino = __DIR__ . '/../assets/uploads/img_perfiles/' . $nombreFoto;
+
+                move_uploaded_file($_FILES['fotoPerfil']['tmp_name'], $rutaDestino);
+
+                //INSERCIÓN DEL USUARIO EN LA BASE DE DATOS
+
+                $resultado = $this->userModel->createUser(
+                    $nombreFoto,
+                    $nombres,
+                    $apellidos,
+                    $descripcionPerfil,
+                    $telefono,
+                    $correo,
+                    $password,
+                    $direccionDomicilio,
+                    $codigoPostal,
+                    $fechaRegistro,
+                    $estado,
+                    $idDistrito
+                );
+
+                if($resultado){
+                    $usuario = $this->userModel->getUserByEmail($correo);
+                    
+                    $_SESSION['idUsuario'] = $usuario['idUsuario'];
+                    $_SESSION['nombres'] = $usuario['nombres'];
+                    $_SESSION['correo'] = $usuario['correo'];
+
+                    unset($_SESSION['registro_email']);
+                    unset($_SESSION['registro_password']);
+
+                    header('Location: ../index.php');
+                    exit();
+                }else{
+                    die('Error al registrarse el usuario');   
+                }
+            }
+        }
     }
 
     $controller = new UserController();
@@ -79,6 +155,9 @@
             break;
         case 'login':
             $controller->login();
+            break;
+        case 'completeRegister':
+            $controller->completeRegister();
             break;
         default:
             die('Acción no válida');

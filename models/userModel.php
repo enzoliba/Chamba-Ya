@@ -10,8 +10,8 @@
             $this->conn = $database->getConnection();
         }
 
-        public function createUser($fotoPerfil, $nombres, $apellidos, $descripcion, $correo, $password, $direccionDomicilio, $codigoPostal, $estado){
-            $sql = "INSERT INTO usuario (fotoPerfil, nombres, apellidos, descripcion, correo, password, direccionDomicilio, codigoPostal, fechaRegistro, estado) VALUES (:fotoPerfil, :nombres, :apellidos, :descripcion, :correo, :password, :direccionDomicilio, :codigoPostal, :fechaRegistro, :estado)";
+        public function createUser($fotoPerfil, $nombres, $apellidos, $descripcionPerfil, $telefono, $correo, $password, $direccionDomicilio, $codigoPostal, $fechaRegistro, $estado, $idDistrito){
+            $sql = "INSERT INTO usuario (fotoPerfil, nombres, apellidos, descripcionPerfil, telefono, correo, password, direccionDomicilio, codigoPostal, fechaRegistro, estado, idDistrito) VALUES (:fotoPerfil, :nombres, :apellidos, :descripcionPerfil, :telefono, :correo, :password, :direccionDomicilio, :codigoPostal, :fechaRegistro, :estado, :idDistrito)";
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             $date = date('Y-m-d H:i:s');
 
@@ -19,13 +19,15 @@
             $stmt->bindParam(':fotoPerfil', $fotoPerfil);
             $stmt->bindParam(':nombres', $nombres);
             $stmt->bindParam(':apellidos', $apellidos);
-            $stmt->bindParam(':descripcion', $descripcion);
+            $stmt->bindParam(':descripcionPerfil', $descripcionPerfil);
+            $stmt->bindParam(':telefono', $telefono);
             $stmt->bindParam(':correo', $correo);
             $stmt->bindParam(':password', $password_hash);
             $stmt->bindParam(':direccionDomicilio', $direccionDomicilio);
             $stmt->bindParam(':codigoPostal', $codigoPostal);
             $stmt->bindParam(':fechaRegistro', $date);
             $stmt->bindParam(':estado', $estado);
+            $stmt->bindParam(':idDistrito', $idDistrito);
 
             return $stmt->execute();
         }
