@@ -25,7 +25,7 @@
             }
 
             $_SESSION['registro_email'] = $email;
-            $_SESSION['registro_password'] = password_hash($password, PASSWORD_DEFAULT); 
+            $_SESSION['registro_password'] = $password;
 
             header('Location: AuthController.php?action=showFormDatos');
             exit();
@@ -49,6 +49,7 @@
 
             $correo = $_POST['emailInput'] ?? '';
             $password = $_POST['passwordInput'] ?? '';
+
             $usuario = $this->userModel->getUserByEmail($correo);
 
             if(!$usuario){
@@ -56,6 +57,7 @@
             }
 
             if(password_verify($password, $usuario['password'])){
+                $_SESSION['nombres'] = $usuario['nombres'];
                 $_SESSION['idUsuario'] = $usuario['idUsuario'];
                 $_SESSION['emailUsuario'] = $usuario['correo'];
                 header('Location: ../index.php');

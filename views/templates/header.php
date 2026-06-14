@@ -48,7 +48,7 @@
                         <a href="">Mis postulaciones</a>
                         <a href="">Anuncios guardados</a>
                         <a href="">Anuncios creados</a>
-                        <a href="../pages/logout.php">Cerrar sesión</a>
+                        <a href="../../views/auth/logout.php">Cerrar sesión</a>
                     </div>
 
                 <?php else: ?>
@@ -63,7 +63,7 @@
                             Iniciar Sesión
                         </a>
 
-                        <a href="views/auth/register.php">
+                        <a href="views/auth/login.php">
                             Registrarse
                         </a>
                     </div>
