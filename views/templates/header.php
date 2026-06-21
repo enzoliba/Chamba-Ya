@@ -1,9 +1,10 @@
 <?php require_once 'assets/css/style_header.php'; ?>
+<?php require_once 'core/config/config.php'; ?>
 
 <header>
     <div class="main-header">
 
-        <img src="../assets/img/logo-chamba-ya.png" 
+        <img src="<?= $base_path; ?>assets/img/logo-chamba-ya.png" 
             alt="logo_chambaYa" 
             class="logo_web" 
             width="200px">
@@ -16,10 +17,10 @@
 
         <nav class="main-nav">
             <ul class="nav-links">
-                <li><a href="../index.php">Inicio</a></li>
-                <li><a href="">Ofertas de Trabajo</a></li>
-                <li><a href="">Ofertas de Servicio</a></li>
-                <li><a href="">Ofertas cerca de ti</a></li>
+                <li><a href="<?= $base_path; ?>index.php">Inicio</a></li>
+                <li><a href="<?= $base_path; ?>views/offers/job_offers.php">Ofertas de Trabajo</a></li>
+                <li><a href="<?= $base_path; ?>views/offers/service_offers.php">Ofertas de Servicio</a></li>
+                <li><a href="<?= $base_path; ?>views/offers/nearby_offers.php">Ofertas cerca de ti</a></li>
             </ul>
 
             <div class="actions">
@@ -44,11 +45,11 @@
                             <?= $_SESSION['nombres']; ?>
                         </p>
 
-                        <a href="">Mis datos</a>
-                        <a href="">Mis postulaciones</a>
-                        <a href="">Anuncios guardados</a>
-                        <a href="">Anuncios creados</a>
-                        <a href="../../views/auth/logout.php">Cerrar sesión</a>
+                        <a href="<?= $base_path; ?>views/user/profile.php">Mis datos</a>
+                        <a href="<?= $base_path; ?>views/user/applications.php">Mis postulaciones</a>
+                        <a href="<?= $base_path; ?>views/user/saved_ads.php">Anuncios guardados</a>
+                        <a href="<?= $base_path; ?>views/user/created_ads.php">Anuncios creados</a>
+                        <a href="<?= $base_path; ?>views/auth/logout.php">Cerrar sesión</a>
                     </div>
 
                 <?php else: ?>
@@ -59,11 +60,11 @@
                     </button>
 
                     <div class="user_menu" id="userMenu">
-                        <a href="views/auth/login.php">
+                        <a href="<?= $base_path; ?>views/auth/login.php">
                             Iniciar Sesión
                         </a>
 
-                        <a href="views/auth/login.php">
+                        <a href="<?= $base_path; ?>views/auth/login.php">
                             Registrarse
                         </a>
                     </div>
@@ -78,4 +79,4 @@
     </div>
 </header>
 
-<script src="../assets/js/functions_header.js"></script>
+<script src="<?= $base_path; ?>assets/js/functions_header.js"></script>
