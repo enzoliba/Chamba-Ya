@@ -33,19 +33,16 @@ class AnuncioModel {
 
     public function obtenerAnuncios($filtros = []) {
         try {
-            $sql = "SELECT DISTINCT
+            // La ubicación del anuncio es un texto libre (a.ubicacion), por eso los
+            // filtros geográficos se comparan contra el NOMBRE del lugar seleccionado.
+            $sql = "SELECT
             a.*,
             u.nombres,
             u.apellidos,
-            COALESCE(d.nombre,'No especificado') AS ubicacion,
             ROUND(AVG(cal.puntaje),1) AS promedio
             FROM anuncio a
             INNER JOIN usuario u ON a.idUsuario = u.idUsuario
-            LEFT JOIN distrito d ON a.idDistrito = d.idDistrito
-            LEFT JOIN provincia pr ON d.idProvincia = pr.idProvincia
-            LEFT JOIN departamento dp ON pr.idDepartamento = dp.idDepartamento
             LEFT JOIN categoriasanuncio ca ON a.idAnuncio = ca.idAnuncio
-            LEFT JOIN categoria c ON ca.idCategoria = c.idCategoria
             LEFT JOIN calificacion cal ON u.idUsuario = cal.idUsuarioCalificado
 
             WHERE 1=1";
@@ -87,21 +84,21 @@ class AnuncioModel {
                 $params[':precioMin'] = $filtros['precioMin'];
             }
 
-            // DEPARTAMENTO
+            // DEPARTAMENTO: compara el texto de a.ubicacion con el nombre del departamento
             if (!empty($filtros['idDepartamento'])) {
-                $sql .= " AND dp.idDepartamento = :idDepartamento";
+                $sql .= " AND a.ubicacion LIKE CONCAT('%', (SELECT nombre FROM departamento WHERE idDepartamento = :idDepartamento), '%')";
                 $params[':idDepartamento'] = (int)$filtros['idDepartamento'];
             }
 
             // PROVINCIA
             if (!empty($filtros['idProvincia'])) {
-                $sql .= " AND pr.idProvincia = :idProvincia";
+                $sql .= " AND a.ubicacion LIKE CONCAT('%', (SELECT nombre FROM provincia WHERE idProvincia = :idProvincia), '%')";
                 $params[':idProvincia'] = (int)$filtros['idProvincia'];
             }
 
             // DISTRITO
             if (!empty($filtros['idDistrito'])) {
-                $sql .= " AND d.idDistrito = :idDistrito";
+                $sql .= " AND a.ubicacion LIKE CONCAT('%', (SELECT nombre FROM distrito WHERE idDistrito = :idDistrito), '%')";
                 $params[':idDistrito'] = (int)$filtros['idDistrito'];
             }
             
@@ -125,15 +122,12 @@ class AnuncioModel {
     
     public function obtenerDetalleAnuncio($idAnuncio) {
     try {
-        $sql = "SELECT a.*, 
+        $sql = "SELECT a.*,
                        u.nombres, u.apellidos, u.telefono, u.correo, u.fotoPerfil, u.descripcionPerfil,
-                       CONCAT(dep.nombre, ' - ', pr.nombre, ' - ', d.nombre) AS ubicacion_completa,
+                       a.ubicacion AS ubicacion_completa,
                        GROUP_CONCAT(DISTINCT c.nombre SEPARATOR ', ') AS categorias_nombres
                 FROM anuncio a
                 INNER JOIN usuario u ON a.idUsuario = u.idUsuario
-                LEFT JOIN distrito d ON a.idDistrito = d.idDistrito
-                LEFT JOIN provincia pr ON d.idProvincia = pr.idProvincia
-                LEFT JOIN departamento dep ON pr.idDepartamento = dep.idDepartamento
                 LEFT JOIN categoriasanuncio ca ON a.idAnuncio = ca.idAnuncio
                 LEFT JOIN categoria c ON ca.idCategoria = c.idCategoria
                 WHERE a.idAnuncio = :idAnuncio
@@ -152,9 +146,8 @@ class AnuncioModel {
 // NUEVO MÉTODO: Para listar los otros servicios que ofrece ese mismo usuario
 public function obtenerAnunciosPorUsuario($idUsuario, $idAnuncioActual) {
     try {
-        $sql = "SELECT a.*, d.nombre AS nombre_distrito 
+        $sql = "SELECT a.*
                 FROM anuncio a
-                LEFT JOIN distrito d ON a.idDistrito = d.idDistrito
                 WHERE a.idUsuario = :idUsuario AND a.idAnuncio <> :idAnuncioActual AND a.tipoAnuncio = 'servicio'
                 LIMIT 3";
         $stmt = $this->conn->prepare($sql);
@@ -167,23 +160,24 @@ public function obtenerAnunciosPorUsuario($idUsuario, $idAnuncioActual) {
     }
 }
 
-    public function obtenerCalificacionesPorAnuncio($idAnuncio) {
+    // La tabla calificacion no se relaciona con anuncio, sino con el usuario calificado.
+    // Recibe el idUsuario dueño del anuncio y lista las opiniones que ha recibido.
+    public function obtenerCalificacionesPorAnuncio($idUsuario) {
     try {
-        // Ajusta los nombres de las columnas 'puntaje', 'comentario', 'fecha' si varían en tu BD
-        $sql = "SELECT 
-                    c.puntaje, 
-                    c.comentario, 
-                    c.fechaCalificacion AS fecha, 
-                    u.nombres, 
+        $sql = "SELECT
+                    c.puntaje,
+                    c.comentario,
+                    c.fecha AS fecha,
+                    u.nombres,
                     u.apellidos,
                     u.fotoPerfil
                 FROM calificacion c
-                INNER JOIN usuario u ON c.idUsuario = u.idUsuario
-                WHERE c.idAnuncio = :idAnuncio
-                ORDER BY c.fechaCalificacion DESC";
+                INNER JOIN usuario u ON c.idUsuarioCalificador = u.idUsuario
+                WHERE c.idUsuarioCalificado = :idUsuario
+                ORDER BY c.fecha DESC";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':idAnuncio', $idAnuncio, PDO::PARAM_INT);
+        $stmt->bindParam(':idUsuario', $idUsuario, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {

@@ -115,6 +115,6 @@ require_once __DIR__ . '/../templates/header.php';
             
         </div>
     </div>
-    <?php require_once __DIR__ . '/views/templates/footer.php'; ?>
+    <?php require_once __DIR__ . '/../../views/templates/footer.php'; ?>
 </body>
 </html>
