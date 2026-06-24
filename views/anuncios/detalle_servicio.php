@@ -1,7 +1,9 @@
 <?php
-// views/auth/detalle_servicio.php
-require_once __DIR__ . '/../../assets/css/style_detalleServicio.php';
-require_once __DIR__ . '/../templates/header.php';
+    // views/auth/detalle_servicio.php
+    require_once __DIR__ . '/../../assets/css/style_detalleServicio.php';
+    require_once __DIR__ . '/../templates/header.php';
+    require_once __DIR__ . '/../templates/head.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

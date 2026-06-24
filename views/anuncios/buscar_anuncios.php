@@ -2,7 +2,8 @@
 //buscar_anuncios.php
     require_once __DIR__ . '/../../assets/css/style_buscarAnuncio.php';
     require_once __DIR__ . '/../templates/header.php';
-    //corregir desde aqui
+    require_once __DIR__ . '/../templates/head.php';
+
     $tipo = $_GET['tipo'] ?? 'trabajo';
     $tituloPagina = ($tipo == 'trabajo')
         ? 'BUSCAR TRABAJO'

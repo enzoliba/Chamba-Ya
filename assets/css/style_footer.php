@@ -3,7 +3,6 @@
     .footer{
         background-color: #fff;
         padding: 40px 0;
-        margin-top: 40px;
         border-top: 1px solid #e5e7eb;
         font-family: Arial, Helvetica, sans-serif;
     }
@@ -70,6 +69,9 @@
     }
 
     @media (max-width: 768px) {
+        .footer{
+            padding: 0;
+        }
         .footer .footer_row{
             flex-direction: column;
             align-items: center;
