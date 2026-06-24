@@ -18,6 +18,16 @@
         <div class="form_box login">
             <form action="../../controllers/AuthController.php?action=login" method="post" id="loginForm">
                 <h1>Iniciar Sesión</h1>
+                <?php if(isset($_GET['login_status'])): ?>
+                    <?php
+                        $loginMsgs = [
+                            'not_found'      => 'El usuario no está registrado.',
+                            'wrong_password' => 'Contraseña incorrecta.',
+                        ];
+                        $msg = $loginMsgs[$_GET['login_status']] ?? 'Ocurrió un error al iniciar sesión.';
+                    ?>
+                    <p class="form_msg form_msg_error"><?= htmlspecialchars($msg) ?></p>
+                <?php endif; ?>
                 <div class="input_box">
                     <input type="email" placeholder="Email" required name="emailInput" >
                     <i class='bx bxs-user' ></i>
@@ -45,6 +55,19 @@
         <div class="form_box register">
             <form action="../../controllers/AuthController.php?action=registerFirst" method="POST" id="registerForm">
                 <h1>Registrarse</h1>
+                <?php if(isset($_GET['reg_status'])): ?>
+                    <?php
+                        $regMsgs = [
+                            'email_exists' => 'El correo ya está registrado.',
+                            'mismatch'     => 'Las contraseñas no coinciden.',
+                            'bad_format'   => 'Imagen no válida. Solo JPG o PNG.',
+                            'too_big'      => 'La imagen supera el tamaño máximo (2 MB).',
+                            'error'        => 'No se pudo completar el registro.',
+                        ];
+                        $msg = $regMsgs[$_GET['reg_status']] ?? 'Ocurrió un error en el registro.';
+                    ?>
+                    <p class="form_msg form_msg_error"><?= htmlspecialchars($msg) ?></p>
+                <?php endif; ?>
                 <div class="input_box">
                     <input type="email" placeholder="Email" required name="emailInput">
                     <i class='bx bxs-envelope' ></i>

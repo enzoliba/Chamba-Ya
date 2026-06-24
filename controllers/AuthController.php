@@ -1,8 +1,9 @@
 <?php
     require_once __DIR__ . '/../core/config/autoload.php';
     require_once __DIR__ . '/../core/config/config.php';
+    require_once __DIR__ . '/../core/config/session.php';
 
-    class UserController{
+    class AuthController{
 
         private $userModel;
 
@@ -11,18 +12,20 @@
         }
 
         public function registerFirst(){
-            session_start();
+            iniciarSesion();
 
             $email = $_POST['emailInput'] ?? '';
             $password = $_POST['password'] ?? '';
             $confirmPassword = $_POST['confirmPassword'] ?? '';
 
             if($this->userModel->emailExists($email)){
-                die('El correo ya está registrado');
+                header('Location: ' . BASE_URL . 'views/auth/login.php?reg_status=email_exists');
+                exit();
             }
 
             if($password !== $confirmPassword){
-                die('Las contraseñas no coinciden');
+                header('Location: ' . BASE_URL . 'views/auth/login.php?reg_status=mismatch');
+                exit();
             }
 
             $_SESSION['registro_email'] = $email;
@@ -33,7 +36,7 @@
         }
 
         public function showDatosForm(){
-            session_start();
+            iniciarSesion();
 
             if(!isset($_SESSION['registro_email']) || !isset($_SESSION['registro_password'])){
                 header('Location: login.php');
@@ -47,7 +50,7 @@
         }
 
         public function login(){
-            session_start();
+            iniciarSesion();
 
             $correo = $_POST['emailInput'] ?? '';
             $password = $_POST['passwordInput'] ?? '';
@@ -55,21 +58,24 @@
             $usuario = $this->userModel->getUserByEmail($correo);
 
             if(!$usuario){
-                die('Usuario no registrado');
+                header('Location: ' . BASE_URL . 'views/auth/login.php?login_status=not_found');
+                exit();
             }
 
             if(password_verify($password, $usuario['password'])){
                 $_SESSION['nombres'] = $usuario['nombres'];
                 $_SESSION['idUsuario'] = $usuario['idUsuario'];
                 $_SESSION['emailUsuario'] = $usuario['correo'];
-                header('Location: ../index.php');
+                header('Location: ' . BASE_URL . 'index.php');
+                exit();
             } else {
-                die('Contraseña incorrecta');
+                header('Location: ' . BASE_URL . 'views/auth/login.php?login_status=wrong_password');
+                exit();
             }
         }
 
         public function completeRegister(){
-            session_start();
+            iniciarSesion();
 
             if(!isset($_SESSION['registro_email']) || !isset($_SESSION['registro_password'])){
                 header('Location: ../views/auth/login.php');
@@ -97,7 +103,23 @@
                 $permitidos = ['jpg', 'jpeg', 'png'];
 
                 if(!in_array(strtolower($extension), $permitidos)){
-                    die('Formato de imagen no permitido. Solo se permiten JPG, JPEG y PNG.');
+                    header('Location: AuthController.php?action=showFormDatos&reg_status=bad_format');
+                    exit();
+                }
+
+                // Validación del archivo: tamaño máximo y tipo MIME real
+                $maxBytes = 2 * 1024 * 1024; // 2 MB
+                if($_FILES['fotoPerfil']['size'] > $maxBytes){
+                    header('Location: AuthController.php?action=showFormDatos&reg_status=too_big');
+                    exit();
+                }
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimeReal = finfo_file($finfo, $_FILES['fotoPerfil']['tmp_name']);
+                finfo_close($finfo);
+                $mimesPermitidos = ['image/jpeg', 'image/png'];
+                if(!in_array($mimeReal, $mimesPermitidos)){
+                    header('Location: AuthController.php?action=showFormDatos&reg_status=bad_format');
+                    exit();
                 }
 
                 $nombreFoto = uniqid() . '.' . $extension;
@@ -120,13 +142,14 @@
                     header('Location: ../index.php');
                     exit();
                 } else {
-                    die('Error al registrarse el usuario');
+                    header('Location: AuthController.php?action=showFormDatos&reg_status=error');
+                    exit();
                 }
             }
         }
 
         public function showMisDatos(){
-            session_start();
+            iniciarSesion();
             if(!isset($_SESSION['idUsuario'])){
                 header('Location: login.php');
                 exit();
@@ -150,7 +173,7 @@
         }
 
         public function showSeguridad(){
-            session_start();
+            iniciarSesion();
             if(!isset($_SESSION['idUsuario'])){
                 header('Location: login.php');
                 exit();
@@ -160,7 +183,7 @@
         }
 
         public function showPreferencias(){
-            session_start();
+            iniciarSesion();
             if(!isset($_SESSION['idUsuario'])){
                 header('Location: login.php');
                 exit();
@@ -170,7 +193,7 @@
         }
 
         public function updateMisDatos(){
-            session_start();
+            iniciarSesion();
             if(!isset($_SESSION['idUsuario'])){
                 die('No autorizado');
             }
@@ -191,6 +214,20 @@
                 if(!in_array($extension, $permitidos)){
                     header('Location: AuthController.php?action=showMisDatos&status=error'); exit();
                 }
+
+                // Validación del archivo: tamaño máximo y tipo MIME real
+                $maxBytes = 2 * 1024 * 1024; // 2 MB
+                if($_FILES['fotoPerfil']['size'] > $maxBytes){
+                    header('Location: AuthController.php?action=showMisDatos&status=error'); exit();
+                }
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimeReal = finfo_file($finfo, $_FILES['fotoPerfil']['tmp_name']);
+                finfo_close($finfo);
+                $mimesPermitidos = ['image/jpeg', 'image/png', 'image/webp'];
+                if(!in_array($mimeReal, $mimesPermitidos)){
+                    header('Location: AuthController.php?action=showMisDatos&status=error'); exit();
+                }
+
                 $nombreFoto = uniqid('pfp_') . '.' . $extension;
                 $rutaDestino = __DIR__ . '/../assets/uploads/img_perfiles/' . $nombreFoto;
                 if(move_uploaded_file($_FILES['fotoPerfil']['tmp_name'], $rutaDestino)){
@@ -220,7 +257,7 @@
         }
 
         public function changePassword(){
-            session_start();
+            iniciarSesion();
             if(!isset($_SESSION['idUsuario'])){
                 die('No autorizado');
             }
@@ -254,7 +291,7 @@
         }
     }
 
-    $controller = new UserController();
+    $controller = new AuthController();
 
     $action = $_GET['action'] ?? '';
 
