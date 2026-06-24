@@ -20,24 +20,18 @@
         exit();
     }
 
-    // NUEVA INCLUSIÓN: Capturar el clic de "Ver más"
-    if ($action === 'detalle-anuncio') {
-        require_once 'controllers/AnuncioController.php';
-        $controller = new AnuncioController();
-        $controller->verDetalle(); // Reutilizamos el mismo controlador
-        exit();
-    }
+
 
     // =========================================================================
     // SI LA ACCIÓN ES HOME O REFRESH, CARGAMOS LAS CATEGORÍAS DE LA BASE DE DATOS
     // =========================================================================
+    require_once 'core/config/autoload.php';
+    require_once 'core/config/config.php';
     require_once 'models/anuncioModel.php';
     $model = new AnuncioModel();
     $categoriasBD = $model->obtenerCategorias();
 
     // SI LA ACCIÓN ES REFRESH O HOME, SE CORRE TU LANDING PAGE ORIGINAL:
-    require_once 'core/config/autoload.php';
-    require_once 'core/config/config.php';
     require_once 'assets/css/style.php';
     require_once 'assets/css/styles.php';
     require_once 'views/templates/head.php';
@@ -50,15 +44,15 @@
                 <h1>¿Buscas trabajo rápido?</h1>
                 <p>Encuentra ofertas cerca de ti y postula al toque. Sin CV, contacto directo</p>
                 <img src="<?= BASE_URL ?>assets/img/imagen_left.png" alt="Imagen Left">
-                <button class="btn_left_first">[Ver ofertas de Trabajo]</button>
-                <button class="btn_left_second">[Publicar mi perfil de servicio]</button>
+                <button class="btn_left_first" onclick="window.location.href='<?= BASE_URL ?>index.php?action=buscar-trabajo&tipo=trabajo'">Ver ofertas de Trabajo</button>
+                <button class="btn_left_second" onclick="alert('Funcionalidad en desarrollo')">Publicar mi perfil de servicio</button>
             </div>
             <div class="right_half">
                 <h1>¿Necesitas ayuda ahora?</h1>
                 <p>Encuentra a trabajadores que te ayuden o publica tu necesidad. Gasfiteres, electricistas, limpieza, jardinero y más.</p>
                 <img src="<?= BASE_URL ?>assets/img/imagen_right.png" alt="Imagen Right">
-                <button class="btn_right_first">[Buscar trabajadores]</button>
-                <button class="btn_right_second">[Publicar oferta de trabajo]</button>
+                <button class="btn_right_first" onclick="window.location.href='<?= BASE_URL ?>index.php?action=buscar-trabajo&tipo=servicio'">Buscar trabajadores</button>
+                <button class="btn_right_second" onclick="alert('Funcionalidad en desarrollo')">Publicar oferta de trabajo</button>
             </div>
         </div>
         
@@ -93,7 +87,6 @@
             <button class="carousel_btn next" onclick="scrollCarousel(1)">&#10095;</button>
         </div>
     </div>
-        </div>
 
     <div class="why_chamba_ya">
         <h1>¿Por qué usar "Chamba Ya"?</h1>

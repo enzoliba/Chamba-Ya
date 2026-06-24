@@ -1,5 +1,5 @@
 <?php
-    require_once __DIR__ . '/../config.php';
+    require_once __DIR__ . '/../core/config/config.php';
     require_once __DIR__ . '/../models/anuncioModel.php';
 
 
@@ -33,7 +33,7 @@ class AnuncioController {
         $base_path = isset($GLOBALS['base_path']) ? $GLOBALS['base_path'] : '';
 
         // Carga la interfaz visual pasándole las variables creadas arriba
-        require_once __DIR__ . '/../views/auth/buscar_anuncios.php';
+        require_once __DIR__ . '/../views/anuncios/buscar_anuncios.php';
     }
 
     public function verDetalle() {
@@ -69,10 +69,10 @@ class AnuncioController {
 
         if ($tipoAnuncioLimpio === 'servicio') {
             $otrosServicios = $model->obtenerAnunciosPorUsuario($anuncio['idUsuario'], $idAnuncio);
-            $testimonios = $model->obtenerCalificacionesPorAnuncio($idAnuncio);
-            require_once __DIR__ . '/../views/auth/detalle_servicio.php';
+            $testimonios = $model->obtenerCalificacionesPorAnuncio($anuncio['idUsuario']);
+            require_once __DIR__ . '/../views/anuncios/detalle_servicio.php';
         } else {
-            require_once __DIR__ . '/../views/auth/detalle_anuncio.php';
+            require_once __DIR__ . '/../views/anuncios/detalle_anuncio.php';
         }
     }
 }
