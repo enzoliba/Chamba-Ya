@@ -18,9 +18,8 @@
         <nav class="main-nav">
             <ul class="nav-links">
                 <li><a href="<?= BASE_URL; ?>index.php">Inicio</a></li>
-                <li><a href="<?= BASE_URL; ?>views/offers/job_offers.php">Ofertas de Trabajo</a></li>
-                <li><a href="<?= BASE_URL; ?>views/offers/service_offers.php">Ofertas de Servicio</a></li>
-                <li><a href="<?= BASE_URL; ?>views/offers/nearby_offers.php">Ofertas cerca de ti</a></li>
+                <li><a href="<?= BASE_URL; ?>index.php?action=buscar-trabajo&tipo=trabajo">Ofertas de Trabajo</a></li>
+                <li><a href="<?= BASE_URL; ?>index.php?action=buscar-trabajo&tipo=servicio">Ofertas de Servicio</a></li>
             </ul>
 
             <div class="actions">

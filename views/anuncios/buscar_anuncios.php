@@ -162,10 +162,9 @@
         </div>
     </form>
     
-    <footer class="footer"></footer>
-    
     <script>
         // Enlazar los filtros activos de PHP hacia variables globales leídas por buscar_Trabajo.js
+        const BASE_URL = "<?= BASE_URL ?>";
         const idDepartamentoSeleccionado = "<?= $_GET['departamento'] ?? '' ?>";
         const idProvinciaSeleccionada = "<?= $_GET['provincia'] ?? '' ?>";
         const idDistritoSeleccionado = "<?= $_GET['distrito'] ?? '' ?>";
@@ -200,7 +199,7 @@
         }
         
     </script>
-    <script src="<?= BASE_URL?> assets/js/buscar_Anuncio.js"></script>
-    <?php require_once __DIR__ . '/views/templates/footer.php'; ?>
+    <script src="<?= BASE_URL?>assets/js/buscar_Anuncio.js"></script>
+    <?php require_once __DIR__ . '/../../views/templates/footer.php'; ?>
 </body>
 </html>

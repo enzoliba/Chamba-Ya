@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Función para cargar provincias mediante AJAX
     function cargarProvincias(idDep, provIdSeleccionada, enviarAlTerminar = false) {
-        fetch(`core/db/getProvincias.php?id=${idDep}`)
+        fetch(`${BASE_URL}core/db/getProvincias.php?id=${idDep}`)
             .then(res => res.json())
             .then(data => {
                 provSelect.innerHTML = '<option value="">Provincia</option>';
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Función para cargar distritos mediante AJAX
     function cargarDistritos(idProv, distIdSeleccionado, enviarAlTerminar = false) {
-        fetch(`core/db/getDistritos.php?id=${idProv}`)
+        fetch(`${BASE_URL}core/db/getDistritos.php?id=${idProv}`)
             .then(res => res.json())
             .then(data => {
                 distSelect.innerHTML = '<option value="">Distrito</option>';
