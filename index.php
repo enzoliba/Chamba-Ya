@@ -1,5 +1,6 @@
 <?php
-    session_start();
+    require_once __DIR__ . '/core/config/session.php';
+    iniciarSesion();
 
     // Capturamos la acción solicitada
     $action = $_GET['action'] ?? 'home';
@@ -63,14 +64,18 @@
             <div class="carousel_wrapper" id="carouselWrapper">
                 
                 <?php if (!empty($categoriasBD)): ?>
-                    <?php foreach ($categoriasBD as $cat): 
-                        // Cambiado a $cat['nombre'] para coincidir con tu phpMyAdmin
-                        $nombreLimpio = strtolower(trim($cat['nombre']));
-                        
-                        // Reemplazamos acentos y espacios para que busque las imágenes correctamente
-                        $buscar = array('á', 'é', 'í', 'ó', 'ú', 'ñ', ' ', 'í');
-                        $reemplazar = array('a', 'e', 'i', 'o', 'u', 'n', '_', 'i');
-                        $archivoImagen = str_replace($buscar, $reemplazar, $nombreLimpio) . ".png";
+                    <?php foreach ($categoriasBD as $cat):
+                        // 1) Si la categoría tiene una imagen asignada en la BD, se usa esa.
+                        if (!empty($cat['imagen'])) {
+                            $archivoImagen = $cat['imagen'];
+                        } else {
+                            // 2) Respaldo: deriva el nombre del archivo a partir del nombre
+                            //    de la categoría (minúsculas, sin tildes ni espacios).
+                            $nombreLimpio = strtolower(trim($cat['nombre']));
+                            $buscar = array('á', 'é', 'í', 'ó', 'ú', 'ñ', ' ');
+                            $reemplazar = array('a', 'e', 'i', 'o', 'u', 'n', '_');
+                            $archivoImagen = str_replace($buscar, $reemplazar, $nombreLimpio) . ".png";
+                        }
                     ?>
                         <a href="index.php?action=buscar-trabajo&categoria=<?= urlencode($cat['nombre']) ?>" class="categories_card">
                             <img src="<?= BASE_URL ?>assets/img/<?= $archivoImagen ?>" alt="<?= htmlspecialchars($cat['nombre']) ?>" onerror="this.src='<?= BASE_URL ?>assets/img/servicios_varios.png';">

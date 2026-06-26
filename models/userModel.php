@@ -39,7 +39,7 @@
         }
 
         public function updateUser($id, $fotoPerfil, $nombres, $apellidos, $descripcion, $direccionDomicilio, $codigoPostal, $estado){
-            $sql = "UPDATE usuario SET fotoPerfil = :fotoPerfil, nombres = :nombres, apellidos = :apellidos, descripcion = :descripcion, direccionDomicilio = :direccionDomicilio, codigoPostal = :codigoPostal, estado = :estado WHERE id = :id";
+            $sql = "UPDATE usuario SET fotoPerfil = :fotoPerfil, nombres = :nombres, apellidos = :apellidos, descripcionPerfil = :descripcion, direccionDomicilio = :direccionDomicilio, codigoPostal = :codigoPostal, estado = :estado WHERE idUsuario = :id";
             $stmt = $this->conn->prepare($sql);
             
             $stmt->bindParam(':id', $id);
@@ -73,7 +73,7 @@
         }
 
         public function deleteUser($id){
-            $sql = "DELETE FROM usuario WHERE id = :id";
+            $sql = "DELETE FROM usuario WHERE idUsuario = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             return $stmt->execute();
