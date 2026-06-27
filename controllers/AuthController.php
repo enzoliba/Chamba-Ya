@@ -31,7 +31,7 @@
             $_SESSION['registro_email'] = $email;
             $_SESSION['registro_password'] = $password;
 
-            header('Location: AuthController.php?action=showFormDatos');
+            header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showFormDatos');
             exit();
         }
 
@@ -39,7 +39,7 @@
             iniciarSesion();
 
             if(!isset($_SESSION['registro_email']) || !isset($_SESSION['registro_password'])){
-                header('Location: login.php');
+                header('Location: ' . BASE_URL . 'views/auth/login.php');
                 exit();
             }
 
@@ -78,7 +78,7 @@
             iniciarSesion();
 
             if(!isset($_SESSION['registro_email']) || !isset($_SESSION['registro_password'])){
-                header('Location: ../views/auth/login.php');
+                header('Location: ' . BASE_URL . 'views/auth/login.php');
                 exit();
             }
 
@@ -139,7 +139,7 @@
                     $_SESSION['emailUsuario'] = $usuario['correo'];
                     unset($_SESSION['registro_email']);
                     unset($_SESSION['registro_password']);
-                    header('Location: ../index.php');
+                    header('Location: ' . BASE_URL . 'index.php');
                     exit();
                 } else {
                     header('Location: AuthController.php?action=showFormDatos&reg_status=error');
@@ -151,7 +151,7 @@
         public function showMisDatos(){
             iniciarSesion();
             if(!isset($_SESSION['idUsuario'])){
-                header('Location: login.php');
+                header('Location: ' . BASE_URL . 'views/auth/login.php');
                 exit();
             }
 
@@ -175,7 +175,7 @@
         public function showSeguridad(){
             iniciarSesion();
             if(!isset($_SESSION['idUsuario'])){
-                header('Location: login.php');
+                header('Location: ' . BASE_URL . 'views/auth/login.php');
                 exit();
             }
             global $base_path;
@@ -185,7 +185,7 @@
         public function showPreferencias(){
             iniciarSesion();
             if(!isset($_SESSION['idUsuario'])){
-                header('Location: login.php');
+                header('Location: ' . BASE_URL . 'views/auth/login.php');
                 exit();
             }
             global $base_path;
@@ -212,7 +212,7 @@
                 $extension = strtolower(pathinfo($_FILES['fotoPerfil']['name'], PATHINFO_EXTENSION));
                 $permitidos = ['jpg', 'jpeg', 'png', 'webp'];
                 if(!in_array($extension, $permitidos)){
-                    header('Location: AuthController.php?action=showMisDatos&status=error'); exit();
+                    header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showMisDatos&status=error'); exit();
                 }
 
                 // Validación del archivo: tamaño máximo y tipo MIME real
@@ -250,9 +250,9 @@
             if($success){
                 $_SESSION['nombres'] = $nombres;
                 $_SESSION['emailUsuario'] = $correo;
-                header('Location: AuthController.php?action=showMisDatos&status=success');
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showMisDatos&status=success');
             }else{
-                header('Location: AuthController.php?action=showMisDatos&status=error');
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showMisDatos&status=error');
             }
         }
 
@@ -268,25 +268,25 @@
             $confirmPassword = $_POST['confirmPassword'] ?? '';
 
             if(empty($currentPassword) || empty($newPassword) || empty($confirmPassword)){
-                header('Location: AuthController.php?action=showSeguridad&pass_status=empty'); exit();
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showSeguridad&pass_status=empty'); exit();
             }
             if($newPassword !== $confirmPassword){
-                header('Location: AuthController.php?action=showSeguridad&pass_status=mismatch'); exit();
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showSeguridad&pass_status=mismatch'); exit();
             }
             if(strlen($newPassword) < 8){
-                header('Location: AuthController.php?action=showSeguridad&pass_status=short'); exit();
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showSeguridad&pass_status=short'); exit();
             }
 
             $usuario = $this->userModel->getUserById($idUsuario);
             if(!$usuario || !password_verify($currentPassword, $usuario['password'])){
-                header('Location: AuthController.php?action=showSeguridad&pass_status=wrong'); exit();
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showSeguridad&pass_status=wrong'); exit();
             }
 
             $success = $this->userModel->updatePassword($idUsuario, $newPassword);
             if($success){
-                header('Location: AuthController.php?action=showSeguridad&pass_status=success');
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showSeguridad&pass_status=success');
             } else {
-                header('Location: AuthController.php?action=showSeguridad&pass_status=error');
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showSeguridad&pass_status=error');
             }
         }
     }

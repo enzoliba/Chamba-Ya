@@ -77,7 +77,7 @@
                             $archivoImagen = str_replace($buscar, $reemplazar, $nombreLimpio) . ".png";
                         }
                     ?>
-                        <a href="index.php?action=buscar-trabajo&categoria=<?= urlencode($cat['nombre']) ?>" class="categories_card">
+                        <a href="index.php?action=buscar-trabajo&tipo=trabajo&categoria[]=<?= urlencode($cat['idCategoria']) ?>" class="categories_card">
                             <img src="<?= BASE_URL ?>assets/img/<?= $archivoImagen ?>" alt="<?= htmlspecialchars($cat['nombre']) ?>" onerror="this.src='<?= BASE_URL ?>assets/img/servicios_varios.png';">
                             <h3><?= htmlspecialchars($cat['nombre']) ?></h3>
                         </a>
