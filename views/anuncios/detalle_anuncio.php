@@ -1,9 +1,8 @@
 <?php
-    // views/auth/detalle_anuncio.php
-    require_once __DIR__ . '/../../assets/css/style_detalleTrabajo.php';
-    require_once __DIR__ . '/../templates/header.php';
-    require_once __DIR__ . '/../templates/head.php';
-
+// views/auth/detalle_anuncio.php
+require_once __DIR__ . '/../../assets/css/style_detalleTrabajo.php';
+require_once __DIR__ . '/../templates/head.php';
+require_once __DIR__ . '/../templates/header.php';
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +51,7 @@
                         </div>
                         <div class="item-secundario">
                             <span class="label">Dirección:</span>
-                            <span class="valor"><?= htmlspecialchars($anuncio['direccionEspecificas'] ?? $anuncio['direccionEspecifica'] ?? 'No especificada') ?></span>
+                            <span class="valor"><?= htmlspecialchars($anuncio['direccionEspecificas'] ?? $anuncio['direccionEspecifica'] ?? 'Se pone la direccion especifica') ?></span>
                         </div>
                     </div>
                     
@@ -108,15 +107,15 @@
                 ?>
                 <div style="margin-top: 15px;">
                     <span class="label" style="color: #7f8c8d; font-size: 0.9rem; display: block; margin-bottom: 5px;">(FotoPerfil)</span>
-                    <img src="<?= BASE_URL ?>assets/uploads/img_perfiles/<?= $foto ?>" 
-                        alt="Foto de Perfil del Reclutador" 
-                        class="avatar-perfil-img"
-                        onerror="this.src='<?= BASE_URL ?>assets/uploads/img_perfiles/default.png';">
+                    <img src="<?= $base_path ?>assets/uploads/img_perfiles/<?= $foto ?>" 
+                         alt="Foto de Perfil del Reclutador" 
+                         class="avatar-perfil-img"
+                         onerror="this.src='<?= $base_path ?>assets/uploads/img_perfiles/default.png';">
                 </div>
             </aside>
             
         </div>
     </div>
-    <?php require_once __DIR__ . '/../../views/templates/footer.php'; ?>
+
 </body>
 </html>
