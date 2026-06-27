@@ -10,6 +10,17 @@
     <div class="form-container">
         <h1>Formulario de Datos del Usuario</h1>
         <h3>Completa la información para registrarte</h3>
+        <?php if(isset($_GET['reg_status'])): ?>
+            <?php
+                $regMsgs = [
+                    'bad_format' => 'Imagen no válida. Solo se permiten JPG o PNG.',
+                    'too_big'    => 'La imagen supera el tamaño máximo (2 MB).',
+                    'error'      => 'No se pudo completar el registro. Intenta de nuevo.',
+                ];
+                $msg = $regMsgs[$_GET['reg_status']] ?? 'Ocurrió un error en el registro.';
+            ?>
+            <p class="form_msg form_msg_error"><?= htmlspecialchars($msg) ?></p>
+        <?php endif; ?>
         <form action="<?= BASE_URL ?>controllers/AuthController.php?action=completeRegister" method="POST" enctype="multipart/form-data">
             <div class="profile-picture">
                 <label for="fotoPerfil">Foto de Perfil:</label>

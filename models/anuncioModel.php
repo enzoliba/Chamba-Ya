@@ -11,7 +11,7 @@ class AnuncioModel {
     // Obtiene las categorías ordenadas por como se agregaron (idCategoria)
     public function obtenerCategorias() {
         try {
-            $stmt = $this->conn->query("SELECT idCategoria, nombre FROM categoria ORDER BY idCategoria ASC");
+            $stmt = $this->conn->query("SELECT idCategoria, nombre, imagen FROM categoria ORDER BY idCategoria ASC");
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Error en obtenerCategorias: " . $e->getMessage());
