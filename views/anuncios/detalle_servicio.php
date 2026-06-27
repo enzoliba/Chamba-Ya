@@ -1,17 +1,10 @@
 <?php
-// views/auth/detalle_servicio.php
+// views/anuncios/detalle_servicio.php
+$pageTitle = 'Perfil de Servicio - ' . $anuncio['nombres'];
 require_once __DIR__ . '/../../assets/css/style_detalleServicio.php';
 require_once __DIR__ . '/../templates/head.php';
 require_once __DIR__ . '/../templates/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil de Servicio - <?= htmlspecialchars($anuncio['nombres']) ?></title>
-    
-</head>
 <body>
 
     <div class="container-servicio">

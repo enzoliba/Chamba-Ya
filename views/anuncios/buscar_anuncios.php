@@ -1,10 +1,12 @@
 <?php
 //buscar_anuncios.php
+    $tipo = $_GET['tipo'] ?? 'trabajo';
+    $pageTitle = (($tipo == 'trabajo') ? 'Buscar Trabajo' : 'Brindar Servicios') . ' - Chamba Ya';
+
     require_once __DIR__ . '/../../assets/css/style_buscarAnuncio.php';
     require_once __DIR__ . '/../templates/head.php';
     require_once __DIR__ . '/../templates/header.php';
-    //corregir desde aqui
-    $tipo = $_GET['tipo'] ?? 'trabajo';
+
     $tituloPagina = ($tipo == 'trabajo')
         ? 'BUSCAR TRABAJO'
         : 'BRINDAR SERVICIOS';
@@ -17,13 +19,6 @@
     $precioActualSlider = !empty($_GET['precio_min']) ? $_GET['precio_min'] : 0;
     $categoriaSeleccionada = $_GET['categoria'] ?? '';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <body class="<?= $claseColor ?>">
     <div class="title-banner-trabajo <?= $claseColor ?>">
         <?= $tituloPagina ?>

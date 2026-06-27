@@ -1,17 +1,11 @@
 <?php
-// views/auth/detalle_anuncio.php
+// views/anuncios/detalle_anuncio.php
+$pageTitle = $anuncio['titulo'] . ' - Chamba Ya';
 require_once __DIR__ . '/../../assets/css/style_detalleTrabajo.php';
 require_once __DIR__ . '/../templates/head.php';
 require_once __DIR__ . '/../templates/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($anuncio['titulo']) ?> - Chamba Ya</title>
-</head>
 <body>
 
     <div class="container-detalle">

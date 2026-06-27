@@ -206,7 +206,7 @@
             $direccionDomicilio = $_POST['direccionDomicilio'] ?? '';
             $codigoPostal = $_POST['codigoPostal'] ?? '';
             $idDistrito = !empty($_POST['distrito']) ? $_POST['distrito'] : null;
-            
+
             $fotoPerfilData = null;
             if(isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] == UPLOAD_ERR_OK){
                 $extension = strtolower(pathinfo($_FILES['fotoPerfil']['name'], PATHINFO_EXTENSION));
