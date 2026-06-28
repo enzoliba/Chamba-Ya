@@ -18,6 +18,7 @@
                     <ul>
                         <li><a href="<?= BASE_URL ?>views/footer-views/terminos_y_condiciones.php">Terminos y Condiciones</a></li>
                         <li><a href="<?= BASE_URL ?>views/footer-views/preguntas_frecuentes.php">Preguntas frecuentes</a></li>
+                        <li><a href="<?= BASE_URL ?>views/footer-views/politicas_privacidad.php">Politicas de Privacidad</a></li>
                     </ul>
                 </div>
             </div>
