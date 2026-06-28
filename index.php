@@ -46,14 +46,14 @@
                 <p>Encuentra ofertas cerca de ti y postula al toque. Sin CV, contacto directo</p>
                 <img src="<?= BASE_URL ?>assets/img/imagen_left.png" alt="Imagen Left">
                 <button class="btn_left_first" onclick="window.location.href='<?= BASE_URL ?>index.php?action=buscar-trabajo&tipo=trabajo'">Ver ofertas de Trabajo</button>
-                <button class="btn_left_second" onclick="alert('Funcionalidad en desarrollo')">Publicar mi perfil de servicio</button>
+                <button class="btn_left_second" onclick="window.location.href='<?= BASE_URL ?>views/user/mis_anuncios.php'">Publicar mi perfil de servicio</button>
             </div>
             <div class="right_half">
                 <h1>¿Necesitas ayuda ahora?</h1>
                 <p>Encuentra a trabajadores que te ayuden o publica tu necesidad. Gasfiteres, electricistas, limpieza, jardinero y más.</p>
                 <img src="<?= BASE_URL ?>assets/img/imagen_right.png" alt="Imagen Right">
                 <button class="btn_right_first" onclick="window.location.href='<?= BASE_URL ?>index.php?action=buscar-trabajo&tipo=servicio'">Buscar trabajadores</button>
-                <button class="btn_right_second" onclick="alert('Funcionalidad en desarrollo')">Publicar oferta de trabajo</button>
+                <button class="btn_right_second" onclick="window.location.href='<?= BASE_URL ?>views/user/mis_anuncios.php'">Publicar oferta de trabajo</button>
             </div>
         </div>
         

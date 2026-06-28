@@ -7,3 +7,13 @@
             session_start();
         }
     }
+
+    // Retorna el ID del usuario activo en la sesión.
+    function obtenerIdUsuarioActivo(): int {
+        iniciarSesion();
+        if (!isset($_SESSION['idUsuario'])) {
+            return 1; // Fallback para desarrollo
+        }
+        return (int) $_SESSION['idUsuario'];
+    }
+?>
