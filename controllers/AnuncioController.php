@@ -1,7 +1,7 @@
 <?php
     require_once __DIR__ . '/../core/config/config.php';
     require_once __DIR__ . '/../models/anuncioModel.php';
-
+    require_once __DIR__ . '/../models/userModel.php';
 
 class AnuncioController {
     //correccion desde aqui
@@ -39,6 +39,7 @@ class AnuncioController {
     public function verDetalle() {
         require_once __DIR__ . '/../models/anuncioModel.php';
         $model = new AnuncioModel();
+        $modeloUser = new UserModel();
         
         $idAnuncio = isset($_GET['id']) ? intval($_GET['id']) : 0;
         if ($idAnuncio === 0) {
@@ -50,9 +51,14 @@ class AnuncioController {
         if (!$anuncio) {
             die("El anuncio solicitado no existe.");
         }
+        
+        // Obtener la calificación promedio del usuario que publicó el anuncio
+        $calificacion = $modeloUser->obtenerCalificacionUsuario($anuncio['idUsuario']);
+        $puntaje = round($calificacion['puntaje'] ?? 0);
 
         global $base_path;
         $base_path = isset($GLOBALS['base_path']) ? $GLOBALS['base_path'] : '';
+
 
         // Convertimos a minúsculas 
         $tipoAnuncioLimpio = isset($anuncio['tipoAnuncio']) ? strtolower(trim($anuncio['tipoAnuncio'])) : '';

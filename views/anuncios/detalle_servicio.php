@@ -14,8 +14,8 @@ require_once __DIR__ . '/../templates/header.php';
                 <div class="encabezado-usuario">
                     <?php $foto = !empty($anuncio['fotoPerfil']) ? $anuncio['fotoPerfil'] : 'default.png'; ?>
                     <img src="<?= $base_path ?>assets/uploads/img_perfiles/<?= $foto ?>" 
-                         alt="Foto de Perfil" class="foto-perfil-avatar"
-                         onerror="this.src='<?= $base_path ?>assets/uploads/img_perfiles/default.png';">
+                        alt="Foto de Perfil" class="foto-perfil-avatar"
+                        onerror="this.src='<?= $base_path ?>assets/uploads/img_perfiles/default.png';">
                     
                     <div class="info-usuario-titulo">
                         <h1><?= htmlspecialchars($anuncio['nombres'] . ' ' . $anuncio['apellidos']) ?></h1>
@@ -87,7 +87,8 @@ require_once __DIR__ . '/../templates/header.php';
                     <p><?= htmlspecialchars($anuncio['modalidad']) ?></p>
                 </div>
 
-                <button class="btn-solicitar-servicio" type="button">Contratar Servicio</button>
+                <button class="btn-solicitar-servicio" id="btn-solicitar-service" type="button">Contratar Servicio</button>
+                <button class="btn-calificar-servicio" id="btn-calificar-service" type="button">Calificar Usuario</button>
             </aside>
 
         </div>
@@ -117,42 +118,39 @@ require_once __DIR__ . '/../templates/header.php';
         </section>
 
         <div class="seccion-testimonios">
-    <h2>Opiniones de los usuarios</h2>
-    
-    <?php if (!empty($testimonios)): ?>
-        <div class="lista-testimonios">
-            <?php foreach ($testimonios as $testimonio): ?>
-                <div class="tarjeta-testimonio">
-                    <div class="testimonio-header">
-                        <div class="usuario-info">
-                            <strong><?= htmlspecialchars($testimonio['nombres'] . ' ' . $testimonio['apellidos']) ?></strong>
-                            <span class="testimonio-fecha"><?= date('d/m/Y', strtotime($testimonio['fecha'])) ?></span>
+            <h2>Opiniones de los usuarios</h2>
+            
+            <?php if (!empty($testimonios)): ?>
+                <div class="lista-testimonios">
+                    <?php foreach ($testimonios as $testimonio): ?>
+                        <div class="tarjeta-testimonio">
+                            <div class="testimonio-header">
+                                <div class="usuario-info">
+                                    <strong><?= htmlspecialchars($testimonio['nombres'] . ' ' . $testimonio['apellidos']) ?></strong>
+                                    <span class="testimonio-fecha"><?= date('d/m/Y', strtotime($testimonio['fecha'])) ?></span>
+                                </div>
+                                <div class="estrellas">
+                                    <?php 
+                                    $puntaje = intval($testimonio['puntaje']);
+                                    for ($i = 1; $i <= 5; $i++): 
+                                        if ($i <= $puntaje): ?>
+                                            <i class="fa-solid fa-star" style="color: #ffcc00;"></i>
+                                        <?php else: ?>
+                                            <i class="fa-regular fa-star" style="color: #ccc;"></i>
+                                        <?php endif; 
+                                    endfor; ?>
+                                </div>
+                            </div>
+                            <div class="testimonio-cuerpo">
+                                <p><?= htmlspecialchars($testimonio['comentario']) ?></p>
+                            </div>
                         </div>
-                        
-                        <div class="estrellas">
-                            <?php 
-                            $puntaje = intval($testimonio['puntaje']);
-                            for ($i = 1; $i <= 5; $i++): 
-                                if ($i <= $puntaje): ?>
-                                    <i class="fa-solid fa-star" style="color: #ffcc00;"></i>
-                                <?php else: ?>
-                                    <i class="fa-regular fa-star" style="color: #ccc;"></i>
-                                <?php endif; 
-                            endfor; ?>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonio-cuerpo">
-                        <p><?= htmlspecialchars($testimonio['comentario']) ?></p>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
+            <?php else: ?>
+                <p class="sin-testimonios">Este perfil de servicio aún no cuenta con calificaciones o testimonios.</p>
+            <?php endif; ?>
         </div>
-    <?php else: ?>
-        <p class="sin-testimonios">Este perfil de servicio aún no cuenta con calificaciones o testimonios.</p>
-    <?php endif; ?>
-</div>
     </div>
-
 </body>
 </html>

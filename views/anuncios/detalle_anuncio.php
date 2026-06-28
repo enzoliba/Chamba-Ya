@@ -1,9 +1,9 @@
 <?php
-// views/anuncios/detalle_anuncio.php
-$pageTitle = $anuncio['titulo'] . ' - Chamba Ya';
-require_once __DIR__ . '/../../assets/css/style_detalleTrabajo.php';
-require_once __DIR__ . '/../templates/head.php';
-require_once __DIR__ . '/../templates/header.php';
+    // views/anuncios/detalle_anuncio.php
+    $pageTitle = $anuncio['titulo'] . ' - Chamba Ya';
+    require_once __DIR__ . '/../../assets/css/style_detalleTrabajo.php';
+    require_once __DIR__ . '/../templates/head.php';
+    require_once __DIR__ . '/../templates/header.php';
 ?>
 
 <body>
@@ -23,10 +23,11 @@ require_once __DIR__ . '/../templates/header.php';
                 <!-- Fila de Ubicación y Sueldo -->
                 <div class="fila-encabezados-mini">
                     <div class="caja-info-mini">
+                        <span class="label">Departamento - Provincia - Distrito</span>
                         <?= htmlspecialchars($anuncio['ubicacion_completa']) ?>
                     </div>
                     <div class="caja-info-mini">
-                        Pago Referencial: <strong>S/. <?= number_format($anuncio['pagoReferencia'], 2) ?> / hora</strong>
+                        <span class="label">Pago Referencial:</span><strong>S/. <?= number_format($anuncio['pagoReferencia'], 2) ?> / hora</strong>
                     </div>
                 </div>
                 
@@ -44,7 +45,7 @@ require_once __DIR__ . '/../templates/header.php';
                             <span class="valor"><?= htmlspecialchars($anuncio['modalidad']) ?></span>
                         </div>
                         <div class="item-secundario">
-                            <span class="label">Dirección:</span>
+                            <span class="label">Dirección del trabajo:</span>
                             <span class="valor"><?= htmlspecialchars($anuncio['direccionEspecificas'] ?? $anuncio['direccionEspecifica'] ?? 'Se pone la direccion especifica') ?></span>
                         </div>
                     </div>
@@ -53,14 +54,14 @@ require_once __DIR__ . '/../templates/header.php';
                     
                     <div class="grid-detalles-secundarios">
                         <div class="item-secundario">
-                            <span class="label">Estado:</span>
+                            <span class="label">Estado del trabajo:</span>
                             <span class="valor"><?= htmlspecialchars($anuncio['estado']) ?></span>
                         </div>
                     </div>
                     
                     <!-- Bloque de Categorías Embebidas -->
                     <div class="contenedor-tags-categorias">
-                        <span class="label" style="color: #7f8c8d; font-size: 0.95rem; font-weight: 500;">Categorías:</span>
+                        <span class="label">Categorías:</span>
                         <div class="lista-tags">
                             <?php if (!empty($anuncio['categorias_nombres'])): ?>
                                 <?php foreach (explode(', ', $anuncio['categorias_nombres']) as $cat_nom): ?>
@@ -90,26 +91,39 @@ require_once __DIR__ . '/../templates/header.php';
                 <hr class="divisor-linea">
                 
                 <div class="datos-contacto-card">
-                    <strong>teléfono:</strong> <?= htmlspecialchars($anuncio['telefono'] ?? 'No especificado') ?>
+                    <strong>Teléfono:</strong> <?= htmlspecialchars($anuncio['telefono'] ?? 'No especificado') ?>
                 </div>
                 <div class="datos-contacto-card">
-                    <strong>correo:</strong> <?= htmlspecialchars($anuncio['correo']) ?>
+                    <strong>Correo de contacto:</strong> <?= htmlspecialchars($anuncio['correo']) ?>
                 </div>
                 
+                <div class="datos-contacto-card">
+                    <strong>Calificación del usuario:</strong>
+
+                    <div class="estrellas">
+                        <?php for($i=1; $i<=5; $i++): ?>
+                            <?php if($i <= $puntaje): ?>
+                                <i class="fa-solid fa-star" style="color:#ffcc00;"></i>
+                            <?php else: ?>
+                                <i class="fa-regular fa-star" style="color:#ccc;"></i>
+                            <?php endif; ?>
+                        <?php endfor; ?>
+                        <span>(<?= number_format($puntaje,1) ?>/5)</span>
+                    </div>
+                </div>
+
                 <?php 
                     $foto = !empty($anuncio['fotoPerfil']) ? $anuncio['fotoPerfil'] : 'default.png'; 
                 ?>
                 <div style="margin-top: 15px;">
-                    <span class="label" style="color: #7f8c8d; font-size: 0.9rem; display: block; margin-bottom: 5px;">(FotoPerfil)</span>
+                    <span class="label">(Foto de Perfil)</span>
                     <img src="<?= $base_path ?>assets/uploads/img_perfiles/<?= $foto ?>" 
-                         alt="Foto de Perfil del Reclutador" 
-                         class="avatar-perfil-img"
-                         onerror="this.src='<?= $base_path ?>assets/uploads/img_perfiles/default.png';">
+                        alt="Foto de Perfil del Reclutador" 
+                        class="avatar-perfil-img"
+                        onerror="this.src='<?= $base_path ?>assets/uploads/img_perfiles/default.png';">
                 </div>
             </aside>
-            
         </div>
     </div>
-
 </body>
 </html>

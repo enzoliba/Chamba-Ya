@@ -173,6 +173,24 @@
             background: #c39300;
         }
 
+        .btn-calificar-servicio {
+            width: 100%;
+            background: #128b09;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-calificar-servicio:hover {
+            background: #097402;
+        }
+        
         /* SECCIÓN INFERIOR: Servicios que ofrezco */
         .seccion-otros-servicios {
             margin-top: 45px;

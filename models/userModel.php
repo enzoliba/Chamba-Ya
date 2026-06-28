@@ -130,6 +130,21 @@
             }
             
             return $stmt->execute();
+
+        }
+        public function obtenerCalificacionUsuario($idUsuario){
+            try{
+                $sql = "SELECT ROUND(AVG(puntaje),0) AS puntaje
+                        FROM calificacion
+                        WHERE idUsuarioCalificado = :idUsuario";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':idUsuario', $idUsuario, PDO::PARAM_INT);
+                $stmt->execute();
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                error_log("Error al obtenerCalificacionDelUsuario: " . $e->getMessage());
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            }
         }
     }
 ?>

@@ -5,7 +5,7 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #333;
-        }
+        }   
 
         .container-detalle {
             max-width: 1200px;
@@ -113,11 +113,12 @@
             flex-direction: column;
         }
 
-        .item-secundario .label {
-            color: #7f8c8d;
-            font-size: 0.95rem;
-            margin-bottom: 5px;
+        .label {
+            color: #7f8c8d; 
             font-weight: 500;
+            font-size: 0.9rem; 
+            display: block; 
+            margin-bottom: 5px;
         }
 
         .item-secundario .valor {

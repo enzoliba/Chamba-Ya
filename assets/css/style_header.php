@@ -1,5 +1,4 @@
 <style>
-    
     header a{
         text-decoration: none;
         color: #000;
@@ -29,7 +28,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 15px 30px;
-        background-color: none;
+        background: white;
         position:sticky;
         top: 0;
         z-index: 1000;

@@ -125,9 +125,9 @@ class AnuncioModel {
     public function obtenerDetalleAnuncio($idAnuncio) {
     try {
         $sql = "SELECT a.*, 
-                       u.nombres, u.apellidos, u.telefono, u.correo, u.fotoPerfil, u.descripcionPerfil,
-                       CONCAT(dep.nombre, ' - ', pr.nombre, ' - ', d.nombre) AS ubicacion_completa,
-                       GROUP_CONCAT(DISTINCT c.nombre SEPARATOR ', ') AS categorias_nombres
+                    u.nombres, u.apellidos, u.telefono, u.correo, u.fotoPerfil, u.descripcionPerfil,
+                    CONCAT(dep.nombre, ' - ', pr.nombre, ' - ', d.nombre) AS ubicacion_completa,
+                    GROUP_CONCAT(DISTINCT c.nombre SEPARATOR ', ') AS categorias_nombres
                 FROM anuncio a
                 INNER JOIN usuario u ON a.idUsuario = u.idUsuario
                 LEFT JOIN distrito d ON a.idDistrito = d.idDistrito
@@ -142,53 +142,53 @@ class AnuncioModel {
         $stmt->bindValue(':idAnuncio', $idAnuncio, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        error_log("Error en obtenerDetalleAnuncio: " . $e->getMessage());
-        return null;
+        } catch (PDOException $e) {
+            error_log("Error en obtenerDetalleAnuncio: " . $e->getMessage());
+            return null;
+        }
     }
-}
 
-// NUEVO MÉTODO: Para listar los otros servicios que ofrece ese mismo usuario
-public function obtenerAnunciosPorUsuario($idUsuario, $idAnuncioActual) {
-    try {
-        $sql = "SELECT a.*, d.nombre AS nombre_distrito 
-                FROM anuncio a
-                LEFT JOIN distrito d ON a.idDistrito = d.idDistrito
-                WHERE a.idUsuario = :idUsuario AND a.idAnuncio <> :idAnuncioActual AND a.tipoAnuncio = 'servicio'
-                LIMIT 3";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue(':idUsuario', $idUsuario, PDO::PARAM_INT);
-        $stmt->bindValue(':idAnuncioActual', $idAnuncioActual, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        return [];
+    // NUEVO MÉTODO: Para listar los otros servicios que ofrece ese mismo usuario
+    public function obtenerAnunciosPorUsuario($idUsuario, $idAnuncioActual) {
+        try {
+            $sql = "SELECT a.*, d.nombre AS nombre_distrito 
+                    FROM anuncio a
+                    LEFT JOIN distrito d ON a.idDistrito = d.idDistrito
+                    WHERE a.idUsuario = :idUsuario AND a.idAnuncio <> :idAnuncioActual AND a.tipoAnuncio = 'servicio'
+                    LIMIT 3";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(':idUsuario', $idUsuario, PDO::PARAM_INT);
+            $stmt->bindValue(':idAnuncioActual', $idAnuncioActual, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
     }
-}
 
     // Las calificaciones son sobre la persona (idUsuarioCalificado),
     // quien escribe la opinión es el idUsuarioCalificador.
     public function obtenerCalificacionesPorUsuario($idUsuario) {
-    try {
-        $sql = "SELECT
-                    c.puntaje,
-                    c.comentario,
-                    c.fecha AS fecha,
-                    u.nombres,
-                    u.apellidos,
-                    u.fotoPerfil
-                FROM calificacion c
-                INNER JOIN usuario u ON c.idUsuarioCalificador = u.idUsuario
-                WHERE c.idUsuarioCalificado = :idUsuario
-                ORDER BY c.fecha DESC";
+        try {
+            $sql = "SELECT
+                        c.puntaje,
+                        c.comentario,
+                        c.fecha AS fecha,
+                        u.nombres,
+                        u.apellidos,
+                        u.fotoPerfil
+                    FROM calificacion c
+                    INNER JOIN usuario u ON c.idUsuarioCalificador = u.idUsuario
+                    WHERE c.idUsuarioCalificado = :idUsuario
+                    ORDER BY c.fecha DESC";
 
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':idUsuario', $idUsuario, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        error_log("Error en obtenerCalificacionesPorUsuario: " . $e->getMessage());
-        return [];
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':idUsuario', $idUsuario, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error en obtenerCalificacionesPorUsuario: " . $e->getMessage());
+            return [];
+        }
     }
-}
 }
