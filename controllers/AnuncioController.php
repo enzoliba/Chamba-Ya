@@ -42,7 +42,7 @@ class AnuncioController {
         
         $idAnuncio = isset($_GET['id']) ? intval($_GET['id']) : 0;
         if ($idAnuncio === 0) {
-            header("Location: index.php");
+            header("Location: " . BASE_URL . "index.php");
             exit();
         }
         
@@ -69,7 +69,7 @@ class AnuncioController {
 
         if ($tipoAnuncioLimpio === 'servicio') {
             $otrosServicios = $model->obtenerAnunciosPorUsuario($anuncio['idUsuario'], $idAnuncio);
-            $testimonios = $model->obtenerCalificacionesPorAnuncio($anuncio['idUsuario']);
+            $testimonios = $model->obtenerCalificacionesPorUsuario($anuncio['idUsuario']);
             require_once __DIR__ . '/../views/anuncios/detalle_servicio.php';
         } else {
             require_once __DIR__ . '/../views/anuncios/detalle_anuncio.php';

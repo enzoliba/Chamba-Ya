@@ -1,7 +1,7 @@
 <?php
-    session_start();
-
     require_once __DIR__ . '/../../core/config/config.php';
+    require_once __DIR__ . '/../../core/config/session.php';
+    iniciarSesion();
 
     //Eliminar todas las variables de sesión
     $_SESSION = [];

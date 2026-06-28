@@ -1,18 +1,10 @@
 <?php
-    // views/auth/detalle_servicio.php
-    require_once __DIR__ . '/../../assets/css/style_detalleServicio.php';
-    require_once __DIR__ . '/../templates/header.php';
-    require_once __DIR__ . '/../templates/head.php';
-
+// views/anuncios/detalle_servicio.php
+$pageTitle = 'Perfil de Servicio - ' . $anuncio['nombres'];
+require_once __DIR__ . '/../../assets/css/style_detalleServicio.php';
+require_once __DIR__ . '/../templates/head.php';
+require_once __DIR__ . '/../templates/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil de Servicio - <?= htmlspecialchars($anuncio['nombres']) ?></title>
-    
-</head>
 <body>
 
     <div class="container-servicio">
@@ -21,9 +13,9 @@
             <main class="col-perfil-principal">
                 <div class="encabezado-usuario">
                     <?php $foto = !empty($anuncio['fotoPerfil']) ? $anuncio['fotoPerfil'] : 'default.png'; ?>
-                    <img src="<?= BASE_URL ?>assets/uploads/img_perfiles/<?= $foto ?>" 
-                        alt="Foto de Perfil" class="foto-perfil-avatar"
-                        onerror="this.src='<?= BASE_URL ?>assets/uploads/img_perfiles/default.png';">
+                    <img src="<?= $base_path ?>assets/uploads/img_perfiles/<?= $foto ?>" 
+                         alt="Foto de Perfil" class="foto-perfil-avatar"
+                         onerror="this.src='<?= $base_path ?>assets/uploads/img_perfiles/default.png';">
                     
                     <div class="info-usuario-titulo">
                         <h1><?= htmlspecialchars($anuncio['nombres'] . ' ' . $anuncio['apellidos']) ?></h1>
@@ -112,7 +104,7 @@
                             </div>
                             <div class="footer-mini-tarjeta">
                                 <span style="font-weight: bold; color: #d8a500;">S/. <?= number_format($otro['pagoReferencia'], 2) ?></span>
-                                <a href="index.php?action=detalle-anuncio&id=<?= $otro['idAnuncio'] ?>" class="btn-ver-detalle-mini">
+                                <a href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $otro['idAnuncio'] ?>" class="btn-ver-detalle-mini">
                                     Ver Detalle
                                 </a>
                             </div>
@@ -125,42 +117,42 @@
         </section>
 
         <div class="seccion-testimonios">
-            <h2>Opiniones de los usuarios</h2>
-            
-            <?php if (!empty($testimonios)): ?>
-                <div class="lista-testimonios">
-                    <?php foreach ($testimonios as $testimonio): ?>
-                        <div class="tarjeta-testimonio">
-                            <div class="testimonio-header">
-                                <div class="usuario-info">
-                                    <strong><?= htmlspecialchars($testimonio['nombres'] . ' ' . $testimonio['apellidos']) ?></strong>
-                                    <span class="testimonio-fecha"><?= date('d/m/Y', strtotime($testimonio['fecha'])) ?></span>
-                                </div>
-                                
-                                <div class="estrellas">
-                                    <?php 
-                                    $puntaje = intval($testimonio['getPuntaje'] ?? $testimonio['puntaje']); 
-                                    for ($i = 1; $i <= 5; $i++): 
-                                        if ($i <= $puntaje): ?>
-                                            <i class="fa-solid fa-star" style="color: #ffcc00;"></i>
-                                        <?php else: ?>
-                                            <i class="fa-regular fa-star" style="color: #ccc;"></i>
-                                        <?php endif; 
-                                    endfor; ?>
-                                </div>
-                            </div>
-                            
-                            <div class="testimonio-cuerpo">
-                                <p><?= htmlspecialchars($testimonio['comentario']) ?></p>
-                            </div>
+    <h2>Opiniones de los usuarios</h2>
+    
+    <?php if (!empty($testimonios)): ?>
+        <div class="lista-testimonios">
+            <?php foreach ($testimonios as $testimonio): ?>
+                <div class="tarjeta-testimonio">
+                    <div class="testimonio-header">
+                        <div class="usuario-info">
+                            <strong><?= htmlspecialchars($testimonio['nombres'] . ' ' . $testimonio['apellidos']) ?></strong>
+                            <span class="testimonio-fecha"><?= date('d/m/Y', strtotime($testimonio['fecha'])) ?></span>
                         </div>
-                    <?php endforeach; ?>
+                        
+                        <div class="estrellas">
+                            <?php 
+                            $puntaje = intval($testimonio['puntaje']);
+                            for ($i = 1; $i <= 5; $i++): 
+                                if ($i <= $puntaje): ?>
+                                    <i class="fa-solid fa-star" style="color: #ffcc00;"></i>
+                                <?php else: ?>
+                                    <i class="fa-regular fa-star" style="color: #ccc;"></i>
+                                <?php endif; 
+                            endfor; ?>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonio-cuerpo">
+                        <p><?= htmlspecialchars($testimonio['comentario']) ?></p>
+                    </div>
                 </div>
-            <?php else: ?>
-                <p class="sin-testimonios">Este perfil de servicio aún no cuenta con calificaciones o testimonios.</p>
-            <?php endif; ?>
+            <?php endforeach; ?>
         </div>
+    <?php else: ?>
+        <p class="sin-testimonios">Este perfil de servicio aún no cuenta con calificaciones o testimonios.</p>
+    <?php endif; ?>
+</div>
     </div>
-    <?php require_once __DIR__ . '/../../views/templates/footer.php'; ?>
+
 </body>
 </html>

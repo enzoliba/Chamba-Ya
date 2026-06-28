@@ -124,4 +124,16 @@
     .form-container button:hover {
         background-color: #0056b3;
     }
+    .form_msg {
+        margin: 8px 0;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        text-align: center;
+    }
+    .form_msg_error {
+        background-color: #fdecea;
+        color: #b3261e;
+        border: 1px solid #f5c2c0;
+    }
 </style>

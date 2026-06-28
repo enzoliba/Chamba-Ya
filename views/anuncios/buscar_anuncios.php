@@ -1,10 +1,12 @@
 <?php
 //buscar_anuncios.php
-    require_once __DIR__ . '/../../assets/css/style_buscarAnuncio.php';
-    require_once __DIR__ . '/../templates/header.php';
-    require_once __DIR__ . '/../templates/head.php';
-
     $tipo = $_GET['tipo'] ?? 'trabajo';
+    $pageTitle = (($tipo == 'trabajo') ? 'Buscar Trabajo' : 'Brindar Servicios') . ' - Chamba Ya';
+
+    require_once __DIR__ . '/../../assets/css/style_buscarAnuncio.php';
+    require_once __DIR__ . '/../templates/head.php';
+    require_once __DIR__ . '/../templates/header.php';
+
     $tituloPagina = ($tipo == 'trabajo')
         ? 'BUSCAR TRABAJO'
         : 'BRINDAR SERVICIOS';
@@ -17,19 +19,12 @@
     $precioActualSlider = !empty($_GET['precio_min']) ? $_GET['precio_min'] : 0;
     $categoriaSeleccionada = $_GET['categoria'] ?? '';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-witdth, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <body class="<?= $claseColor ?>">
     <div class="title-banner-trabajo <?= $claseColor ?>">
         <?= $tituloPagina ?>
     </div>
     
-    <form method="GET" action="index.php" id="formFiltrosGlobal">
+    <form method="GET" action="<?= BASE_URL ?>index.php" id="formFiltrosGlobal">
         <input type="hidden" name="action" value="buscar-trabajo">
         <input type="hidden" name="tipo" value="<?= $tipo ?>">
         <div class="wrapper-busqueda">
@@ -92,7 +87,7 @@
                     oninput="document.getElementById('indicadorPrecio').innerText = 'S/. ' + this.value;"
                     onchange="document.getElementById('formFiltrosGlobal').submit();">
                 </div>
-                <a href="index.php?action=buscar-trabajo&tipo=<?= urlencode($tipo) ?>" class="limpiar-filtros"> Limpiar Filtros </a>
+                <a href="<?= BASE_URL ?>index.php?action=buscar-trabajo&tipo=<?= urlencode($tipo) ?>" class="limpiar-filtros"> Limpiar Filtros </a>
             </aside>
             
             <main class="main-feed-trabajos">
@@ -130,7 +125,7 @@
                                         <p class="ubicacion-card"><?= htmlspecialchars($anuncio['ubicacion']) ?></p>
                                         <p class="pago-card"> S/. <?= $anuncio['pagoReferencia'] ?></p>
                                     </div>
-                                    <a class="btn-ver-mas-card" href="index.php?action=detalle-anuncio&id=<?= $anuncio['idAnuncio'] ?>&tipo=trabajo"> Ver más</a>
+                                    <a class="btn-ver-mas-card" href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $anuncio['idAnuncio'] ?>&tipo=trabajo"> Ver más</a>
                                 </div>
                             <!-- SERVICIO -->
                             <?php else: ?>
@@ -149,7 +144,7 @@
                                             }
                                         ?>
                                     </div>
-                                    <a class="btn-ver-mas-servicio" href="index.php?action=detalle-anuncio&id=<?= $anuncio['idAnuncio'] ?>&tipo=servicio">Ver más </a>
+                                    <a class="btn-ver-mas-servicio" href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $anuncio['idAnuncio'] ?>&tipo=servicio">Ver más </a>
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
@@ -163,9 +158,13 @@
         </div>
     </form>
     
+    <?php require_once __DIR__ . '/../templates/footer.php'; ?>
+
     <script>
-        // Enlazar los filtros activos de PHP hacia variables globales leídas por buscar_Trabajo.js
+        // Ruta base del proyecto, usada por buscar_Anuncio.js para los fetch de provincias/distritos
         const BASE_URL = "<?= BASE_URL ?>";
+
+        // Enlazar los filtros activos de PHP hacia variables globales leídas por buscar_Trabajo.js
         const idDepartamentoSeleccionado = "<?= $_GET['departamento'] ?? '' ?>";
         const idProvinciaSeleccionada = "<?= $_GET['provincia'] ?? '' ?>";
         const idDistritoSeleccionado = "<?= $_GET['distrito'] ?? '' ?>";
@@ -200,7 +199,6 @@
         }
         
     </script>
-    <script src="<?= BASE_URL?>assets/js/buscar_Anuncio.js"></script>
-    <?php require_once __DIR__ . '/../../views/templates/footer.php'; ?>
+    <script src="assets/js/buscar_Anuncio.js"></script>
 </body>
 </html>
