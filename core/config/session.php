@@ -9,10 +9,12 @@
     }
 
     // Retorna el ID del usuario activo en la sesión.
+    // Devuelve 0 cuando NO hay sesión iniciada. Nunca asume un usuario por
+    // defecto: quien llame debe exigir login antes de operar con datos.
     function obtenerIdUsuarioActivo(): int {
         iniciarSesion();
         if (!isset($_SESSION['idUsuario'])) {
-            return 1; // Fallback para desarrollo
+            return 0;
         }
         return (int) $_SESSION['idUsuario'];
     }

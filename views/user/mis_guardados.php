@@ -7,8 +7,8 @@
         exit();
     }
     
-    require_once __DIR__ . '/../../controllers/Con_AnuncioGuardado.php';
-    $conGuardado = new Con_AnuncioGuardado();
+    require_once __DIR__ . '/../../controllers/AnuncioGuardadoController.php';
+    $conGuardado = new AnuncioGuardadoController();
     $anuncios_favoritos = $conGuardado->obtenerAnunciosFavoritos();
 
     require_once __DIR__ . '/../../assets/css/style.php';
