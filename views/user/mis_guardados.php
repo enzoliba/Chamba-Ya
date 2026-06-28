@@ -16,10 +16,11 @@
     require_once __DIR__ . '/../../assets/css/style_profile.php';
     require_once __DIR__ . '/../templates/head.php';
     require_once __DIR__ . '/../templates/header.php';
+    require_once __DIR__ . '/../../assets/css/styles_anuncios.php'
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="<?= BASE_URL ?>assets/css/estilos_Anuncios.css">
+
 
 <div class="profile-page">
 
@@ -70,7 +71,7 @@
                 <div class="encabezado-seccion"><h2>Anuncios Guardados</h2></div>
                 <div id="lista-anuncios-guardados">
                     <?php if (empty($anuncios_favoritos)): ?>
-                        <p>No tienes anuncios guardados todavía.</p>
+                        <p>Actualmente no tienes anuncios guardados</p>
                     <?php else: ?>
                         <?php foreach ($anuncios_favoritos as $fav): ?>
                             <div class="tarjeta-horizontal">

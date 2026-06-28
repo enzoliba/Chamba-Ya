@@ -18,10 +18,10 @@
     require_once __DIR__ . '/../../assets/css/style_profile.php';
     require_once __DIR__ . '/../templates/head.php';
     require_once __DIR__ . '/../templates/header.php';
+    require_once __DIR__ . '/../../assets/css/styles_anuncios.php'
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="<?= BASE_URL ?>assets/css/estilos_Anuncios.css">
 
 <div class="profile-page">
 
@@ -69,13 +69,13 @@
         <main class="profile-content">
             <!-- SECCIÓN: ANUNCIOS CREADOS -->
             <section id="seccion-anuncios" class="vista-seccion activo" style="display: block;">
-                <button class="boton-crear" onclick="prepararCreacion()"><i class="fas fa-plus"></i> Crear Nuevo Anuncio</button>
                 <div class="encabezado-seccion">
-                    <h2>Anuncios Activos</h2>    
+                    <h2>Anuncios Activos</h2>
+                    <button class="boton-crear" onclick="prepararCreacion()"><i class="fas fa-plus"></i> Crear Nuevo Anuncio</button> 
                 </div>
                 <div id="lista-anuncios">
                     <?php if (empty($mis_anuncios)): ?>
-                        <p>No tienes anuncios creados todavía.</p>
+                        <p>Actualmente no tienes anuncios creados</p>
                     <?php else: ?>
                         <?php foreach ($mis_anuncios as $anuncio): ?>
                             <div class="tarjeta-horizontal">

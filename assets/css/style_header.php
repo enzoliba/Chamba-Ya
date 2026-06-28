@@ -135,7 +135,7 @@
         font-size: 25px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1050px) {
         .main-header{
             flex-wrap: wrap;
             padding: 15px 20px;
