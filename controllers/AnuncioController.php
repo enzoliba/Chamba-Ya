@@ -66,6 +66,14 @@ class AnuncioController {
             $esFavorito = $favModel->esFavorito($idUsuarioActivo, $idAnuncio);
         }
 
+        // ¿El usuario ya guardó a este trabajador? (para el botón en servicios)
+        require_once __DIR__ . '/../models/TrabajadorFavoritoModel.php';
+        $esTrabajadorFavorito = false;
+        if ($idUsuarioActivo > 0 && $idUsuarioActivo !== (int) $anuncio['idUsuario']) {
+            $tfModel = new TrabajadorFavoritoModel();
+            $esTrabajadorFavorito = $tfModel->esFavorito($idUsuarioActivo, (int) $anuncio['idUsuario']);
+        }
+
         global $base_path;
         $base_path = isset($GLOBALS['base_path']) ? $GLOBALS['base_path'] : '';
 
@@ -76,6 +84,8 @@ class AnuncioController {
         if ($tipoAnuncioLimpio === 'servicio') {
             $otrosServicios = $model->obtenerAnunciosPorUsuario($anuncio['idUsuario'], $idAnuncio);
             $testimonios = $model->obtenerCalificacionesPorUsuario($anuncio['idUsuario']);
+            require_once __DIR__ . '/../models/HabilidadModel.php';
+            $habilidadesServicio = (new HabilidadModel())->obtenerNombresDeUsuario($anuncio['idUsuario']);
             require_once __DIR__ . '/../views/anuncios/detalle_servicio.php';
         } else {
             require_once __DIR__ . '/../views/anuncios/detalle_anuncio.php';

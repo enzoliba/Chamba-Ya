@@ -67,6 +67,11 @@
             <!-- SECCIÓN: GUARDADOS -->
             <section id="seccion-guardados" class="vista-seccion activo" style="display: block;">
                 <div class="encabezado-seccion"><h2>Anuncios Guardados</h2></div>
+                <?php if (($_GET['estado'] ?? '') === 'fav_quitado'): ?>
+                    <div style="margin:0 0 15px;padding:12px 18px;border-radius:8px;color:#fff;background:#64748b;font-weight:600;">
+                        Anuncio quitado de tus guardados.
+                    </div>
+                <?php endif; ?>
                 <div id="lista-anuncios-guardados">
                     <?php if (empty($anuncios_favoritos)): ?>
                         <p>Actualmente no tienes anuncios guardados</p>
@@ -89,6 +94,15 @@
                                             <?php endforeach; ?>
                                         </div>
                                     <?php endif; ?>
+                                </div>
+                                <div class="acciones-tarjeta">
+                                    <form action="<?= BASE_URL ?>controllers/AnuncioGuardadoController.php" method="POST">
+                                        <input type="hidden" name="idAnuncio" value="<?= (int) $fav['id'] ?>">
+                                        <input type="hidden" name="origen" value="guardados">
+                                        <button type="submit" class="boton-accion" onclick="return confirm('¿Quitar este anuncio de guardados?');">
+                                            <i class="fas fa-trash"></i> Quitar
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         <?php endforeach; ?>

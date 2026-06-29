@@ -170,6 +170,11 @@
 
             $departamentos = $this->userModel->getDepartamentos();
 
+            require_once __DIR__ . '/../models/HabilidadModel.php';
+            $habModel = new HabilidadModel();
+            $habilidades = $habModel->obtenerTodas();
+            $misHabilidades = $habModel->obtenerIdsDeUsuario($_SESSION['idUsuario']);
+
             global $base_path;
             require_once __DIR__ . '/../views/user/mis_datos.php';
         }
