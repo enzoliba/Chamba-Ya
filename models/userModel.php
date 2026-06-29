@@ -38,23 +38,6 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-        public function updateUser($id, $fotoPerfil, $nombres, $apellidos, $descripcion, $direccionDomicilio, $codigoPostal, $estado){
-            $sql = "UPDATE usuario SET fotoPerfil = :fotoPerfil, nombres = :nombres, apellidos = :apellidos, descripcionPerfil = :descripcion, direccionDomicilio = :direccionDomicilio, codigoPostal = :codigoPostal, estado = :estado WHERE idUsuario = :id";
-            $stmt = $this->conn->prepare($sql);
-            
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':fotoPerfil', $fotoPerfil);
-            $stmt->bindParam(':nombres', $nombres);
-            $stmt->bindParam(':apellidos', $apellidos);
-            $stmt->bindParam(':descripcion', $descripcion);
-            $stmt->bindParam(':direccionDomicilio', $direccionDomicilio);
-            $stmt->bindParam(':codigoPostal', $codigoPostal);
-            $stmt->bindParam(':estado', $estado);
-
-            return $stmt->execute();
-
-        }
-
         public function updatePassword($id, $newPassword){
             $sql = "UPDATE usuario SET password = :password WHERE idUsuario = :id";
             $password_hash = password_hash($newPassword, PASSWORD_DEFAULT);
@@ -72,11 +55,49 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-        public function deleteUser($id){
-            $sql = "DELETE FROM usuario WHERE idUsuario = :id";
+        public function desactivarUsuario($id){
+            $sql = "UPDATE usuario SET estado = 'Inactivo' WHERE idUsuario = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             return $stmt->execute();
+        }
+
+        public function reactivarUsuario($id){
+            $sql = "UPDATE usuario SET estado = 'Activo' WHERE idUsuario = :id AND estado = 'Inactivo'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        }
+
+        // Borra al usuario y todo lo que depende de él, en una transacción.
+        public function eliminarCuentaCompleta($id){
+            try {
+                $this->conn->beginTransaction();
+
+                $consultas = [
+                    "DELETE FROM postulacion WHERE idUsuario = ?",
+                    "DELETE FROM postulacion WHERE idAnuncio IN (SELECT idAnuncio FROM anuncio WHERE idUsuario = ?)",
+                    "DELETE FROM anunciosfavoritos WHERE idUsuario = ?",
+                    "DELETE FROM anunciosfavoritos WHERE idAnuncio IN (SELECT idAnuncio FROM anuncio WHERE idUsuario = ?)",
+                    "DELETE FROM calificacion WHERE idUsuarioCalificado = ? OR idUsuarioCalificador = ?",
+                    "DELETE FROM trabajadoresfavoritos WHERE idUsuarioCliente = ? OR idUsuarioTrabajador = ?",
+                    "DELETE FROM usuariohabilidad WHERE idUsuario = ?",
+                    "DELETE FROM categoriasanuncio WHERE idAnuncio IN (SELECT idAnuncio FROM anuncio WHERE idUsuario = ?)",
+                    "DELETE FROM anuncio WHERE idUsuario = ?",
+                    "DELETE FROM usuario WHERE idUsuario = ?",
+                ];
+                foreach ($consultas as $sql) {
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->execute(array_fill(0, substr_count($sql, '?'), $id));
+                }
+
+                $this->conn->commit();
+                return true;
+            } catch (Exception $e) {
+                $this->conn->rollBack();
+                error_log("Error al eliminar cuenta: " . $e->getMessage());
+                return false;
+            }
         }
 
         public function emailExists($correo){
@@ -85,6 +106,35 @@
             $stmt->bindParam(':correo', $correo);
             $stmt->execute();
             return $stmt->fetchColumn() > 0;
+        }
+
+        // El correo ya lo usa OTRO usuario distinto (para validar al editar perfil).
+        public function correoEnUsoPorOtro($correo, $idUsuario){
+            $sql = "SELECT COUNT(*) FROM usuario WHERE correo = :correo AND idUsuario <> :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':correo', $correo);
+            $stmt->bindParam(':id', $idUsuario);
+            $stmt->execute();
+            return $stmt->fetchColumn() > 0;
+        }
+
+        public function getPreferencias($id){
+            $sql = "SELECT notif_ofertas, notif_vistas, notif_boletin, visibilidad FROM usuario WHERE idUsuario = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function guardarPreferencias($id, $ofertas, $vistas, $boletin, $visibilidad){
+            $sql = "UPDATE usuario SET notif_ofertas = :o, notif_vistas = :v, notif_boletin = :b, visibilidad = :vis WHERE idUsuario = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(':o', $ofertas, PDO::PARAM_INT);
+            $stmt->bindValue(':v', $vistas, PDO::PARAM_INT);
+            $stmt->bindValue(':b', $boletin, PDO::PARAM_INT);
+            $stmt->bindValue(':vis', $visibilidad);
+            $stmt->bindValue(':id', $id);
+            return $stmt->execute();
         }
 
         public function getDepartamentos(){

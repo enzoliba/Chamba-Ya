@@ -59,6 +59,10 @@
                 <div class="alert alert-success">
                     <i class="fa-solid fa-circle-check"></i> Tus datos han sido actualizados exitosamente.
                 </div>
+            <?php elseif(isset($_GET['status']) && $_GET['status'] == 'email_dup'): ?>
+                <div class="alert alert-error">
+                    <i class="fa-solid fa-circle-exclamation"></i> Ese correo ya está en uso por otra cuenta.
+                </div>
             <?php elseif(isset($_GET['status']) && $_GET['status'] == 'error'): ?>
                 <div class="alert alert-error">
                     <i class="fa-solid fa-circle-exclamation"></i> Hubo un error al guardar. Inténtalo de nuevo.

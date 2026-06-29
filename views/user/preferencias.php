@@ -50,10 +50,15 @@
 
         <main class="profile-content">
 
-            <!-- Alerta de guardado (se muestra con JS) -->
-            <div class="alert alert-success" id="prefSavedAlert" style="display:none;">
-                <i class="fa-solid fa-circle-check"></i> Preferencias guardadas correctamente.
-            </div>
+            <?php $preferencias = $preferencias ?? ['notif_ofertas'=>1, 'notif_vistas'=>1, 'notif_boletin'=>0, 'visibilidad'=>'publico']; ?>
+
+            <?php if(isset($_GET['pref_status']) && $_GET['pref_status'] === 'success'): ?>
+                <div class="alert alert-success">
+                    <i class="fa-solid fa-circle-check"></i> Preferencias guardadas correctamente.
+                </div>
+            <?php endif; ?>
+
+            <form method="POST" action="<?= BASE_URL ?>controllers/AuthController.php?action=guardarPreferencias">
 
             <!-- Card: Notificaciones -->
             <div class="profile-card">
@@ -71,7 +76,7 @@
                         <p>Avisarme cuando se publiquen ofertas en mi área de interés.</p>
                     </div>
                     <label class="switch">
-                        <input type="checkbox" id="notif_ofertas">
+                        <input type="checkbox" id="notif_ofertas" name="notif_ofertas" <?= !empty($preferencias['notif_ofertas']) ? 'checked' : '' ?>>
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -84,7 +89,7 @@
                         <p>Recibir un resumen semanal de quién ha visto mi perfil.</p>
                     </div>
                     <label class="switch">
-                        <input type="checkbox" id="notif_vistas">
+                        <input type="checkbox" id="notif_vistas" name="notif_vistas" <?= !empty($preferencias['notif_vistas']) ? 'checked' : '' ?>>
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -97,7 +102,7 @@
                         <p>Noticias, consejos de búsqueda de empleo y actualizaciones de la plataforma.</p>
                     </div>
                     <label class="switch">
-                        <input type="checkbox" id="notif_boletin">
+                        <input type="checkbox" id="notif_boletin" name="notif_boletin" <?= !empty($preferencias['notif_boletin']) ? 'checked' : '' ?>>
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -115,32 +120,38 @@
 
                 <div class="form-group full-width">
                     <label for="visibilidad">Nivel de Visibilidad</label>
-                    <select id="visibilidad" class="profile-select" style="margin-top: 8px;">
-                        <option value="publico">Público (Recomendado) — Visible para todos los empleadores</option>
-                        <option value="solo_empresas">Solo Empresas Verificadas</option>
-                        <option value="oculto">Oculto — Solo podré postular a ofertas manualmente</option>
+                    <select id="visibilidad" name="visibilidad" class="profile-select" style="margin-top: 8px;">
+                        <option value="publico" <?= $preferencias['visibilidad']==='publico' ? 'selected' : '' ?>>Público (Recomendado) — Visible para todos los empleadores</option>
+                        <option value="solo_empresas" <?= $preferencias['visibilidad']==='solo_empresas' ? 'selected' : '' ?>>Solo Empresas Verificadas</option>
+                        <option value="oculto" <?= $preferencias['visibilidad']==='oculto' ? 'selected' : '' ?>>Oculto — Solo podré postular a ofertas manualmente</option>
                     </select>
                     <span class="input-hint" style="margin-top: 8px;"><i class="fa-solid fa-circle-info"></i> Ocultar tu perfil no eliminará tus postulaciones activas.</span>
                 </div>
 
                 <div class="form-actions" style="margin-top: 24px;">
-                    <button type="button" class="btn-cancel" onclick="resetearPreferencias()">
+                    <button type="button" class="btn-cancel" onclick="restablecerDefaults()">
                         <i class="fa-solid fa-rotate-left"></i> Restablecer
                     </button>
-                    <button type="button" class="btn-save" onclick="guardarPreferencias()">
+                    <button type="submit" class="btn-save">
                         <i class="fa-solid fa-floppy-disk"></i> Guardar Preferencias
                     </button>
                 </div>
             </div>
+            </form>
 
         </main>
     </div>
 </div>
 
 <script>
-    const PREF_KEY = 'chambaYaPrefs_<?= $_SESSION['idUsuario'] ?>';
+    // Restablece los campos a sus valores por defecto (no guarda hasta dar "Guardar").
+    function restablecerDefaults() {
+        document.getElementById('notif_ofertas').checked = true;
+        document.getElementById('notif_vistas').checked = true;
+        document.getElementById('notif_boletin').checked = false;
+        document.getElementById('visibilidad').value = 'publico';
+    }
 </script>
-<script src="<?= BASE_URL ?>assets/js/functions_preferencias.js"></script>
 
 </body>
 </html>

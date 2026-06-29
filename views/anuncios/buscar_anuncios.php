@@ -17,7 +17,6 @@
 
     // Conservamos de manera estricta el valor del slider que viene por URL ($_GET)
     $precioActualSlider = !empty($_GET['precio_min']) ? $_GET['precio_min'] : 0;
-    $categoriaSeleccionada = $_GET['categoria'] ?? '';
 ?>
 <body class="<?= $claseColor ?>">
     <div class="title-banner-trabajo <?= $claseColor ?>">
