@@ -73,16 +73,6 @@ class AnuncioController {
         // Convertimos a minúsculas 
         $tipoAnuncioLimpio = isset($anuncio['tipoAnuncio']) ? strtolower(trim($anuncio['tipoAnuncio'])) : '';
 
-        /*// Si es un servicio
-        if ($tipoAnuncioLimpio === 'servicio') {
-            // Traemos otros servicios del mismo usuario para el carrusel inferior
-            $otrosServicios = $model->obtenerAnunciosPorUsuario($anuncio['idUsuario'], $idAnuncio);
-            require_once __DIR__ . '/../views/auth/detalle_servicio.php';
-        } else {
-            // Si es trabajo (o cualquier otro), carga tu vista anterior
-            require_once __DIR__ . '/../views/auth/detalle_anuncio.php';
-        }*/
-
         if ($tipoAnuncioLimpio === 'servicio') {
             $otrosServicios = $model->obtenerAnunciosPorUsuario($anuncio['idUsuario'], $idAnuncio);
             $testimonios = $model->obtenerCalificacionesPorUsuario($anuncio['idUsuario']);
