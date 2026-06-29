@@ -1,5 +1,12 @@
 <?php require_once __DIR__ . '/../../assets/css/style_header.php'; ?>
 <?php require_once __DIR__ . '/../../core/config/config.php'; ?>
+<?php
+    $notifNoLeidas = 0;
+    if (isset($_SESSION['idUsuario'])) {
+        require_once __DIR__ . '/../../models/NotificacionModel.php';
+        $notifNoLeidas = (new NotificacionModel())->contarNoLeidas($_SESSION['idUsuario']);
+    }
+?>
 
 <header>
     <div class="main-header">
@@ -39,6 +46,15 @@
 
                 <?php if(isset($_SESSION['idUsuario'])): ?>
 
+                    <!-- Campana de notificaciones -->
+                    <a href="<?= BASE_URL ?>views/user/notificaciones.php"
+                       style="position:relative;display:inline-flex;align-items:center;margin-right:14px;font-size:22px;color:#000;text-decoration:none;">
+                        <i class="fa-regular fa-bell"></i>
+                        <?php if ($notifNoLeidas > 0): ?>
+                            <span style="position:absolute;top:-7px;right:-9px;background:#dc2626;color:#fff;font-size:11px;font-weight:700;min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;"><?= $notifNoLeidas > 9 ? '9+' : $notifNoLeidas ?></span>
+                        <?php endif; ?>
+                    </a>
+
                     <!-- Usuario logueado -->
                     <button id="userBtn">
                         <i class="fa-regular fa-user"></i>
@@ -54,6 +70,7 @@
                         <a href="<?= BASE_URL ?>views/user/mis_postulaciones.php">Mis postulaciones</a>
                         <a href="<?= BASE_URL ?>views/user/postulaciones_recibidas.php">Postulaciones recibidas</a>
                         <a href="<?= BASE_URL ?>views/user/mis_guardados.php">Anuncios guardados</a>
+                        <a href="<?= BASE_URL ?>views/user/trabajadores_favoritos.php">Trabajadores guardados</a>
                         <a href="<?= BASE_URL ?>views/user/mis_anuncios.php">Anuncios creados</a>
                         <a href="<?= BASE_URL; ?>views/auth/logout.php">Cerrar sesión</a>
                     </div>

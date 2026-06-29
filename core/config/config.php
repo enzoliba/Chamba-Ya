@@ -17,4 +17,16 @@
             return 'S/. ' . number_format((float) $monto, 2);
         }
     }
+
+    // Arma el link de WhatsApp (wa.me) a partir de un teléfono. Null si no hay.
+    if (!function_exists('linkWhatsApp')) {
+        function linkWhatsApp($telefono, $mensaje = ''): ?string {
+            $num = preg_replace('/\D+/', '', (string) $telefono);
+            if ($num === '') return null;
+            if (strlen($num) === 9) $num = '51' . $num; // celular peruano sin código de país
+            $url = 'https://wa.me/' . $num;
+            if ($mensaje !== '') $url .= '?text=' . rawurlencode($mensaje);
+            return $url;
+        }
+    }
 ?>

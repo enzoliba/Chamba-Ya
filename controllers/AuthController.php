@@ -189,6 +189,11 @@
 
             $departamentos = $this->userModel->getDepartamentos();
 
+            require_once __DIR__ . '/../models/HabilidadModel.php';
+            $habModel = new HabilidadModel();
+            $habilidades = $habModel->obtenerTodas();
+            $misHabilidades = $habModel->obtenerIdsDeUsuario($_SESSION['idUsuario']);
+
             global $base_path;
             require_once __DIR__ . '/../views/user/mis_datos.php';
         }
@@ -216,6 +221,7 @@
 
         public function guardarPreferencias(){
             iniciarSesion();
+            if($_SERVER['REQUEST_METHOD'] !== 'POST'){ die('Método no permitido'); }
             if(!isset($_SESSION['idUsuario'])){ die('No autorizado'); }
 
             $id = $_SESSION['idUsuario'];
@@ -233,6 +239,7 @@
 
         public function desactivarCuenta(){
             iniciarSesion();
+            if($_SERVER['REQUEST_METHOD'] !== 'POST'){ die('Método no permitido'); }
             if(!isset($_SESSION['idUsuario'])){ die('No autorizado'); }
             $this->userModel->desactivarUsuario($_SESSION['idUsuario']);
             $_SESSION = [];
@@ -243,6 +250,7 @@
 
         public function eliminarCuenta(){
             iniciarSesion();
+            if($_SERVER['REQUEST_METHOD'] !== 'POST'){ die('Método no permitido'); }
             if(!isset($_SESSION['idUsuario'])){ die('No autorizado'); }
             $this->userModel->eliminarCuentaCompleta($_SESSION['idUsuario']);
             $_SESSION = [];

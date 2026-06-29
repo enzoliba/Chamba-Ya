@@ -59,6 +59,10 @@
                 <div class="alert alert-success">
                     <i class="fa-solid fa-circle-check"></i> Tus datos han sido actualizados exitosamente.
                 </div>
+            <?php elseif(isset($_GET['status']) && $_GET['status'] == 'habilidades_ok'): ?>
+                <div class="alert alert-success">
+                    <i class="fa-solid fa-circle-check"></i> Tus habilidades fueron actualizadas.
+                </div>
             <?php elseif(isset($_GET['status']) && $_GET['status'] == 'email_dup'): ?>
                 <div class="alert alert-error">
                     <i class="fa-solid fa-circle-exclamation"></i> Ese correo ya está en uso por otra cuenta.
@@ -216,6 +220,32 @@
                 </div>
 
             </form>
+
+            <!-- Card: Habilidades -->
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <div class="card-icon personal"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <div>
+                        <h2>Mis Habilidades</h2>
+                        <span>Marca lo que te describe. Aparecerán en tu perfil de servicio.</span>
+                    </div>
+                </div>
+                <form action="<?= BASE_URL ?>controllers/HabilidadController.php" method="POST">
+                    <div style="display:flex;flex-wrap:wrap;gap:10px;margin:12px 0;">
+                        <?php foreach(($habilidades ?? []) as $h): ?>
+                            <label style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid #cbd5e1;border-radius:20px;cursor:pointer;">
+                                <input type="checkbox" name="habilidades[]" value="<?= (int) $h['idHabilidad'] ?>"
+                                    <?= in_array($h['idHabilidad'], $misHabilidades ?? []) ? 'checked' : '' ?>>
+                                <?= htmlspecialchars($h['nombre']) ?>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="form-actions" style="margin-top:14px;">
+                        <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Guardar Habilidades</button>
+                    </div>
+                </form>
+            </div>
+
         </main>
     </div>
 </div>

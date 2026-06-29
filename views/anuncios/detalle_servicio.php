@@ -51,9 +51,13 @@ require_once __DIR__ . '/../templates/header.php';
                 <div class="seccion-bloque-info">
                     <h3>Habilidades</h3>
                     <div class="contenedor-badges">
-                        <span class="badge-item">Puntualidad</span>
-                        <span class="badge-item">Eficiencia</span>
-                        <span class="badge-item">Trabajo Garantizado</span>
+                        <?php if (!empty($habilidadesServicio)): ?>
+                            <?php foreach ($habilidadesServicio as $hab): ?>
+                                <span class="badge-item"><?= htmlspecialchars($hab) ?></span>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <span class="badge-item" style="background:#f2f4f4;color:#7f8c8d;">Aún no especificó habilidades</span>
+                        <?php endif; ?>
                     </div>
                 </div>
             </main>
@@ -79,6 +83,14 @@ require_once __DIR__ . '/../templates/header.php';
                     <p><?= htmlspecialchars($anuncio['telefono'] ?? 'No especificado') ?></p>
                 </div>
 
+                <?php $wa = linkWhatsApp($anuncio['telefono'] ?? '', 'Hola ' . ($anuncio['nombres'] ?? '') . ', vi tu perfil de servicio en Chamba Ya y quiero contactarte.'); ?>
+                <?php if ($wa): ?>
+                    <a href="<?= htmlspecialchars($wa) ?>" target="_blank" rel="noopener"
+                       style="display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 0;padding:11px 16px;background:#25D366;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                        <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
+                    </a>
+                <?php endif; ?>
+
                 <div class="item-contacto-sidebar">
                     <span>Correo Electrónico</span>
                     <p style="word-break: break-all;"><?= htmlspecialchars($anuncio['correo']) ?></p>
@@ -94,6 +106,19 @@ require_once __DIR__ . '/../templates/header.php';
                     <button class="btn-solicitar-servicio" id="btn-solicitar-service" type="submit">Contratar Servicio</button>
                 </form>
                 <a class="btn-calificar-servicio" id="btn-calificar-service" href="#form-calificar">Calificar Usuario</a>
+
+                <?php $esTrabFav = $esTrabajadorFavorito ?? false; ?>
+                <?php if (!isset($_SESSION['idUsuario']) || $_SESSION['idUsuario'] != $anuncio['idUsuario']): ?>
+                    <form action="<?= BASE_URL ?>controllers/TrabajadorFavoritoController.php" method="POST">
+                        <input type="hidden" name="idTrabajador" value="<?= (int) $anuncio['idUsuario'] ?>">
+                        <input type="hidden" name="idAnuncio" value="<?= (int) $anuncio['idAnuncio'] ?>">
+                        <button type="submit" style="width:100%;margin-top:10px;padding:11px;border:1px solid #7c3aed;background:#fff;color:#7c3aed;border-radius:8px;font-weight:600;cursor:pointer;">
+                            <i class="fa-regular fa-heart"></i> <?= $esTrabFav ? 'Quitar de mis trabajadores' : 'Guardar trabajador' ?>
+                        </button>
+                    </form>
+                <?php endif; ?>
+
+                <?php $tipoReporte = 'servicio'; require __DIR__ . '/_form_reporte.php'; ?>
             </aside>
 
         </div>

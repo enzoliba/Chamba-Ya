@@ -27,6 +27,18 @@ class PostulacionModel {
         }
     }
 
+    public function obtenerUsuarioDePostulacion($idPostulacion) {
+        try {
+            $stmt = $this->conn->prepare("SELECT idUsuario FROM postulacion WHERE idPostulacion = ?");
+            $stmt->execute([$idPostulacion]);
+            $r = $stmt->fetchColumn();
+            return $r === false ? null : (int) $r;
+        } catch (Exception $e) {
+            error_log("Error al obtener usuario de postulacion: " . $e->getMessage());
+            return null;
+        }
+    }
+
     public function obtenerIdDuenioAnuncio($idAnuncio) {
         try {
             $stmt = $this->conn->prepare("SELECT idUsuario FROM anuncio WHERE idAnuncio = ?");

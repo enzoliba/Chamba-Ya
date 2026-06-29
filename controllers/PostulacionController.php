@@ -33,6 +33,15 @@ class PostulacionController {
         }
 
         $ok = $this->modelo->crearPostulacion($idUsuario, $idAnuncio);
+        if ($ok) {
+            require_once __DIR__ . '/../models/NotificacionModel.php';
+            (new NotificacionModel())->notificar(
+                $dueno,
+                'Tienes una nueva postulación en uno de tus anuncios.',
+                'views/user/postulaciones_recibidas.php',
+                'Nueva postulación en Chamba Ya'
+            );
+        }
         $this->redirigir($idAnuncio, $ok ? 'postulado' : 'error');
     }
 
@@ -57,6 +66,19 @@ class PostulacionController {
         }
 
         $ok = $this->modelo->actualizarEstado($idPostulacion, $mapa[$decision], $idDueno);
+        if ($ok) {
+            $idPostulante = $this->modelo->obtenerUsuarioDePostulacion($idPostulacion);
+            if ($idPostulante) {
+                require_once __DIR__ . '/../models/NotificacionModel.php';
+                $estadoTxt = $decision === 'aceptar' ? 'aceptada' : 'rechazada';
+                (new NotificacionModel())->notificar(
+                    $idPostulante,
+                    "Tu postulación fue $estadoTxt.",
+                    'views/user/mis_postulaciones.php',
+                    'Actualización de tu postulación'
+                );
+            }
+        }
         $this->redirigirRecibidas($ok ? ($decision === 'aceptar' ? 'aceptada' : 'rechazada') : 'error');
     }
 
