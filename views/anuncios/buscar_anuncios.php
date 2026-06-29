@@ -8,8 +8,12 @@
     require_once __DIR__ . '/../templates/header.php';
 
     $tituloPagina = ($tipo == 'trabajo')
-        ? 'BUSCAR TRABAJO'
-        : 'BRINDAR SERVICIOS';
+        ? 'Ofertas de trabajo'
+        : 'Ofertas de servicio';
+
+    $subtituloPagina = ($tipo == 'trabajo')
+        ? 'Encuentra chamba cerca de ti y postula al toque.'
+        : 'Encuentra trabajadores de confianza para lo que necesites.';
 
     $claseColor = ($tipo == 'trabajo')
         ? 'verde'
@@ -20,7 +24,8 @@
 ?>
 <body class="<?= $claseColor ?>">
     <div class="title-banner-trabajo <?= $claseColor ?>">
-        <?= $tituloPagina ?>
+        <h1><?= $tituloPagina ?></h1>
+        <p><?= $subtituloPagina ?></p>
     </div>
     
     <form method="GET" action="<?= BASE_URL ?>index.php" id="formFiltrosGlobal">
@@ -119,37 +124,41 @@
                             <!-- TRABAJO -->
                             <?php if($tipo == 'trabajo'): ?>
                                 <div class="card-trabajo-ui">
-                                    <div>
-                                        <h3 class="titulo-card"><?= htmlspecialchars($anuncio['titulo']) ?></h3>
-                                        <p class="ubicacion-card"><?= htmlspecialchars($anuncio['ubicacion']) ?></p>
-                                        <p class="pago-card"><?= htmlspecialchars(formatearPago($anuncio['pagoReferencia'])) ?></p>
-                                    </div>
-                                    <a class="btn-ver-mas-card" href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $anuncio['idAnuncio'] ?>&tipo=trabajo"> Ver más</a>
+                                    <span class="card-badge trabajo">Trabajo</span>
+                                    <h3 class="titulo-card"><?= htmlspecialchars($anuncio['titulo']) ?></h3>
+                                    <p class="ubicacion-card"><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars($anuncio['ubicacion']) ?></p>
+                                    <p class="pago-card"><?= htmlspecialchars(formatearPago($anuncio['pagoReferencia'])) ?></p>
+                                    <a class="btn-ver-mas-card" href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $anuncio['idAnuncio'] ?>&tipo=trabajo">Ver más</a>
                                 </div>
                             <!-- SERVICIO -->
                             <?php else: ?>
                                 <div class="card-servicio">
+                                    <span class="card-badge servicio">Servicio</span>
                                     <h2 class="titulo-servicio"><?= htmlspecialchars($anuncio['titulo']) ?></h2>
-                                    <p class="nombre-servicio">
+                                    <p class="nombre-servicio"><i class="fa-regular fa-user"></i>
                                         <?= htmlspecialchars($anuncio['nombres']) ?>
                                         <?= htmlspecialchars($anuncio['apellidos']) ?>
                                     </p>
-                                    <p class="ubicacion-servicio"><?= htmlspecialchars($anuncio['ubicacion']) ?></p>
+                                    <p class="ubicacion-servicio"><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars($anuncio['ubicacion']) ?></p>
                                     <div class="estrellas">
-                                        <?php
+                                        <?php if (!empty($anuncio['promedio'])):
                                             $promedio = round($anuncio['promedio']);
                                             for($i=1;$i<=5;$i++){
-                                                echo ($i <= $promedio)? "★" : "☆";
+                                                echo ($i <= $promedio) ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
                                             }
-                                        ?>
+                                        else: ?>
+                                            <span class="sin-resenas">Sin reseñas aún</span>
+                                        <?php endif; ?>
                                     </div>
-                                    <a class="btn-ver-mas-servicio" href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $anuncio['idAnuncio'] ?>&tipo=servicio">Ver más </a>
+                                    <a class="btn-ver-mas-servicio" href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $anuncio['idAnuncio'] ?>&tipo=servicio">Ver más</a>
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <div class="sin-resultados">
-                            <p>No se encontraron resultados.</p>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <p>No se encontraron resultados</p>
+                            <span>Prueba con otra búsqueda o limpia los filtros.</span>
                         </div>
                     <?php endif; ?>
                 </div>
