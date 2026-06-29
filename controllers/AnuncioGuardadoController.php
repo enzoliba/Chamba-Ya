@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '/../models/Model_AnuncioGuardado.php';
+require_once __DIR__ . '/../models/AnuncioGuardadoModel.php';
 require_once __DIR__ . '/../core/config/session.php';
-class Con_AnuncioGuardado {
-    private Model_AnuncioGuardado $modelo;
+class AnuncioGuardadoController {
+    private AnuncioGuardadoModel $modelo;
 
     public function __construct() {
-        $this->modelo = new Model_AnuncioGuardado();
+        $this->modelo = new AnuncioGuardadoModel();
     }
 
     public function obtenerAnunciosFavoritos() {

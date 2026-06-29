@@ -7,8 +7,8 @@
         exit();
     }
     
-    require_once __DIR__ . '/../../controllers/Con_Historial.php';
-    $conHistorial = new Con_Historial();
+    require_once __DIR__ . '/../../controllers/HistorialController.php';
+    $conHistorial = new HistorialController();
     $historial_postulaciones = $conHistorial->obtenerHistorial();
 
     require_once __DIR__ . '/../../assets/css/style.php';

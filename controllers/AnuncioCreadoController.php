@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '/../models/Model_AnuncioCreado.php';
+require_once __DIR__ . '/../models/AnuncioCreadoModel.php';
 require_once __DIR__ . '/../core/config/session.php';
-class Con_AnuncioCreado {
-    private Model_AnuncioCreado $modelo;
+class AnuncioCreadoController {
+    private AnuncioCreadoModel $modelo;
 
     public function __construct() {
-        $this->modelo = new Model_AnuncioCreado();
+        $this->modelo = new AnuncioCreadoModel();
     }
 
     public function obtenerAnuncios() {
@@ -77,32 +77,47 @@ class Con_AnuncioCreado {
                 $this->redirigir('guardado');
             }
         } catch (Exception $e) {
-            error_log('[Con_AnuncioCreado::guardar] ' . $e->getMessage());
+            error_log('[AnuncioCreadoController::guardar] ' . $e->getMessage());
             $this->redirigir('error_guardar');
         }
     }
 
     private function actualizar(int $id, array $datos): void {
+        $idUsuario = obtenerIdUsuarioActivo();
+
+        // Comprobación de propiedad: si el anuncio no es de este usuario, se corta.
+        if (!$this->modelo->anuncioPerteneceAUsuario($id, $idUsuario)) {
+            $this->redirigir('no_autorizado');
+        }
+
         try {
             if ($this->modelo->actualizarAnuncio(
                 $id, $datos['titulo'], $datos['descripcion'], $datos['estado'],
-                $datos['direccionEspecifica'], $datos['idDistrito'], $datos['pago'], $datos['modalidad'], $datos['tipo']
+                $datos['direccionEspecifica'], $datos['idDistrito'], $datos['pago'], $datos['modalidad'], $datos['tipo'],
+                $idUsuario
             )) {
                 $this->modelo->guardarCategoriasAnuncio($id, $datos['categorias_ids']);
                 $this->redirigir('actualizado');
             }
         } catch (Exception $e) {
-            error_log('[Con_AnuncioCreado::actualizar] ' . $e->getMessage());
+            error_log('[AnuncioCreadoController::actualizar] ' . $e->getMessage());
             $this->redirigir('error_guardar');
         }
     }
 
     private function eliminar(int $id): void {
+        $idUsuario = obtenerIdUsuarioActivo();
+
+        // Comprobación de propiedad: si el anuncio no es de este usuario, se corta.
+        if (!$this->modelo->anuncioPerteneceAUsuario($id, $idUsuario)) {
+            $this->redirigir('no_autorizado');
+        }
+
         try {
-            $this->modelo->eliminarAnuncio($id);
+            $this->modelo->eliminarAnuncio($id, $idUsuario);
             $this->redirigir('eliminado');
         } catch (Exception $e) {
-            error_log('[Con_AnuncioCreado::eliminar] ' . $e->getMessage());
+            error_log('[AnuncioCreadoController::eliminar] ' . $e->getMessage());
             $this->redirigir('error_eliminar');
         }
     }
@@ -125,12 +140,23 @@ class Con_AnuncioCreado {
     }
 }
 
+// Guard de seguridad: cualquier acceso directo a este controlador
+// (AJAX o POST de formulario) exige una sesión iniciada.
+function exigirSesionAnuncios(): void {
+    iniciarSesion();
+    if (!isset($_SESSION['idUsuario'])) {
+        header('Location: ../views/auth/login.php');
+        exit();
+    }
+}
+
 // Manejar peticiones AJAX para cargar ubicaciones
 if (isset($_GET['ajax'])) {
+    exigirSesionAnuncios();
     header('Content-Type: application/json; charset=utf-8');
-    $con = new Con_AnuncioCreado();
+    $con = new AnuncioCreadoController();
     $action = $_GET['ajax'];
-    
+
     if ($action === 'provincias' && isset($_GET['departamento_id'])) {
         echo json_encode($con->obtenerProvincias((int)$_GET['departamento_id']));
     } elseif ($action === 'distritos' && isset($_GET['provincia_id'])) {
@@ -143,6 +169,7 @@ if (isset($_GET['ajax'])) {
 
 // Ejecutar si viene por POST (peticiones directas del formulario)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    (new Con_AnuncioCreado())->procesarPeticion();
+    exigirSesionAnuncios();
+    (new AnuncioCreadoController())->procesarPeticion();
 }
 ?>

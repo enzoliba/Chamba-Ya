@@ -90,7 +90,7 @@ function cargarProvincias(departamentoId, provinciaIdSeleccionada = null) {
         return Promise.resolve();
     }
 
-    return fetch(`../../controllers/Con_AnuncioCreado.php?ajax=provincias&departamento_id=${departamentoId}`)
+    return fetch(`../../controllers/AnuncioCreadoController.php?ajax=provincias&departamento_id=${departamentoId}`)
         .then(res => res.json())
         .then(data => {
             provinciaSelect.innerHTML = '<option value="">Seleccione Provincia</option>';
@@ -118,7 +118,7 @@ function cargarDistritos(provinciaId, distritoIdSeleccionada = null) {
         return Promise.resolve();
     }
 
-    return fetch(`../../controllers/Con_AnuncioCreado.php?ajax=distritos&provincia_id=${provinciaId}`)
+    return fetch(`../../controllers/AnuncioCreadoController.php?ajax=distritos&provincia_id=${provinciaId}`)
         .then(res => res.json())
         .then(data => {
             distritoSelect.innerHTML = '<option value="">Seleccione Distrito</option>';

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../core/db/database.php';
 require_once __DIR__ . '/../core/config/session.php';
-class Model_AnuncioGuardado {
+class AnuncioGuardadoModel {
     private $conn;
 
     public function __construct() {

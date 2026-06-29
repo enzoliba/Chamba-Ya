@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '/../models/Model_Historial.php';
+require_once __DIR__ . '/../models/HistorialModel.php';
 require_once __DIR__ . '/../core/config/session.php';
-class Con_Historial {
-    private Model_Historial $modelo;
+class HistorialController {
+    private HistorialModel $modelo;
 
     public function __construct() {
-        $this->modelo = new Model_Historial();
+        $this->modelo = new HistorialModel();
     }
 
     public function obtenerHistorial() {

@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '/../models/Model_Postulacion.php';
+require_once __DIR__ . '/../models/PostulacionModel.php';
 require_once __DIR__ . '/../core/config/session.php';
-class Con_Postulacion {
-    private Model_Postulacion $modelo;
+class PostulacionController {
+    private PostulacionModel $modelo;
 
     public function __construct() {
-        $this->modelo = new Model_Postulacion();
+        $this->modelo = new PostulacionModel();
     }
 
     public function obtenerPostulaciones() {

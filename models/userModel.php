@@ -143,7 +143,7 @@
                 return $stmt->fetch(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 error_log("Error al obtenerCalificacionDelUsuario: " . $e->getMessage());
-                return $stmt->fetch(PDO::FETCH_ASSOC);
+                return ['puntaje' => 0];
             }
         }
     }

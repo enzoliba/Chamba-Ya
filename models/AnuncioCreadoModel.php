@@ -1,12 +1,25 @@
 <?php
 require_once __DIR__ . '/../core/db/database.php';
 require_once __DIR__ . '/../core/config/session.php';
-class Model_AnuncioCreado {
+class AnuncioCreadoModel {
     private $conn;
 
     public function __construct() {
         $Database = new Database();
         $this->conn = $Database->getConnection();
+    }
+
+    // Verifica que el anuncio exista Y pertenezca al usuario indicado.
+    // Se usa para impedir que alguien edite/elimine anuncios ajenos (IDOR).
+    public function anuncioPerteneceAUsuario($idAnuncio, $idUsuario): bool {
+        try {
+            $stmt = $this->conn->prepare("SELECT 1 FROM anuncio WHERE idAnuncio = ? AND idUsuario = ?");
+            $stmt->execute([$idAnuncio, $idUsuario]);
+            return (bool) $stmt->fetchColumn();
+        } catch (Exception $e) {
+            error_log("Error al verificar propiedad del anuncio: " . $e->getMessage());
+            return false;
+        }
     }
 
     public function guardarAnuncio($titulo, $descripcion, $estado, $direccionEspecifica, $idDistrito, $pago, $modalidad, $tipo, $idUsuario) {
@@ -23,11 +36,12 @@ class Model_AnuncioCreado {
         }
     }
 
-    public function actualizarAnuncio($id, $titulo, $descripcion, $estado, $direccionEspecifica, $idDistrito, $pago, $modalidad, $tipo) {
+    public function actualizarAnuncio($id, $titulo, $descripcion, $estado, $direccionEspecifica, $idDistrito, $pago, $modalidad, $tipo, $idUsuario) {
         try {
-            $sql = "UPDATE anuncio SET titulo=?, descripcion=?, estado=?, direccionEspecifica=?, idDistrito=?, pagoReferencia=?, modalidad=?, tipoAnuncio=? WHERE idAnuncio=?";
+            // El "AND idUsuario=?" garantiza que solo el dueño pueda actualizar su anuncio.
+            $sql = "UPDATE anuncio SET titulo=?, descripcion=?, estado=?, direccionEspecifica=?, idDistrito=?, pagoReferencia=?, modalidad=?, tipoAnuncio=? WHERE idAnuncio=? AND idUsuario=?";
             $stmt = $this->conn->prepare($sql);
-            if ($stmt->execute([$titulo, $descripcion, $estado, $direccionEspecifica, $idDistrito, $pago, $modalidad, $tipo, $id])) {
+            if ($stmt->execute([$titulo, $descripcion, $estado, $direccionEspecifica, $idDistrito, $pago, $modalidad, $tipo, $id, $idUsuario])) {
                 return true;
             } else {
                 throw new Exception("Error al actualizar el anuncio");
@@ -37,11 +51,12 @@ class Model_AnuncioCreado {
         }
     }
 
-    public function eliminarAnuncio($id) {
+    public function eliminarAnuncio($id, $idUsuario) {
         try {
-            $sql = "DELETE FROM anuncio WHERE idAnuncio = ?";
+            // El "AND idUsuario=?" garantiza que solo el dueño pueda eliminar su anuncio.
+            $sql = "DELETE FROM anuncio WHERE idAnuncio = ? AND idUsuario = ?";
             $stmt = $this->conn->prepare($sql);
-            if ($stmt->execute([$id])) {
+            if ($stmt->execute([$id, $idUsuario])) {
                 return true;
             } else {
                 throw new Exception("Error al eliminar el anuncio");
