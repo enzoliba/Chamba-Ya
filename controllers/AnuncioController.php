@@ -56,6 +56,16 @@ class AnuncioController {
         $calificacion = $modeloUser->obtenerCalificacionUsuario($anuncio['idUsuario']);
         $puntaje = round($calificacion['puntaje'] ?? 0);
 
+        // ¿Ya lo guardó? (para el texto del botón)
+        require_once __DIR__ . '/../models/AnuncioGuardadoModel.php';
+        require_once __DIR__ . '/../core/config/session.php';
+        $idUsuarioActivo = obtenerIdUsuarioActivo();
+        $esFavorito = false;
+        if ($idUsuarioActivo > 0) {
+            $favModel = new AnuncioGuardadoModel();
+            $esFavorito = $favModel->esFavorito($idUsuarioActivo, $idAnuncio);
+        }
+
         global $base_path;
         $base_path = isset($GLOBALS['base_path']) ? $GLOBALS['base_path'] : '';
 

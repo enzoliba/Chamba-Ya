@@ -7,8 +7,8 @@
         exit();
     }
     
-    require_once __DIR__ . '/../../controllers/Con_AnuncioCreado.php';
-    $conAnuncio = new Con_AnuncioCreado();
+    require_once __DIR__ . '/../../controllers/AnuncioCreadoController.php';
+    $conAnuncio = new AnuncioCreadoController();
     $mis_anuncios = $conAnuncio->obtenerAnuncios();
     $categorias = $conAnuncio->obtenerCategorias();
     $departamentos = $conAnuncio->obtenerDepartamentos();
@@ -52,6 +52,7 @@
                     <h4>Actividad</h4>
                     <ul class="sidebar-nav">
                         <li><a href="<?= BASE_URL ?>views/user/mis_postulaciones.php"><i class="fa-solid fa-paper-plane"></i> Mis Postulaciones</a></li>
+                        <li><a href="<?= BASE_URL ?>views/user/postulaciones_recibidas.php"><i class="fa-solid fa-inbox"></i> Postulaciones recibidas</a></li>
                         <li><a href="<?= BASE_URL ?>views/user/mi_historial.php"><i class="fa-solid fa-history"></i> Historial</a></li>
                     </ul>
                 </div>
@@ -116,7 +117,7 @@
                                             data-categorias_nombres="<?php echo htmlspecialchars($anuncio['categorias_nombres'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <form action="<?= BASE_URL ?>controllers/Con_AnuncioCreado.php" method="POST" class="form-eliminar">
+                                    <form action="<?= BASE_URL ?>controllers/AnuncioCreadoController.php" method="POST" class="form-eliminar">
                                         <input type="hidden" name="id" value="<?php echo $anuncio['id']; ?>">
                                         <input type="hidden" name="accion" value="eliminar">
                                         <button class="boton-accion" type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar este anuncio?');">
@@ -138,7 +139,7 @@
     <div class="contenido-modal">
         <span class="cerrar-modal" onclick="cerrarModal('modal-crear')">&times;</span>
         <h3>Publicar Nueva Chamba</h3>
-        <form id="formulario-anuncio" action="<?= BASE_URL ?>controllers/Con_AnuncioCreado.php" method="POST">
+        <form id="formulario-anuncio" action="<?= BASE_URL ?>controllers/AnuncioCreadoController.php" method="POST">
             <input type="hidden" name="id" id="form-id-anuncio">
             <div class="grupo-formulario">
                 <label>Título del Anuncio</label>
@@ -240,6 +241,7 @@
         else if (m === "error_campos") msg = "Error: Por favor completa todos los campos obligatorios.";
         else if (m === "error_guardar") msg = "Error: No se pudo guardar el anuncio en la base de datos.";
         else if (m === "error_eliminar") msg = "Error: No se pudo eliminar el anuncio.";
+        else if (m === "no_autorizado") msg = "Error: No tienes permiso para modificar este anuncio.";
         if (msg) mostrarNotificacion(msg);
     });
 </script>

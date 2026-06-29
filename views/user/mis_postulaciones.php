@@ -7,8 +7,8 @@
         exit();
     }
     
-    require_once __DIR__ . '/../../controllers/Con_Postulacion.php';
-    $conPostulacion = new Con_Postulacion();
+    require_once __DIR__ . '/../../controllers/PostulacionController.php';
+    $conPostulacion = new PostulacionController();
     $mis_postulaciones = $conPostulacion->obtenerPostulaciones();
 
     require_once __DIR__ . '/../../assets/css/style.php';

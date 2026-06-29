@@ -7,4 +7,14 @@
 
     // Define el base_path (Ejemplo: /Chamba-Ya-main/)
     define('BASE_URL', $folderName . '/');
+
+    // Si no hay monto, muestra "A convenir".
+    if (!function_exists('formatearPago')) {
+        function formatearPago($monto): string {
+            if ($monto === null || $monto === '' || (float) $monto <= 0) {
+                return 'A convenir';
+            }
+            return 'S/. ' . number_format((float) $monto, 2);
+        }
+    }
 ?>
