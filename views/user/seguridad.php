@@ -146,6 +146,10 @@
                 </div>
             </div>
 
+            <!-- Formularios reales de las acciones de cuenta -->
+            <form id="formDesactivar" action="<?= BASE_URL?>controllers/AuthController.php?action=desactivarCuenta" method="POST"></form>
+            <form id="formEliminar" action="<?= BASE_URL?>controllers/AuthController.php?action=eliminarCuenta" method="POST"></form>
+
             <!-- Modal de confirmación -->
             <div id="dangerModal" class="modal-overlay" style="display:none;">
                 <div class="modal-box">
@@ -201,7 +205,9 @@
     }
 
     // ===== MODAL ZONA DE PELIGRO =====
+    let accionPendiente = null;
     function confirmarAccion(tipo) {
+        accionPendiente = tipo;
         const modal = document.getElementById('dangerModal');
         const title = document.getElementById('modalTitle');
         const text = document.getElementById('modalText');
@@ -220,6 +226,15 @@
     // Cerrar al hacer clic fuera del modal
     document.getElementById('dangerModal').addEventListener('click', function(e) {
         if(e.target === this) cerrarModal();
+    });
+
+    // Al confirmar, envía el formulario correspondiente.
+    document.getElementById('modalConfirmBtn').addEventListener('click', function() {
+        if (accionPendiente === 'desactivar') {
+            document.getElementById('formDesactivar').submit();
+        } else if (accionPendiente === 'eliminar') {
+            document.getElementById('formEliminar').submit();
+        }
     });
 </script>
 

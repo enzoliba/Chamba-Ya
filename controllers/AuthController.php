@@ -63,6 +63,10 @@
             }
 
             if(password_verify($password, $usuario['password'])){
+                // Si la cuenta estaba desactivada, se reactiva al entrar.
+                if(($usuario['estado'] ?? '') === 'Inactivo'){
+                    $this->userModel->reactivarUsuario($usuario['idUsuario']);
+                }
                 $_SESSION['nombres'] = $usuario['nombres'];
                 $_SESSION['idUsuario'] = $usuario['idUsuario'];
                 $_SESSION['emailUsuario'] = $usuario['correo'];
@@ -95,8 +99,6 @@
             $fechaRegistro = date('Y-m-d H:i:s');
             $estado = 'Activo';
             $idDistrito = $_POST['distrito'] ?? '';
-
-            $nombreFoto = 'default.png';
 
             // Solo procesar la imagen si el usuario subió una
             if(isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === UPLOAD_ERR_OK){
@@ -207,8 +209,46 @@
                 header('Location: ' . BASE_URL . 'views/auth/login.php');
                 exit();
             }
+            $preferencias = $this->userModel->getPreferencias($_SESSION['idUsuario']);
             global $base_path;
             require_once __DIR__ . '/../views/user/preferencias.php';
+        }
+
+        public function guardarPreferencias(){
+            iniciarSesion();
+            if(!isset($_SESSION['idUsuario'])){ die('No autorizado'); }
+
+            $id = $_SESSION['idUsuario'];
+            $ofertas = isset($_POST['notif_ofertas']) ? 1 : 0;
+            $vistas  = isset($_POST['notif_vistas'])  ? 1 : 0;
+            $boletin = isset($_POST['notif_boletin']) ? 1 : 0;
+
+            $validas = ['publico', 'solo_empresas', 'oculto'];
+            $visibilidad = in_array($_POST['visibilidad'] ?? '', $validas) ? $_POST['visibilidad'] : 'publico';
+
+            $this->userModel->guardarPreferencias($id, $ofertas, $vistas, $boletin, $visibilidad);
+            header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showPreferencias&pref_status=success');
+            exit();
+        }
+
+        public function desactivarCuenta(){
+            iniciarSesion();
+            if(!isset($_SESSION['idUsuario'])){ die('No autorizado'); }
+            $this->userModel->desactivarUsuario($_SESSION['idUsuario']);
+            $_SESSION = [];
+            session_destroy();
+            header('Location: ' . BASE_URL . 'views/auth/login.php?login_status=cuenta_desactivada');
+            exit();
+        }
+
+        public function eliminarCuenta(){
+            iniciarSesion();
+            if(!isset($_SESSION['idUsuario'])){ die('No autorizado'); }
+            $this->userModel->eliminarCuentaCompleta($_SESSION['idUsuario']);
+            $_SESSION = [];
+            session_destroy();
+            header('Location: ' . BASE_URL . 'index.php');
+            exit();
         }
 
         public function updateMisDatos(){
@@ -225,6 +265,12 @@
             $direccionDomicilio = $_POST['direccionDomicilio'] ?? '';
             $codigoPostal = $_POST['codigoPostal'] ?? '';
             $idDistrito = !empty($_POST['distrito']) ? $_POST['distrito'] : null;
+
+            // No permitir cambiar el correo a uno que ya usa otra cuenta.
+            if($this->userModel->correoEnUsoPorOtro($correo, $idUsuario)){
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showMisDatos&status=email_dup');
+                exit();
+            }
 
             $fotoPerfilData = null;
             if(isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] == UPLOAD_ERR_OK){
@@ -374,6 +420,15 @@
             break;
         case 'showPreferencias':
             $controller->showPreferencias();
+            break;
+        case 'guardarPreferencias':
+            $controller->guardarPreferencias();
+            break;
+        case 'desactivarCuenta':
+            $controller->desactivarCuenta();
+            break;
+        case 'eliminarCuenta':
+            $controller->eliminarCuenta();
             break;
         case 'updateMisDatos':
             $controller->updateMisDatos();
