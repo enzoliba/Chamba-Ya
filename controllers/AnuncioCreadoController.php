@@ -140,8 +140,7 @@ class AnuncioCreadoController {
     }
 }
 
-// Guard de seguridad: cualquier acceso directo a este controlador
-// (AJAX o POST de formulario) exige una sesión iniciada.
+// Todo acceso directo (AJAX o POST) exige sesión iniciada.
 function exigirSesionAnuncios(): void {
     iniciarSesion();
     if (!isset($_SESSION['idUsuario'])) {
@@ -150,7 +149,7 @@ function exigirSesionAnuncios(): void {
     }
 }
 
-// Manejar peticiones AJAX para cargar ubicaciones
+// AJAX: cargar provincias/distritos.
 if (isset($_GET['ajax'])) {
     exigirSesionAnuncios();
     header('Content-Type: application/json; charset=utf-8');
@@ -167,7 +166,6 @@ if (isset($_GET['ajax'])) {
     exit();
 }
 
-// Ejecutar si viene por POST (peticiones directas del formulario)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exigirSesionAnuncios();
     (new AnuncioCreadoController())->procesarPeticion();

@@ -289,6 +289,46 @@
                 header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showSeguridad&pass_status=error');
             }
         }
+
+        public function showRecuperar(){
+            iniciarSesion();
+            global $base_path;
+            require_once __DIR__ . '/../views/auth/recuperar_password.php';
+        }
+
+        public function recuperarPassword(){
+            iniciarSesion();
+
+            $correo          = trim($_POST['emailInput'] ?? '');
+            $telefono        = trim($_POST['telefonoInput'] ?? '');
+            $newPassword     = $_POST['newPassword'] ?? '';
+            $confirmPassword = $_POST['confirmPassword'] ?? '';
+
+            if(empty($correo) || empty($telefono) || empty($newPassword) || empty($confirmPassword)){
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showRecuperar&rec_status=empty'); exit();
+            }
+            if($newPassword !== $confirmPassword){
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showRecuperar&rec_status=mismatch'); exit();
+            }
+            if(strlen($newPassword) < 8){
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showRecuperar&rec_status=short'); exit();
+            }
+
+            // Verificación de identidad simplificada: correo + teléfono registrados.
+            // NOTA: no es tan seguro como un enlace por email con token; ver README.
+            $usuario = $this->userModel->getUserByEmail($correo);
+            if(!$usuario || trim((string)$usuario['telefono']) !== $telefono){
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showRecuperar&rec_status=not_match'); exit();
+            }
+
+            $success = $this->userModel->updatePassword($usuario['idUsuario'], $newPassword);
+            if($success){
+                header('Location: ' . BASE_URL . 'views/auth/login.php?login_status=pass_reset');
+            } else {
+                header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showRecuperar&rec_status=error');
+            }
+            exit();
+        }
     }
 
     $controller = new AuthController();
@@ -322,6 +362,12 @@
             break;
         case 'changePassword':
             $controller->changePassword();
+            break;
+        case 'showRecuperar':
+            $controller->showRecuperar();
+            break;
+        case 'recuperarPassword':
+            $controller->recuperarPassword();
             break;
         default:
             die('Acción no válida');

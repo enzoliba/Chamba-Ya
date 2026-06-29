@@ -33,5 +33,47 @@ class AnuncioGuardadoModel {
             return [];
         }
     }
+
+    public function anuncioExiste($idAnuncio): bool {
+        try {
+            $stmt = $this->conn->prepare("SELECT 1 FROM anuncio WHERE idAnuncio = ?");
+            $stmt->execute([$idAnuncio]);
+            return (bool) $stmt->fetchColumn();
+        } catch (Exception $e) {
+            error_log("Error al verificar anuncio: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function esFavorito($idUsuario, $idAnuncio): bool {
+        try {
+            $stmt = $this->conn->prepare("SELECT 1 FROM anunciosfavoritos WHERE idUsuario = ? AND idAnuncio = ?");
+            $stmt->execute([$idUsuario, $idAnuncio]);
+            return (bool) $stmt->fetchColumn();
+        } catch (Exception $e) {
+            error_log("Error al verificar favorito: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function agregarFavorito($idUsuario, $idAnuncio): bool {
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO anunciosfavoritos (idUsuario, idAnuncio) VALUES (?, ?)");
+            return $stmt->execute([$idUsuario, $idAnuncio]);
+        } catch (Exception $e) {
+            error_log("Error al agregar favorito: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function quitarFavorito($idUsuario, $idAnuncio): bool {
+        try {
+            $stmt = $this->conn->prepare("DELETE FROM anunciosfavoritos WHERE idUsuario = ? AND idAnuncio = ?");
+            return $stmt->execute([$idUsuario, $idAnuncio]);
+        } catch (Exception $e) {
+            error_log("Error al quitar favorito: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

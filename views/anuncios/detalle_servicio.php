@@ -7,6 +7,8 @@ require_once __DIR__ . '/../templates/header.php';
 ?>
 <body>
 
+    <?php require_once __DIR__ . '/_banner_estado.php'; ?>
+
     <div class="container-servicio">
         <div class="wrapper-layout-servicio">
             
@@ -59,7 +61,7 @@ require_once __DIR__ . '/../templates/header.php';
             <aside class="col-sidebar-datos">
                 <div class="precio-box">
                     Precio Estimado
-                    <strong>S/. <?= number_format($anuncio['pagoReferencia'], 2) ?></strong>
+                    <strong><?= htmlspecialchars(formatearPago($anuncio['pagoReferencia'])) ?></strong>
                 </div>
 
                 <div class="item-contacto-sidebar">
@@ -87,8 +89,11 @@ require_once __DIR__ . '/../templates/header.php';
                     <p><?= htmlspecialchars($anuncio['modalidad']) ?></p>
                 </div>
 
-                <button class="btn-solicitar-servicio" id="btn-solicitar-service" type="button">Contratar Servicio</button>
-                <button class="btn-calificar-servicio" id="btn-calificar-service" type="button">Calificar Usuario</button>
+                <form action="<?= BASE_URL ?>controllers/PostulacionController.php" method="POST">
+                    <input type="hidden" name="idAnuncio" value="<?= (int) $anuncio['idAnuncio'] ?>">
+                    <button class="btn-solicitar-servicio" id="btn-solicitar-service" type="submit">Contratar Servicio</button>
+                </form>
+                <a class="btn-calificar-servicio" id="btn-calificar-service" href="#form-calificar">Calificar Usuario</a>
             </aside>
 
         </div>
@@ -104,7 +109,7 @@ require_once __DIR__ . '/../templates/header.php';
                                 <p><?= htmlspecialchars($otro['descripcion']) ?></p>
                             </div>
                             <div class="footer-mini-tarjeta">
-                                <span style="font-weight: bold; color: #d8a500;">S/. <?= number_format($otro['pagoReferencia'], 2) ?></span>
+                                <span style="font-weight: bold; color: #d8a500;"><?= htmlspecialchars(formatearPago($otro['pagoReferencia'])) ?></span>
                                 <a href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $otro['idAnuncio'] ?>" class="btn-ver-detalle-mini">
                                     Ver Detalle
                                 </a>
@@ -119,7 +124,43 @@ require_once __DIR__ . '/../templates/header.php';
 
         <div class="seccion-testimonios">
             <h2>Opiniones de los usuarios</h2>
-            
+
+            <!-- Formulario para dejar una calificación -->
+            <style>
+                .form-calificar{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;margin-bottom:22px;max-width:520px;}
+                .form-calificar .rating{display:inline-flex;flex-direction:row-reverse;justify-content:flex-end;}
+                .form-calificar .rating input{display:none;}
+                .form-calificar .rating label{font-size:32px;color:#d1d5db;cursor:pointer;padding:0 2px;transition:color .15s;}
+                .form-calificar .rating label:hover,
+                .form-calificar .rating label:hover ~ label,
+                .form-calificar .rating input:checked ~ label{color:#ffcc00;}
+                .form-calificar textarea{width:100%;box-sizing:border-box;margin-top:10px;padding:10px;border:1px solid #cbd5e1;border-radius:8px;resize:vertical;min-height:70px;font-family:inherit;}
+                .form-calificar button{margin-top:10px;padding:10px 18px;border:none;border-radius:8px;background:#7c3aed;color:#fff;font-weight:600;cursor:pointer;}
+                .form-calificar button:hover{background:#6d28d9;}
+            </style>
+            <?php if (!isset($_SESSION['idUsuario'])): ?>
+                <p id="form-calificar" style="color:#64748b;">
+                    <a href="<?= BASE_URL ?>views/auth/login.php">Inicia sesión</a> para dejar tu calificación.
+                </p>
+            <?php elseif ($_SESSION['idUsuario'] == $anuncio['idUsuario']): ?>
+                <p id="form-calificar" style="color:#64748b;">No puedes calificarte a ti mismo.</p>
+            <?php else: ?>
+                <form id="form-calificar" class="form-calificar" action="<?= BASE_URL ?>controllers/CalificacionController.php" method="POST">
+                    <input type="hidden" name="idUsuarioCalificado" value="<?= (int) $anuncio['idUsuario'] ?>">
+                    <input type="hidden" name="idAnuncio" value="<?= (int) $anuncio['idAnuncio'] ?>">
+                    <strong>Deja tu opinión</strong>
+                    <div class="rating">
+                        <input type="radio" name="puntaje" id="cal5" value="5" required><label for="cal5" title="Excelente">★</label>
+                        <input type="radio" name="puntaje" id="cal4" value="4"><label for="cal4" title="Muy bueno">★</label>
+                        <input type="radio" name="puntaje" id="cal3" value="3"><label for="cal3" title="Bueno">★</label>
+                        <input type="radio" name="puntaje" id="cal2" value="2"><label for="cal2" title="Regular">★</label>
+                        <input type="radio" name="puntaje" id="cal1" value="1"><label for="cal1" title="Malo">★</label>
+                    </div>
+                    <textarea name="comentario" maxlength="500" placeholder="Cuéntanos tu experiencia (opcional)"></textarea>
+                    <button type="submit">Enviar calificación</button>
+                </form>
+            <?php endif; ?>
+
             <?php if (!empty($testimonios)): ?>
                 <div class="lista-testimonios">
                     <?php foreach ($testimonios as $testimonio): ?>

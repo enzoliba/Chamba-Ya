@@ -9,8 +9,7 @@ class AnuncioCreadoModel {
         $this->conn = $Database->getConnection();
     }
 
-    // Verifica que el anuncio exista Y pertenezca al usuario indicado.
-    // Se usa para impedir que alguien edite/elimine anuncios ajenos (IDOR).
+    // Impide que alguien edite/elimine anuncios ajenos (IDOR).
     public function anuncioPerteneceAUsuario($idAnuncio, $idUsuario): bool {
         try {
             $stmt = $this->conn->prepare("SELECT 1 FROM anuncio WHERE idAnuncio = ? AND idUsuario = ?");
@@ -38,7 +37,7 @@ class AnuncioCreadoModel {
 
     public function actualizarAnuncio($id, $titulo, $descripcion, $estado, $direccionEspecifica, $idDistrito, $pago, $modalidad, $tipo, $idUsuario) {
         try {
-            // El "AND idUsuario=?" garantiza que solo el dueño pueda actualizar su anuncio.
+            // AND idUsuario=? : solo el dueño puede actualizar (anti-IDOR).
             $sql = "UPDATE anuncio SET titulo=?, descripcion=?, estado=?, direccionEspecifica=?, idDistrito=?, pagoReferencia=?, modalidad=?, tipoAnuncio=? WHERE idAnuncio=? AND idUsuario=?";
             $stmt = $this->conn->prepare($sql);
             if ($stmt->execute([$titulo, $descripcion, $estado, $direccionEspecifica, $idDistrito, $pago, $modalidad, $tipo, $id, $idUsuario])) {
@@ -53,7 +52,7 @@ class AnuncioCreadoModel {
 
     public function eliminarAnuncio($id, $idUsuario) {
         try {
-            // El "AND idUsuario=?" garantiza que solo el dueño pueda eliminar su anuncio.
+            // AND idUsuario=? : solo el dueño puede eliminar (anti-IDOR).
             $sql = "DELETE FROM anuncio WHERE idAnuncio = ? AND idUsuario = ?";
             $stmt = $this->conn->prepare($sql);
             if ($stmt->execute([$id, $idUsuario])) {

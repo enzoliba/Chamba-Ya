@@ -8,6 +8,8 @@
 
 <body>
 
+    <?php require_once __DIR__ . '/_banner_estado.php'; ?>
+
     <div class="container-detalle">
         <!-- Rótulo de la Sección -->
         <div class="titulo-seccion-detalle">Detalles del Trabajo</div>
@@ -27,7 +29,7 @@
                         <?= htmlspecialchars($anuncio['ubicacion_completa']) ?>
                     </div>
                     <div class="caja-info-mini">
-                        <span class="label">Pago Referencial:</span><strong>S/. <?= number_format($anuncio['pagoReferencia'], 2) ?> / hora</strong>
+                        <span class="label">Pago Referencial:</span><strong><?= htmlspecialchars(formatearPago($anuncio['pagoReferencia'])) ?><?= ((float)($anuncio['pagoReferencia'] ?? 0) > 0) ? ' / hora' : '' ?></strong>
                     </div>
                 </div>
                 
@@ -75,8 +77,17 @@
                     
                     <!-- Botonera Inferior -->
                     <div class="bloque-acciones">
-                        <button class="btn-postular" type="button">Contactar / Postularse</button>
-                        <button class="btn-favorito" type="button">Añadir a Favoritos</button>
+                        <form action="<?= BASE_URL ?>controllers/PostulacionController.php" method="POST" style="display:inline;">
+                            <input type="hidden" name="idAnuncio" value="<?= (int) $anuncio['idAnuncio'] ?>">
+                            <button class="btn-postular" type="submit">Contactar / Postularse</button>
+                        </form>
+                        <?php $esFavorito = $esFavorito ?? false; ?>
+                        <form action="<?= BASE_URL ?>controllers/AnuncioGuardadoController.php" method="POST" style="display:inline;">
+                            <input type="hidden" name="idAnuncio" value="<?= (int) $anuncio['idAnuncio'] ?>">
+                            <button class="btn-favorito" type="submit">
+                                <?= $esFavorito ? 'Quitar de Favoritos' : 'Añadir a Favoritos' ?>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
