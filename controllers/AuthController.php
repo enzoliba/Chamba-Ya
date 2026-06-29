@@ -197,6 +197,7 @@
 
         public function guardarPreferencias(){
             iniciarSesion();
+            if($_SERVER['REQUEST_METHOD'] !== 'POST'){ die('Método no permitido'); }
             if(!isset($_SESSION['idUsuario'])){ die('No autorizado'); }
 
             $id = $_SESSION['idUsuario'];
@@ -214,6 +215,7 @@
 
         public function desactivarCuenta(){
             iniciarSesion();
+            if($_SERVER['REQUEST_METHOD'] !== 'POST'){ die('Método no permitido'); }
             if(!isset($_SESSION['idUsuario'])){ die('No autorizado'); }
             $this->userModel->desactivarUsuario($_SESSION['idUsuario']);
             $_SESSION = [];
@@ -224,6 +226,7 @@
 
         public function eliminarCuenta(){
             iniciarSesion();
+            if($_SERVER['REQUEST_METHOD'] !== 'POST'){ die('Método no permitido'); }
             if(!isset($_SESSION['idUsuario'])){ die('No autorizado'); }
             $this->userModel->eliminarCuentaCompleta($_SESSION['idUsuario']);
             $_SESSION = [];
