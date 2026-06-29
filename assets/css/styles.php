@@ -1,12 +1,18 @@
-<style>  
-    /* Estilos para el contenido principal */
+<style>
+    /* =====================================================================
+       CHAMBA YA — Landing (index). Diseño "al toque".
+       Firma: split verde/amarillo + buscador con cinta de peligro.
+       ===================================================================== */
+
+    body{ background: var(--cy-paper); color: var(--cy-ink); }
 
     /*==================================*/
-    /*==========DOBLE APARTADO==========*/
+    /*============== HERO ==============*/
     /*==================================*/
 
     .container_halfs{
         display: flex;
+        position: relative;
     }
 
     .left_half, .right_half{
@@ -15,88 +21,244 @@
         align-items: center;
         text-align: center;
         width: 50%;
-        padding: 50px;
-    }
-    
-    .left_half {
-        background-color: #24b55080;
+        padding: 52px 50px 74px;
     }
 
-    .right_half {
-        background-color: #FFCC0080;
+    .left_half { background-color: var(--cy-green); }
+    .right_half { background-color: var(--cy-yellow); }
+
+    /* Eyebrow: etiqueta que dice de qué lado del mercado estás */
+    .hero_eyebrow{
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        border-radius: 999px;
+        margin-bottom: 18px;
     }
+    .left_half .hero_eyebrow{ background: var(--cy-green-deep); color: #fff; }
+    .right_half .hero_eyebrow{ background: var(--cy-ink); color: var(--cy-yellow); }
 
     .left_half h1, .right_half h1{
-        font-size: 36px;
-        font-weight: bold;
-        margin-bottom: 20px;
+        font-size: 42px;
+        font-weight: 800;
+        margin-bottom: 14px;
+        max-width: 12ch;
     }
 
     .left_half p, .right_half p{
         font-size: 18px;
-        height: 41.6px;
+        min-height: 41.6px;
+        line-height: 1.5;
+        max-width: 42ch;
+        color: rgba(21, 35, 26, 0.82);
     }
 
     .left_half img, .right_half img{
-        width: 350px;
+        width: 100%;
+        max-width: 430px;
+        margin: 18px 0 10px;
     }
 
     .btn_right_first, .btn_right_second, .btn_left_first, .btn_left_second{
         border: none;
-        padding: 15px 80px;
+        padding: 15px 56px;
         cursor: pointer;
-        margin-top: 20px;
-        border-radius: 16px;
+        margin-top: 16px;
+        border-radius: 14px;
+        font-size: 17px;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
+        transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
     }
 
-    .btn_left_first{
-        font-size: 18px;
-        font-weight: bold;
-        background-color: #0B46C5;
+    /* Primario = tinta sólida (resalta en verde y en amarillo, acción clara) */
+    .btn_left_first, .btn_right_first{
+        background-color: var(--cy-ink);
         color: #fff;
+        box-shadow: 0 6px 0 rgba(0,0,0,0.18);
+    }
+    .btn_left_first:hover, .btn_right_first:hover{
+        transform: translateY(-2px);
+        box-shadow: 0 8px 0 rgba(0,0,0,0.20);
+    }
+    .btn_left_first:active, .btn_right_first:active{
+        transform: translateY(2px);
+        box-shadow: 0 3px 0 rgba(0,0,0,0.18);
     }
 
-    .btn_left_second{
-        font-size: 16px;
-        font-weight: bold;
-        background-color: #32da64a2;
-        border: 1px solid  #000;
-        color:#000;
+    /* Secundario = contorno sobre el campo de color */
+    .btn_left_second, .btn_right_second{
+        background-color: rgba(255,255,255,0.92);
+        color: var(--cy-ink);
+        border: 2px solid var(--cy-ink);
+    }
+    .btn_left_second:hover, .btn_right_second:hover{
+        transform: translateY(-2px);
+        background-color: #fff;
     }
 
-    .btn_right_first{
-        font-size: 18px;
-        font-weight: bold;
-        background-color: #FFCB00;
-        color: #000
-    }
-
-    .btn_right_second{
-        font-size: 16px;
-        font-weight: bold;
-        background-color: #FFE57F;
-        border: 1px solid  #000;
-        color:#000;
-    }
-
-    @media (max-width: 768px) {
-        .container_halfs{ 
-            display: flex;
-            flex-direction: column;
-        }
-
-        .left_half, .right_half {
-            width: 100%;
-            padding: 30px;
-        }
+    .btn_left_first:focus-visible, .btn_right_first:focus-visible,
+    .btn_left_second:focus-visible, .btn_right_second:focus-visible{
+        outline: 3px solid var(--cy-ink);
+        outline-offset: 3px;
     }
 
     /*==================================*/
-    /*============CATEGORIAS============*/
+    /*========= BUSCADOR (firma) =======*/
     /*==================================*/
 
-    .categories{
-        padding: 50px;
+    .search_band{
+        background: var(--cy-mist);
+        padding: 0 24px 30px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search_card{
+        width: 100%;
+        max-width: 920px;
+        background: #fff;
+        border: 1px solid var(--cy-line);
+        border-radius: 20px;
+        margin-top: -44px;
+        padding: 26px 32px 24px;
+        box-shadow: 0 18px 40px rgba(12, 90, 44, 0.12);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Barra bicolor: eco del split verde/amarillo. */
+    .search_card::before{
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 6px;
+        background: linear-gradient(to right, var(--cy-green) 0 50%, var(--cy-yellow) 50% 100%);
+    }
+
+    .search_card h2{
+        font-size: 26px;
+        font-weight: 700;
+        margin: 8px 0 4px;
+    }
+    .search_card .search_sub{
+        font-size: 15px;
+        color: #5b6b5f;
+        margin-bottom: 18px;
+    }
+
+    .search_form{
+        display: flex;
+        gap: 10px;
+    }
+    .search_form .field{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--cy-mist);
+        border: 1.5px solid var(--cy-line);
+        border-radius: 13px;
+        padding: 0 16px;
+        transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .search_form .field:focus-within{
+        border-color: var(--cy-green);
+        box-shadow: 0 0 0 4px rgba(31, 174, 85, 0.15);
+    }
+    .search_form .field i{ color: #8a978c; font-size: 16px; }
+    .search_form .field input{
+        border: none;
+        background: transparent;
+        outline: none;
+        flex: 1;
+        height: 52px;
+        font-size: 16px;
+        color: var(--cy-ink);
+    }
+    .search_form .btn_buscar{
+        background: var(--cy-green);
+        color: #fff;
+        border: none;
+        border-radius: 13px;
+        padding: 0 30px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background .15s ease, transform .15s ease;
+    }
+    .search_form .btn_buscar:hover{ background: #18994a; transform: translateY(-1px); }
+    .search_form .btn_buscar:focus-visible{ outline: 3px solid var(--cy-ink); outline-offset: 2px; }
+
+    .search_tags{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-top: 16px;
+    }
+    .search_tags .label{ font-size: 13px; color: #5b6b5f; }
+    .search_tags a{
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        color: var(--cy-green-deep);
+        background: rgba(31, 174, 85, 0.12);
+        padding: 6px 13px;
+        border-radius: 999px;
+        transition: background .15s ease;
+    }
+    .search_tags a:hover{ background: rgba(31, 174, 85, 0.22); }
+
+    /*==================================*/
+    /*========= TIRA DE CONFIANZA ======*/
+    /*==================================*/
+
+    .trust_strip{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px 40px;
+        padding: 0 24px 36px;
+        background: var(--cy-mist);
+    }
+    .trust_item{
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--cy-ink);
+    }
+    .trust_item i{
+        color: var(--cy-green);
+        font-size: 20px;
+    }
+
+    /*==================================*/
+    /*============ CATEGORIAS ==========*/
+    /*==================================*/
+
+    .categories{ padding: 48px max(40px, calc((100% - 1240px) / 2)) 18px; }
+
+    .section_head{ margin-bottom: 22px; }
+    .section_eyebrow{
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--cy-green);
+        margin-bottom: 6px;
+    }
+    .categories h2, .recientes h2, .why_chamba_ya h2{
+        font-size: 32px;
+        font-weight: 700;
     }
 
     .categories_carousel{
@@ -104,173 +266,229 @@
         display: flex;
         align-items: center;
         width: 100%;
-    }   
-
+    }
     .carousel_wrapper{
         display: flex;
-        gap: 20px;
+        gap: 18px;
         overflow-x: hidden;
         scroll-behavior: smooth;
-        padding: 20px 5px;
+        padding: 18px 5px;
         width: 100%;
-    }
-
-    .categories h2{
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 20px;
     }
 
     .categories_card{
         display: flex;
-        flex: 0 0 200px;
+        flex: 0 0 190px;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
-        width: 200px;
-        height: 200px;
-        border-radius: 8px;
+        width: 190px;
+        height: 190px;
+        border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
-    }
-
-    .categories_card{
+        background: #fff;
+        border: 1px solid var(--cy-line);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
         text-decoration: none;
-        color: inherit;
+        color: var(--cy-ink);
+        transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
     }
-
+    .categories_card:hover{
+        transform: translateY(-5px);
+        box-shadow: 0 14px 26px rgba(12, 90, 44, 0.16);
+        border-color: var(--cy-green);
+    }
     .categories_card img{
-        width: 100px;
-        margin-top: 10px;
-        transform: scale(1.8);
-        overflow: hidden;
+        width: 92px;
+        height: 92px;
+        margin-top: 12px;
         object-fit: contain;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
     }
-
     .categories_card h3{
-        font-size: 20px;
-        font-weight: bold;
-        margin-top: 20px;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 14px;
     }
 
     .carousel_btn{
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: var(--cy-ink);
         color: #fff;
         border: none;
-        font-size: 24px;
-        padding: 10px 15px;
+        font-size: 20px;
+        width: 44px;
+        height: 44px;
         cursor: pointer;
-        border-radius: 70%;
+        border-radius: 50%;
         position: absolute;
         z-index: 10;
-        transition: background 0.3s;
-    }
-
-    .carousel_btn:hover{
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-
-    .prev{
-        left: -10px;
-    }
-
-    .next{
-        right: -10px;
-    }
-
-    /*==================================*/
-    /*===========WHY CHAMBA YA==========*/
-    /*==================================*/
-
-    .why_chamba_ya{
-        padding: 50px;
-        background: #0088ff4f;
-        text-align: center;
-    }
-
-    .why_chamba_ya h1{
-        font-weight: bold;
-        margin-bottom: 3vh;
-    }
-
-    .why_cards_container{
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
-        gap: 150px;
+        transition: transform .15s ease, background .3s;
     }
-    
-    .why_card {
-        width: 400px;
-    }
-
-    .why_card img{
-        width: 200px;
-    }
-
-    .why_card h2{
-        font-size: 26px;
-        font-weight: bold;
-        margin-top: 20px;
-    }
-
-    .why_card p{
-        font-size: 18px;
-        margin-top: 10px;
-    }
-
-    @media (max-width: 768px) {
-        .why_cards_container{
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
-        }
-
-        .why_card {
-            width: 100%;
-        }
-    }
+    .carousel_btn:hover{ background-color: #000; transform: scale(1.06); }
+    .prev{ left: -12px; }
+    .next{ right: -12px; }
 
     /*==================================*/
-    /*==============FOOTER==============*/
+    /*======== AVISOS RECIENTES ========*/
     /*==================================*/
 
-    .footer{
-        background-color: #fff;
-        padding: 40px 0;
-    }
-
-    .footer_container{
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .footer_row{
+    .recientes{ padding: 34px max(40px, calc((100% - 1240px) / 2)) 56px; }
+    .recientes_head{
         display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 22px;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .recientes_head a.ver_todos{
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--cy-green-deep);
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .recientes_head a.ver_todos:hover{ text-decoration: underline; }
+
+    .recientes_grid{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+    }
+    .aviso_card{
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border: 1px solid var(--cy-line);
+        border-radius: 16px;
+        padding: 18px 18px 16px;
+        text-decoration: none;
+        color: var(--cy-ink);
+        transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .aviso_card:hover{
+        transform: translateY(-4px);
+        box-shadow: 0 14px 26px rgba(12, 90, 44, 0.14);
+        border-color: var(--cy-green);
+    }
+    .aviso_top{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .aviso_tipo{
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 999px;
+    }
+    .aviso_tipo.trabajo{ background: rgba(11,70,197,0.12); color: #0B46C5; }
+    .aviso_tipo.servicio{ background: rgba(31,174,85,0.14); color: var(--cy-green-deep); }
+    .aviso_estrellas{ color: var(--cy-yellow); font-size: 14px; letter-spacing: 1px; }
+    .aviso_card h3{
+        font-size: 19px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .aviso_meta{
+        font-size: 14px;
+        color: #5b6b5f;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+    }
+    .aviso_pago{
+        margin-top: auto;
+        padding-top: 12px;
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--cy-green-deep);
+    }
+    .recientes_empty{
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 40px;
+        color: #5b6b5f;
+        border: 1.5px dashed var(--cy-line);
+        border-radius: 16px;
+    }
+
+    /*==================================*/
+    /*========== WHY CHAMBA YA =========*/
+    /*==================================*/
+
+    .why_chamba_ya{
+        padding: 56px max(40px, calc((100% - 1240px) / 2));
+        background: var(--cy-mist);
+        text-align: center;
+    }
+    .why_chamba_ya .section_eyebrow{ text-align: center; }
+    .why_chamba_ya h2{ margin-bottom: 36px; }
+
+    .why_cards_container{
+        display: flex;
+        align-items: stretch;
         justify-content: center;
-        gap: 350px;
+        gap: 24px;
+        flex-wrap: wrap;
     }
-
-    .footer_links{
-        flex: none;
-        width: auto;
-        text-align: left;
-        padding: 0 15px;
+    .why_card{
+        width: 320px;
+        background: #fff;
+        border: 1px solid var(--cy-line);
+        border-radius: 18px;
+        padding: 32px 26px;
+        text-align: center;
+        transition: transform .15s ease, box-shadow .15s ease;
     }
+    .why_card:hover{
+        transform: translateY(-4px);
+        box-shadow: 0 14px 26px rgba(12, 90, 44, 0.12);
+    }
+    .why_icon{
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 18px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(31,174,85,0.12);
+        color: var(--cy-green-deep);
+        font-size: 28px;
+    }
+    .why_card h3{ font-size: 21px; font-weight: 700; margin-bottom: 10px; }
+    .why_card p{ font-size: 16px; color: #5b6b5f; line-height: 1.55; }
 
+    /*==================================*/
+    /*============== FOOTER ============*/
+    /*==================================*/
+
+    .footer{ background-color: #fff; padding: 40px 0; border-top: 1px solid var(--cy-line); }
+    .footer_container{ max-width: 1200px; margin: 0 auto; }
+    .footer_row{ display: flex; justify-content: center; gap: 120px; flex-wrap: wrap; }
+    .footer_links{ flex: none; width: auto; text-align: left; padding: 0 15px; }
     .footer_links h4{
         font-size: 1.13em;
-        color: black;
+        color: var(--cy-ink);
         margin-bottom: 25px;
-        font-weight: 500;
-        border-bottom: 3px solid #015eafee;
+        font-weight: 600;
+        border-bottom: 3px solid var(--cy-green);
         display: inline-block;
         padding-bottom: 10px;
     }
-
     .footer_links ul li a{
         font-size: 1.06em;
         text-decoration: none;
@@ -279,12 +497,7 @@
         margin-bottom: 15px;
         transition: all .3s ease;
     }
-
-    .footer_links ul li a:hover{
-        color: black;
-        transform: translateX(6px);
-    }
-
+    .footer_links ul li a:hover{ color: var(--cy-ink); transform: translateX(6px); }
     .social_links a{
         display: inline-block;
         min-height: 40px;
@@ -293,31 +506,42 @@
         text-align: center;
         line-height: 40px;
         border-radius: 50%;
-        color: black;
+        color: var(--cy-ink);
         transition: all .5s ease;
     }
-    @media (max-width: 768px) {
-        .footer_row{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-        }
 
-        .footer_links{
-            text-align: center;
-        }
-        
-        .footer_links h4{
-            font-size: 1.3em;
-        }
+    /*==================================*/
+    /*============ RESPONSIVE ==========*/
+    /*==================================*/
 
-        .footer_links ul li a{
-            font-size: 1.2em;
-        }
+    @media (max-width: 1000px){
+        .recientes_grid{ grid-template-columns: repeat(2, 1fr); }
+    }
 
-        .social_links a{
-            font-size: 1.2em;
-        }
+    @media (max-width: 900px){
+        .left_half h1, .right_half h1{ font-size: 34px; }
+        .categories h2, .recientes h2, .why_chamba_ya h2{ font-size: 26px; }
+    }
+
+    @media (max-width: 768px){
+        .container_halfs{ flex-direction: column; }
+        .left_half, .right_half{ width: 100%; padding: 44px 26px 64px; }
+        .left_half img, .right_half img{ max-width: 340px; }
+
+        .search_card{ margin-top: -40px; padding: 24px 20px 22px; }
+        .search_form{ flex-direction: column; }
+        .search_form .btn_buscar{ padding: 15px; }
+
+        .categories, .recientes, .why_chamba_ya{ padding-left: 24px; padding-right: 24px; }
+        .footer_row{ flex-direction: column; align-items: center; gap: 30px; }
+        .footer_links{ text-align: center; }
+    }
+
+    @media (max-width: 560px){
+        .recientes_grid{ grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+        *{ transition: none !important; scroll-behavior: auto !important; }
     }
 </style>
