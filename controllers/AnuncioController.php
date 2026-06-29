@@ -56,7 +56,7 @@ class AnuncioController {
         $calificacion = $modeloUser->obtenerCalificacionUsuario($anuncio['idUsuario']);
         $puntaje = round($calificacion['puntaje'] ?? 0);
 
-        // ¿El usuario logueado ya guardó este anuncio? (para el botón Añadir/Quitar)
+        // ¿Ya lo guardó? (para el texto del botón)
         require_once __DIR__ . '/../models/AnuncioGuardadoModel.php';
         require_once __DIR__ . '/../core/config/session.php';
         $idUsuarioActivo = obtenerIdUsuarioActivo();

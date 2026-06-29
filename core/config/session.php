@@ -5,7 +5,7 @@
         }
     }
 
-    // Devuelve 0 si no hay sesión: nunca asume un usuario por defecto.
+    // 0 = nadie logueado.
     function obtenerIdUsuarioActivo(): int {
         iniciarSesion();
         if (!isset($_SESSION['idUsuario'])) {

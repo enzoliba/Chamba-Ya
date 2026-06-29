@@ -314,8 +314,7 @@
                 header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showRecuperar&rec_status=short'); exit();
             }
 
-            // Verificación de identidad simplificada: correo + teléfono registrados.
-            // NOTA: no es tan seguro como un enlace por email con token; ver README.
+            // Verifica con correo + telefono (metodo simple, sin email).
             $usuario = $this->userModel->getUserByEmail($correo);
             if(!$usuario || trim((string)$usuario['telefono']) !== $telefono){
                 header('Location: ' . BASE_URL . 'controllers/AuthController.php?action=showRecuperar&rec_status=not_match'); exit();

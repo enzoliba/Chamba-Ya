@@ -165,7 +165,7 @@
         const BASE_URL = "<?= BASE_URL ?>";
 
         // Enlazar los filtros activos de PHP hacia variables globales leídas por buscar_Trabajo.js
-        // json_encode escapa de forma segura para contexto JavaScript (evita XSS reflejado).
+        // json_encode evita que metan codigo en el JS.
         const idDepartamentoSeleccionado = <?= json_encode((string)($_GET['departamento'] ?? ''), JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP) ?>;
         const idProvinciaSeleccionada = <?= json_encode((string)($_GET['provincia'] ?? ''), JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP) ?>;
         const idDistritoSeleccionado = <?= json_encode((string)($_GET['distrito'] ?? ''), JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP) ?>;

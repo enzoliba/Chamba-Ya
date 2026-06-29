@@ -140,7 +140,7 @@ class AnuncioCreadoController {
     }
 }
 
-// Todo acceso directo (AJAX o POST) exige sesión iniciada.
+// Pide estar logueado.
 function exigirSesionAnuncios(): void {
     iniciarSesion();
     if (!isset($_SESSION['idUsuario'])) {
@@ -149,7 +149,7 @@ function exigirSesionAnuncios(): void {
     }
 }
 
-// AJAX: cargar provincias/distritos.
+// AJAX: provincias y distritos.
 if (isset($_GET['ajax'])) {
     exigirSesionAnuncios();
     header('Content-Type: application/json; charset=utf-8');

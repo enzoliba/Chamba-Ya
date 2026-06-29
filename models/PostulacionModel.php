@@ -80,7 +80,7 @@ class PostulacionModel {
         }
     }
 
-    // Solo cambia el estado si la postulación es de un anuncio del dueño (autorización).
+    // Solo el dueño del anuncio puede cambiar el estado.
     public function actualizarEstado($idPostulacion, $estado, $idDueno): bool {
         try {
             $stmt = $this->conn->prepare("

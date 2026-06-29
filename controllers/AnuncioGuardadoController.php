@@ -36,7 +36,7 @@ class AnuncioGuardadoController {
     }
 }
 
-// Acceso por POST: exige sesión iniciada.
+// Pide estar logueado.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     iniciarSesion();
     if (!isset($_SESSION['idUsuario'])) {

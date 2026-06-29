@@ -1,5 +1,5 @@
 <?php
-// Banner de feedback segun el parametro ?estado= de la URL.
+// Muestra un mensaje segun ?estado= de la URL.
 if (!empty($_GET['estado'])):
     $bannerMsgs = [
         'postulado'    => ['¡Te postulaste con éxito!',                 '#16a34a'],
