@@ -26,5 +26,75 @@ class PostulacionModel {
             return [];
         }
     }
+
+    public function obtenerIdDuenioAnuncio($idAnuncio) {
+        try {
+            $stmt = $this->conn->prepare("SELECT idUsuario FROM anuncio WHERE idAnuncio = ?");
+            $stmt->execute([$idAnuncio]);
+            $r = $stmt->fetchColumn();
+            return $r === false ? null : (int) $r;
+        } catch (Exception $e) {
+            error_log("Error al obtener dueño del anuncio: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function yaPostulado($idUsuario, $idAnuncio): bool {
+        try {
+            $stmt = $this->conn->prepare("SELECT 1 FROM postulacion WHERE idUsuario = ? AND idAnuncio = ?");
+            $stmt->execute([$idUsuario, $idAnuncio]);
+            return (bool) $stmt->fetchColumn();
+        } catch (Exception $e) {
+            error_log("Error al verificar postulacion: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function crearPostulacion($idUsuario, $idAnuncio): bool {
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO postulacion (idUsuario, idAnuncio) VALUES (?, ?)");
+            return $stmt->execute([$idUsuario, $idAnuncio]);
+        } catch (Exception $e) {
+            error_log("Error al crear postulacion: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function obtenerPostulacionesRecibidas($idDueno) {
+        try {
+            $stmt = $this->conn->prepare("
+                SELECT p.idPostulacion, p.estado, p.fecha,
+                       a.idAnuncio, a.titulo AS puesto,
+                       u.nombres, u.apellidos, u.telefono, u.correo
+                FROM postulacion p
+                JOIN anuncio a ON p.idAnuncio = a.idAnuncio
+                JOIN usuario u ON p.idUsuario = u.idUsuario
+                WHERE a.idUsuario = ?
+                ORDER BY (p.estado = 'Pendiente') DESC, p.fecha DESC
+            ");
+            $stmt->execute([$idDueno]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Error al consultar postulaciones recibidas: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Solo el dueño del anuncio puede cambiar el estado.
+    public function actualizarEstado($idPostulacion, $estado, $idDueno): bool {
+        try {
+            $stmt = $this->conn->prepare("
+                UPDATE postulacion
+                SET estado = ?
+                WHERE idPostulacion = ?
+                  AND idAnuncio IN (SELECT idAnuncio FROM anuncio WHERE idUsuario = ?)
+            ");
+            $stmt->execute([$estado, $idPostulacion, $idDueno]);
+            return $stmt->rowCount() > 0;
+        } catch (Exception $e) {
+            error_log("Error al actualizar estado de postulacion: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

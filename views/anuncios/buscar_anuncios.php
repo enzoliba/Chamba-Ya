@@ -26,7 +26,7 @@
     
     <form method="GET" action="<?= BASE_URL ?>index.php" id="formFiltrosGlobal">
         <input type="hidden" name="action" value="buscar-trabajo">
-        <input type="hidden" name="tipo" value="<?= $tipo ?>">
+        <input type="hidden" name="tipo" value="<?= htmlspecialchars($tipo) ?>">
         <div class="wrapper-busqueda">
             <aside class="sidebar-filtros <?= $claseColor ?>">
                 <h3>Categorías:</h3>
@@ -123,7 +123,7 @@
                                     <div>
                                         <h3 class="titulo-card"><?= htmlspecialchars($anuncio['titulo']) ?></h3>
                                         <p class="ubicacion-card"><?= htmlspecialchars($anuncio['ubicacion']) ?></p>
-                                        <p class="pago-card"> S/. <?= $anuncio['pagoReferencia'] ?></p>
+                                        <p class="pago-card"><?= htmlspecialchars(formatearPago($anuncio['pagoReferencia'])) ?></p>
                                     </div>
                                     <a class="btn-ver-mas-card" href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $anuncio['idAnuncio'] ?>&tipo=trabajo"> Ver más</a>
                                 </div>
@@ -165,9 +165,10 @@
         const BASE_URL = "<?= BASE_URL ?>";
 
         // Enlazar los filtros activos de PHP hacia variables globales leídas por buscar_Trabajo.js
-        const idDepartamentoSeleccionado = "<?= $_GET['departamento'] ?? '' ?>";
-        const idProvinciaSeleccionada = "<?= $_GET['provincia'] ?? '' ?>";
-        const idDistritoSeleccionado = "<?= $_GET['distrito'] ?? '' ?>";
+        // json_encode evita que metan codigo en el JS.
+        const idDepartamentoSeleccionado = <?= json_encode((string)($_GET['departamento'] ?? ''), JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP) ?>;
+        const idProvinciaSeleccionada = <?= json_encode((string)($_GET['provincia'] ?? ''), JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP) ?>;
+        const idDistritoSeleccionado = <?= json_encode((string)($_GET['distrito'] ?? ''), JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP) ?>;
         
         // Simula comportamiento desmarcable único para los checkboxes de categorías
         function alternarCategoriaUnica(checkbox) {

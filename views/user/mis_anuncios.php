@@ -52,6 +52,7 @@
                     <h4>Actividad</h4>
                     <ul class="sidebar-nav">
                         <li><a href="<?= BASE_URL ?>views/user/mis_postulaciones.php"><i class="fa-solid fa-paper-plane"></i> Mis Postulaciones</a></li>
+                        <li><a href="<?= BASE_URL ?>views/user/postulaciones_recibidas.php"><i class="fa-solid fa-inbox"></i> Postulaciones recibidas</a></li>
                         <li><a href="<?= BASE_URL ?>views/user/mi_historial.php"><i class="fa-solid fa-history"></i> Historial</a></li>
                     </ul>
                 </div>

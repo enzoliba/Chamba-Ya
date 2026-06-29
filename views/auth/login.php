@@ -19,14 +19,18 @@
             <form action="../../controllers/AuthController.php?action=login" method="post" id="loginForm">
                 <h1>Iniciar Sesión</h1>
                 <?php if(isset($_GET['login_status'])): ?>
-                    <?php
-                        $loginMsgs = [
-                            'not_found'      => 'El usuario no está registrado.',
-                            'wrong_password' => 'Contraseña incorrecta.',
-                        ];
-                        $msg = $loginMsgs[$_GET['login_status']] ?? 'Ocurrió un error al iniciar sesión.';
-                    ?>
-                    <p class="form_msg form_msg_error"><?= htmlspecialchars($msg) ?></p>
+                    <?php if($_GET['login_status'] === 'pass_reset'): ?>
+                        <p class="form_msg" style="color:#16a34a;">Contraseña actualizada. Inicia sesión con tu nueva contraseña.</p>
+                    <?php else: ?>
+                        <?php
+                            $loginMsgs = [
+                                'not_found'      => 'El usuario no está registrado.',
+                                'wrong_password' => 'Contraseña incorrecta.',
+                            ];
+                            $msg = $loginMsgs[$_GET['login_status']] ?? 'Ocurrió un error al iniciar sesión.';
+                        ?>
+                        <p class="form_msg form_msg_error"><?= htmlspecialchars($msg) ?></p>
+                    <?php endif; ?>
                 <?php endif; ?>
                 <div class="input_box">
                     <input type="email" placeholder="Email" required name="emailInput" >
@@ -36,8 +40,8 @@
                     <input type="password" placeholder="Contraseña" required name="passwordInput">
                     <i class='bx bxs-lock-alt' ></i>
                 </div>
-                <div class="link_olvido">   
-                    <button type="button" class="btn_forgot_pass">¿Olvidó su contraseña?</button>
+                <div class="link_olvido">
+                    <a href="<?= BASE_URL ?>controllers/AuthController.php?action=showRecuperar" class="btn_forgot_pass">¿Olvidó su contraseña?</a>
                 </div>
                 <button type="submit" class="btn_link" name="login">Iniciar Sesión</button>
                 <p>o inicie sesión con</p>
