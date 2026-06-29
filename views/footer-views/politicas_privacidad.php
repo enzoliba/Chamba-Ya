@@ -1,16 +1,14 @@
 <?php
+    $empresa = isset($empresa) ? $empresa : "CHAMBA YA";
+    $anio = isset($anio) ? $anio : date("Y");
 
-$empresa = isset($empresa) ? $empresa : "CHAMBA YA";
-$anio = isset($anio) ? $anio : date("Y");
-
-require_once __DIR__ . '/../../assets/css/style_politicas_privacidad.php';
-require_once __DIR__ . '/../templates/head.php';
-require_once __DIR__ . '/../templates/header.php';
+    require_once __DIR__ . '/../../assets/css/style_politicas_privacidad.php';
+    require_once __DIR__ . '/../templates/head.php';
+    require_once __DIR__ . '/../templates/header.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <body>
-
 
 <section class="banner">
     <div class="banner-contenido">
@@ -22,9 +20,7 @@ require_once __DIR__ . '/../templates/header.php';
     </div>
 </section>
 
-
 <div class="contenedor">
-    
     
     <aside class="sidebar">
         <h3>Contenido</h3>
@@ -41,10 +37,8 @@ require_once __DIR__ . '/../templates/header.php';
         </ul>
     </aside>
 
-   
     <main class="contenido-principal">
         
-     
         <article id="seccion-1" class="card">
             <h2>1. Introducción</h2>
             <p>
@@ -58,7 +52,6 @@ require_once __DIR__ . '/../templates/header.php';
             </p>
         </article>
 
-       
         <article id="seccion-2" class="card">
             <h2>2. Información recopilada</h2>
             <p>
@@ -76,7 +69,6 @@ require_once __DIR__ . '/../templates/header.php';
             </ul>
         </article>
 
-    
         <article id="seccion-3" class="card">
             <h2>3. Uso de la información</h2>
             <p>
@@ -93,7 +85,6 @@ require_once __DIR__ . '/../templates/header.php';
             </ul>
         </article>
 
-       
         <article id="seccion-4" class="card">
             <h2>4. Seguridad de los datos</h2>
             <p>
@@ -107,7 +98,6 @@ require_once __DIR__ . '/../templates/header.php';
             </p>
         </article>
 
-       
         <article id="seccion-5" class="card">
             <h2>5. Compartición de información</h2>
             <p>

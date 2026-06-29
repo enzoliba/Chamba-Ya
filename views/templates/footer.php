@@ -26,9 +26,9 @@
                 <h4>Siguenos</h4>
                 <div class="footer_content">
                     <div class="social_links">
-                        <a href="https://www.facebook.com/share/1Bo4gejadn/"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/clinicacentenariodelnorte?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@centenario_delnorte?_r=1&_t=ZS-91kjkdxP0vo"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
             </div>

@@ -24,7 +24,7 @@
         <form action="<?= BASE_URL ?>controllers/AuthController.php?action=completeRegister" method="POST" enctype="multipart/form-data">
             <div class="profile-picture">
                 <label for="fotoPerfil">Foto de Perfil:</label>
-                <input type="file" id="fotoPerfil" name="fotoPerfil" accept="image/*" required>
+                <input type="file" id="fotoPerfil" name="fotoPerfil" accept="image/*">
                 <p>*PNG, JPG, JPEG</p>
                 <div class="profilePictureImage">
                     <img id="fotoPerfilPreview" src="" alt="Foto de Perfil">

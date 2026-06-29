@@ -98,55 +98,74 @@
 
             $nombreFoto = 'default.png';
 
-            if(isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === 0){
-                $extension = pathinfo($_FILES['fotoPerfil']['name'], PATHINFO_EXTENSION);
-                $permitidos = ['jpg', 'jpeg', 'png'];
+            // Solo procesar la imagen si el usuario subió una
+            if(isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === UPLOAD_ERR_OK){
 
-                if(!in_array(strtolower($extension), $permitidos)){
-                    header('Location: AuthController.php?action=showFormDatos&reg_status=bad_format');
-                    exit();
-                }
+            $extension = pathinfo($_FILES['fotoPerfil']['name'], PATHINFO_EXTENSION);
+            $permitidos = ['jpg', 'jpeg', 'png'];
 
-                // Validación del archivo: tamaño máximo y tipo MIME real
-                $maxBytes = 2 * 1024 * 1024; // 2 MB
-                if($_FILES['fotoPerfil']['size'] > $maxBytes){
-                    header('Location: AuthController.php?action=showFormDatos&reg_status=too_big');
-                    exit();
-                }
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $mimeReal = finfo_file($finfo, $_FILES['fotoPerfil']['tmp_name']);
-                finfo_close($finfo);
-                $mimesPermitidos = ['image/jpeg', 'image/png'];
-                if(!in_array($mimeReal, $mimesPermitidos)){
-                    header('Location: AuthController.php?action=showFormDatos&reg_status=bad_format');
-                    exit();
-                }
-
-                $nombreFoto = uniqid() . '.' . $extension;
-                $rutaDestino = __DIR__ . '/../assets/uploads/img_perfiles/' . $nombreFoto;
-                move_uploaded_file($_FILES['fotoPerfil']['tmp_name'], $rutaDestino);
-
-                $resultado = $this->userModel->createUser(
-                    $nombreFoto, $nombres, $apellidos, $descripcionPerfil,
-                    $telefono, $correo, $password, $direccionDomicilio,
-                    $codigoPostal, $fechaRegistro, $estado, $idDistrito
-                );
-
-                if($resultado){
-                    $usuario = $this->userModel->getUserByEmail($correo);
-                    $_SESSION['idUsuario'] = $usuario['idUsuario'];
-                    $_SESSION['nombres'] = $usuario['nombres'];
-                    $_SESSION['emailUsuario'] = $usuario['correo'];
-                    unset($_SESSION['registro_email']);
-                    unset($_SESSION['registro_password']);
-                    header('Location: ' . BASE_URL . 'index.php');
-                    exit();
-                } else {
-                    header('Location: AuthController.php?action=showFormDatos&reg_status=error');
-                    exit();
-                }
+            if(!in_array(strtolower($extension), $permitidos)){
+                header('Location: AuthController.php?action=showFormDatos&reg_status=bad_format');
+                exit();
             }
-        }
+
+            $maxBytes = 2 * 1024 * 1024; //maximo de bytes permitidos para la foto de perfil y asi evitar cargas de archivos pesados a la bd
+
+            if($_FILES['fotoPerfil']['size'] > $maxBytes){
+                header('Location: AuthController.php?action=showFormDatos&reg_status=too_big');
+                exit();
+            }
+
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeReal = finfo_file($finfo, $_FILES['fotoPerfil']['tmp_name']);
+            finfo_close($finfo);
+
+            $mimesPermitidos = ['image/jpeg', 'image/png']; //mimes permitidos para las imagenes
+
+            if(!in_array($mimeReal, $mimesPermitidos)){
+                header('Location: AuthController.php?action=showFormDatos&reg_status=bad_format');
+                exit();
+            }
+
+            $nombreFoto = uniqid() . '.' . $extension;
+
+            $rutaDestino = __DIR__ . '/../assets/uploads/img_perfiles/' . $nombreFoto;
+
+            move_uploaded_file($_FILES['fotoPerfil']['tmp_name'], $rutaDestino);
+            }
+
+            $resultado = $this->userModel->createUser(
+                $nombreFoto,
+                $nombres,
+                $apellidos,
+                $descripcionPerfil,
+                $telefono,
+                $correo,
+                $password,
+                $direccionDomicilio,
+                $codigoPostal,
+                $fechaRegistro,
+                $estado,
+                $idDistrito
+            );
+
+            if($resultado){
+                $usuario = $this->userModel->getUserByEmail($correo);
+
+                $_SESSION['idUsuario'] = $usuario['idUsuario'];
+                $_SESSION['nombres'] = $usuario['nombres'];
+                $_SESSION['emailUsuario'] = $usuario['correo'];
+
+                unset($_SESSION['registro_email']);
+                unset($_SESSION['registro_password']);
+
+                header('Location: ' . BASE_URL . 'index.php');
+                exit();
+            }else{
+                header('Location: AuthController.php?action=showFormDatos&reg_status=error');
+                exit();
+            }
+        }   
 
         public function showMisDatos(){
             iniciarSesion();
