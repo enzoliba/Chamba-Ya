@@ -104,6 +104,13 @@
                 <div class="datos-contacto-card">
                     <strong>Teléfono:</strong> <?= htmlspecialchars($anuncio['telefono'] ?? 'No especificado') ?>
                 </div>
+                <?php $wa = linkWhatsApp($anuncio['telefono'] ?? '', 'Hola, vi tu anuncio "' . ($anuncio['titulo'] ?? '') . '" en Chamba Ya y me interesa.'); ?>
+                <?php if ($wa): ?>
+                    <a href="<?= htmlspecialchars($wa) ?>" target="_blank" rel="noopener"
+                       style="display:inline-flex;align-items:center;gap:8px;margin:10px 0;padding:10px 16px;background:#25D366;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                        <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
+                    </a>
+                <?php endif; ?>
                 <div class="datos-contacto-card">
                     <strong>Correo de contacto:</strong> <?= htmlspecialchars($anuncio['correo']) ?>
                 </div>
@@ -133,6 +140,8 @@
                         class="avatar-perfil-img"
                         onerror="this.src='<?= $base_path ?>assets/uploads/img_perfiles/default.png';">
                 </div>
+
+                <?php $tipoReporte = 'trabajo'; require __DIR__ . '/_form_reporte.php'; ?>
             </aside>
         </div>
     </div>

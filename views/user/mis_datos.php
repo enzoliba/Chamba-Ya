@@ -25,32 +25,7 @@
     <div class="profile-layout">
 
         <!-- Sidebar -->
-        <aside class="profile-sidebar">
-            <div class="profile-sidebar-card">
-                <div class="sidebar-section">
-                    <h4>Ajustes</h4>
-                    <ul class="sidebar-nav">
-                        <li><a href="<?= BASE_URL ?>controllers/AuthController.php?action=showMisDatos" class="active"><i class="fa-solid fa-user"></i> Mis Datos</a></li>
-                        <li><a href="<?= BASE_URL ?>views/user/mis_guardados.php"><i class="fa-regular fa-bookmark"></i> Anuncios guardados</a></li>
-                        <li><a href="<?= BASE_URL ?>views/user/mis_anuncios.php"><i class="fa-regular fa-square-plus"></i> Anuncios creados</a></li>
-                    </ul>
-                </div>
-                <div class="sidebar-section">
-                    <h4>Actividad</h4>
-                    <ul class="sidebar-nav">
-                        <li><a href="<?= BASE_URL ?>views/user/mis_postulaciones.php"><i class="fa-solid fa-paper-plane"></i> Mis Postulaciones</a></li>
-                        <li><a href="<?= BASE_URL ?>views/user/mi_historial.php"><i class="fa-solid fa-history"></i> Historial</a></li>
-                    </ul>
-                </div>
-                <div class="sidebar-section">
-                    <h4>Seguridad</h4>
-                    <ul class="sidebar-nav">
-                        <li><a href="<?= BASE_URL ?>controllers/AuthController.php?action=showSeguridad"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
-                        <li><a href="<?= BASE_URL ?>controllers/AuthController.php?action=showPreferencias"><i class="fa-solid fa-sliders"></i> Preferencias</a></li>
-                    </ul>
-                </div>
-            </div>
-        </aside>
+        <?php $paginaActual = 'mis_datos'; require_once __DIR__ . '/../templates/profile_sidebar.php'; ?>
 
         <!-- Content -->
         <main class="profile-content">
@@ -58,6 +33,10 @@
             <?php if(isset($_GET['status']) && $_GET['status'] == 'success'): ?>
                 <div class="alert alert-success">
                     <i class="fa-solid fa-circle-check"></i> Tus datos han sido actualizados exitosamente.
+                </div>
+            <?php elseif(isset($_GET['status']) && $_GET['status'] == 'habilidades_ok'): ?>
+                <div class="alert alert-success">
+                    <i class="fa-solid fa-circle-check"></i> Tus habilidades fueron actualizadas.
                 </div>
             <?php elseif(isset($_GET['status']) && $_GET['status'] == 'email_dup'): ?>
                 <div class="alert alert-error">
@@ -216,6 +195,32 @@
                 </div>
 
             </form>
+
+            <!-- Card: Habilidades -->
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <div class="card-icon personal"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <div>
+                        <h2>Mis Habilidades</h2>
+                        <span>Marca lo que te describe. Aparecerán en tu perfil de servicio.</span>
+                    </div>
+                </div>
+                <form action="<?= BASE_URL ?>controllers/HabilidadController.php" method="POST">
+                    <div style="display:flex;flex-wrap:wrap;gap:10px;margin:12px 0;">
+                        <?php foreach(($habilidades ?? []) as $h): ?>
+                            <label style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid #cbd5e1;border-radius:20px;cursor:pointer;">
+                                <input type="checkbox" name="habilidades[]" value="<?= (int) $h['idHabilidad'] ?>"
+                                    <?= in_array($h['idHabilidad'], $misHabilidades ?? []) ? 'checked' : '' ?>>
+                                <?= htmlspecialchars($h['nombre']) ?>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="form-actions" style="margin-top:14px;">
+                        <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Guardar Habilidades</button>
+                    </div>
+                </form>
+            </div>
+
         </main>
     </div>
 </div>

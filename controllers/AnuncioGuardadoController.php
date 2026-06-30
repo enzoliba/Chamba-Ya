@@ -31,7 +31,12 @@ class AnuncioGuardadoController {
     }
 
     private function redirigir(int $idAnuncio, string $estado): never {
-        header("Location: ../index.php?action=detalle-anuncio&id=" . $idAnuncio . "&estado=" . urlencode($estado));
+        // Si vino desde la lista de guardados, vuelve a esa lista.
+        if (($_POST['origen'] ?? '') === 'guardados') {
+            header("Location: ../views/user/mis_guardados.php?estado=" . urlencode($estado));
+        } else {
+            header("Location: ../index.php?action=detalle-anuncio&id=" . $idAnuncio . "&estado=" . urlencode($estado));
+        }
         exit();
     }
 }

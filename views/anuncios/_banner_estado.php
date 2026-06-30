@@ -10,6 +10,12 @@ if (!empty($_GET['estado'])):
         'calificado'   => ['¡Gracias! Tu calificación fue registrada.',  '#16a34a'],
         'cal_invalida' => ['Selecciona una puntuación de 1 a 5 estrellas.', '#d97706'],
         'cal_propia'   => ['No puedes calificarte a ti mismo.',          '#d97706'],
+        'trab_guardado'=> ['Trabajador agregado a tus guardados.',       '#16a34a'],
+        'trab_quitado' => ['Trabajador quitado de tus guardados.',       '#64748b'],
+        'trab_propio'  => ['No puedes guardarte a ti mismo.',            '#d97706'],
+        'reportado'    => ['Gracias, recibimos tu reporte.',             '#16a34a'],
+        'rep_duplicado'=> ['Ya habías reportado este anuncio.',          '#d97706'],
+        'rep_error'    => ['No se pudo enviar el reporte.',              '#dc2626'],
         'error'        => ['Ocurrió un error. Inténtalo de nuevo.',      '#dc2626'],
     ];
     $b = $bannerMsgs[$_GET['estado']] ?? null;

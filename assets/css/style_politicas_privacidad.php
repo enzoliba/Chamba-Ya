@@ -1,6 +1,8 @@
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  
+
     --bg-color: #f8fafc;
     --card-bg: #ffffff;
     --text-color: #475569;
@@ -16,7 +18,7 @@
     --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
     --shadow-hover: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
     --transition-speed: 0.3s;
-    --font-stack: 'Poppins', sans-serif;
+    --font-stack: 'Inter', sans-serif;
     --max-width: 1200px;
 }
 
@@ -51,14 +53,31 @@ body {
 
 
 .banner {
-    height: 300px;
     position: relative;
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+    overflow: hidden;
+    background: linear-gradient(135deg, #0f2847 0%, #1a3f6f 40%, #2563a8 100%);
+    padding: 90px 20px 110px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 40px;
+}
+
+.banner::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #f59e0b, #f97316, #ef4444, #8b5cf6, #3b82f6);
 }
 
 .banner-contenido {
@@ -72,27 +91,28 @@ body {
 
 .banner-contenido h1 {
     font-size: 48px;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 15px;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
     color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .banner-contenido p {
     font-size: 18px;
-    opacity: 0.95;
+    color: rgba(255,255,255,0.7);
     font-weight: 300;
     max-width: 600px;
     margin: 0 auto;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    line-height: 1.6;
 }
 
 
 .contenedor {
     max-width: var(--max-width);
-    margin: 0 auto 80px auto;
+    margin: -60px auto 80px auto;
     padding: 0 20px;
+    position: relative;
+    z-index: 2;
     display: grid;
     grid-template-columns: 280px 1fr;
     gap: 40px;

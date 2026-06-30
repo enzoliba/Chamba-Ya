@@ -32,6 +32,15 @@ class CalificacionController {
             $ok = $this->modelo->crear($idCalificador, $idCalificado, $puntaje, $comentario);
         }
 
+        if ($ok) {
+            require_once __DIR__ . '/../models/NotificacionModel.php';
+            (new NotificacionModel())->notificar(
+                $idCalificado,
+                "Recibiste una nueva calificación de $puntaje estrella(s).",
+                'controllers/AuthController.php?action=showMisDatos',
+                'Nueva calificación en Chamba Ya'
+            );
+        }
         $this->redirigir($idAnuncio, $ok ? 'calificado' : 'error');
     }
 

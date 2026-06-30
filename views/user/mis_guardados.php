@@ -35,38 +35,18 @@
     <div class="profile-layout">
 
         <!-- Sidebar -->
-        <aside class="profile-sidebar">
-            <div class="profile-sidebar-card">
-                <div class="sidebar-section">
-                    <h4>Ajustes</h4>
-                    <ul class="sidebar-nav">
-                        <li><a href="<?= BASE_URL ?>controllers/AuthController.php?action=showMisDatos"><i class="fa-solid fa-user"></i> Mis Datos</a></li>
-                        <li><a href="<?= BASE_URL ?>views/user/mis_guardados.php" class="active"><i class="fa-regular fa-bookmark"></i> Anuncios guardados</a></li>
-                        <li><a href="<?= BASE_URL ?>views/user/mis_anuncios.php"><i class="fa-regular fa-square-plus"></i> Anuncios creados</a></li>
-                    </ul>
-                </div>
-                <div class="sidebar-section">
-                    <h4>Actividad</h4>
-                    <ul class="sidebar-nav">
-                        <li><a href="<?= BASE_URL ?>views/user/mis_postulaciones.php"><i class="fa-solid fa-paper-plane"></i> Mis Postulaciones</a></li>
-                        <li><a href="<?= BASE_URL ?>views/user/mi_historial.php"><i class="fa-solid fa-history"></i> Historial</a></li>
-                    </ul>
-                </div>
-                <div class="sidebar-section">
-                    <h4>Seguridad</h4>
-                    <ul class="sidebar-nav">
-                        <li><a href="<?= BASE_URL ?>controllers/AuthController.php?action=showSeguridad"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
-                        <li><a href="<?= BASE_URL ?>controllers/AuthController.php?action=showPreferencias"><i class="fa-solid fa-sliders"></i> Preferencias</a></li>
-                    </ul>
-                </div>
-            </div>
-        </aside>
+        <?php $paginaActual = 'guardados'; require_once __DIR__ . '/../templates/profile_sidebar.php'; ?>
 
         <!-- Content -->
         <main class="profile-content">
             <!-- SECCIÓN: GUARDADOS -->
             <section id="seccion-guardados" class="vista-seccion activo" style="display: block;">
                 <div class="encabezado-seccion"><h2>Anuncios Guardados</h2></div>
+                <?php if (($_GET['estado'] ?? '') === 'fav_quitado'): ?>
+                    <div style="margin:0 0 15px;padding:12px 18px;border-radius:8px;color:#fff;background:#64748b;font-weight:600;">
+                        Anuncio quitado de tus guardados.
+                    </div>
+                <?php endif; ?>
                 <div id="lista-anuncios-guardados">
                     <?php if (empty($anuncios_favoritos)): ?>
                         <p>Actualmente no tienes anuncios guardados</p>
@@ -89,6 +69,15 @@
                                             <?php endforeach; ?>
                                         </div>
                                     <?php endif; ?>
+                                </div>
+                                <div class="acciones-tarjeta">
+                                    <form action="<?= BASE_URL ?>controllers/AnuncioGuardadoController.php" method="POST">
+                                        <input type="hidden" name="idAnuncio" value="<?= (int) $fav['id'] ?>">
+                                        <input type="hidden" name="origen" value="guardados">
+                                        <button type="submit" class="boton-accion" onclick="return confirm('¿Quitar este anuncio de guardados?');">
+                                            <i class="fas fa-trash"></i> Quitar
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         <?php endforeach; ?>
