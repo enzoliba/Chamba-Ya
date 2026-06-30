@@ -21,32 +21,7 @@
 
     <div class="profile-layout">
         <!-- Sidebar -->
-        <aside class="profile-sidebar">
-            <div class="profile-sidebar-card">
-                <div class="sidebar-section">
-                    <h4>Ajustes</h4>
-                    <ul class="sidebar-nav">
-                        <li><a href="<?= BASE_URL ?>controllers/AuthController.php?action=showMisDatos"><i class="fa-solid fa-user"></i> Mis Datos</a></li>
-                        <li><a href="<?= BASE_URL ?>views/user/mis_guardados.php"><i class="fa-regular fa-bookmark"></i> Anuncios guardados</a></li>
-                        <li><a href="<?= BASE_URL ?>views/user/mis_anuncios.php"><i class="fa-regular fa-square-plus"></i> Anuncios creados</a></li>
-                    </ul>
-                </div>
-                <div class="sidebar-section">
-                    <h4>Actividad</h4>
-                    <ul class="sidebar-nav">
-                        <li><a href="<?= BASE_URL ?>views/user/mis_postulaciones.php"><i class="fa-solid fa-paper-plane"></i> Mis Postulaciones</a></li>
-                        <li><a href="<?= BASE_URL ?>views/user/mi_historial.php"><i class="fa-solid fa-history"></i> Historial</a></li>
-                    </ul>
-                </div>
-                <div class="sidebar-section">
-                    <h4>Seguridad</h4>
-                    <ul class="sidebar-nav">
-                        <li><a href="<?= BASE_URL ?>controllers/AuthController.php?action=showSeguridad"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
-                        <li><a href="<?= BASE_URL ?>controllers/AuthController.php?action=showPreferencias" class="active"><i class="fa-solid fa-sliders"></i> Preferencias</a></li>
-                    </ul>
-                </div>
-            </div>
-        </aside>
+        <?php $paginaActual = 'preferencias'; require_once __DIR__ . '/../templates/profile_sidebar.php'; ?>
 
         <main class="profile-content">
 

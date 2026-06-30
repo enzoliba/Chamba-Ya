@@ -2,9 +2,12 @@
 <?php require_once __DIR__ . '/../../core/config/config.php'; ?>
 <?php
     $notifNoLeidas = 0;
+    $notifRecientes = [];
     if (isset($_SESSION['idUsuario'])) {
         require_once __DIR__ . '/../../models/NotificacionModel.php';
-        $notifNoLeidas = (new NotificacionModel())->contarNoLeidas($_SESSION['idUsuario']);
+        $nmHeader = new NotificacionModel();
+        $notifNoLeidas = $nmHeader->contarNoLeidas($_SESSION['idUsuario']);
+        $notifRecientes = $nmHeader->obtenerDeUsuario($_SESSION['idUsuario'], 8);
     }
 ?>
 
@@ -46,14 +49,35 @@
 
                 <?php if(isset($_SESSION['idUsuario'])): ?>
 
-                    <!-- Campana de notificaciones -->
-                    <a href="<?= BASE_URL ?>views/user/notificaciones.php"
-                       style="position:relative;display:inline-flex;align-items:center;margin-right:14px;font-size:22px;color:#000;text-decoration:none;">
-                        <i class="fa-regular fa-bell"></i>
-                        <?php if ($notifNoLeidas > 0): ?>
-                            <span style="position:absolute;top:-7px;right:-9px;background:#dc2626;color:#fff;font-size:11px;font-weight:700;min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;"><?= $notifNoLeidas > 9 ? '9+' : $notifNoLeidas ?></span>
-                        <?php endif; ?>
-                    </a>
+                    <!-- Campana de notificaciones (desplegable) -->
+                    <div class="notif_box">
+                        <button id="notifBtn" class="notif-bell" aria-label="Notificaciones"
+                                data-marcar="<?= BASE_URL ?>controllers/NotificacionController.php">
+                            <i class="fa-regular fa-bell"></i>
+                            <?php if ($notifNoLeidas > 0): ?>
+                                <span class="notif-badge"><?= $notifNoLeidas > 9 ? '9+' : $notifNoLeidas ?></span>
+                            <?php endif; ?>
+                        </button>
+
+                        <div class="notif_menu" id="notifMenu">
+                            <div class="notif_menu_header">Notificaciones</div>
+                            <?php if (empty($notifRecientes)): ?>
+                                <div class="notif_empty">No tienes notificaciones</div>
+                            <?php else: ?>
+                                <?php foreach ($notifRecientes as $n): ?>
+                                    <a class="notif_item <?= $n['leida'] ? '' : 'no-leida' ?>"
+                                       href="<?= !empty($n['link']) ? BASE_URL . htmlspecialchars($n['link']) : BASE_URL . 'views/user/notificaciones.php' ?>">
+                                        <i class="fa-regular fa-bell"></i>
+                                        <div>
+                                            <span><?= htmlspecialchars($n['mensaje']) ?></span>
+                                            <small><?= date('d M H:i', strtotime($n['fecha'])) ?></small>
+                                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <a class="notif_ver_todas" href="<?= BASE_URL ?>views/user/notificaciones.php">Ver todas</a>
+                        </div>
+                    </div>
 
                     <!-- Usuario logueado -->
                     <button id="userBtn">
@@ -102,4 +126,4 @@
     </div>
 </header>
 
-<script src="<?= BASE_URL; ?>assets/js/functions_header.js"></script>
+<script src="<?= BASE_URL; ?>assets/js/functions_header.js?v=<?php echo time(); ?>"></script>

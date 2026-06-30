@@ -1,19 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("userBtn");
     const menu = document.getElementById("userMenu");
+    const notifBtn = document.getElementById("notifBtn");
+    const notifMenu = document.getElementById("notifMenu");
 
-    btn.addEventListener("click", (e) => {
-        e.stopPropagation(); 
-        menu.classList.toggle("active");
-    });
+    if (btn && menu) {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            menu.classList.toggle("active");
+            if (notifMenu) notifMenu.classList.remove("active");
+        });
+    }
 
-    // Click en cualquier parte del documento
+    if (notifBtn && notifMenu) {
+        let yaMarcado = false;
+        notifBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const abriendo = !notifMenu.classList.contains("active");
+            notifMenu.classList.toggle("active");
+            if (menu) menu.classList.remove("active");
+
+            // Al abrir por primera vez: marca como leídas y quita el contador.
+            if (abriendo && !yaMarcado) {
+                yaMarcado = true;
+                const url = notifBtn.dataset.marcar;
+                if (url) {
+                    fetch(url, { method: "POST" })
+                        .then(() => {
+                            const badge = notifBtn.querySelector(".notif-badge");
+                            if (badge) badge.remove();
+                        })
+                        .catch(() => {});
+                }
+            }
+        });
+    }
+
+    // Click fuera: cierra los menús abiertos
     document.addEventListener("click", (e) => {
-        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
             menu.classList.remove("active");
         }
+        if (notifBtn && notifMenu && !notifBtn.contains(e.target) && !notifMenu.contains(e.target)) {
+            notifMenu.classList.remove("active");
+        }
     });
-
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {

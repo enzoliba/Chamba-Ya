@@ -77,7 +77,7 @@ class PostulacionModel {
             $stmt = $this->conn->prepare("
                 SELECT p.idPostulacion, p.estado, p.fecha,
                        a.idAnuncio, a.titulo AS puesto,
-                       u.nombres, u.apellidos, u.telefono, u.correo
+                       u.nombres, u.apellidos, u.telefono, u.correo, u.fotoPerfil
                 FROM postulacion p
                 JOIN anuncio a ON p.idAnuncio = a.idAnuncio
                 JOIN usuario u ON p.idUsuario = u.idUsuario
