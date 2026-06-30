@@ -46,7 +46,8 @@ class AnuncioModel {
             LEFT JOIN categoria c ON ca.idCategoria = c.idCategoria
             LEFT JOIN calificacion cal ON u.idUsuario = cal.idUsuarioCalificado
 
-            WHERE 1=1";
+            WHERE 1=1
+            AND NOT (a.tipoAnuncio = 'servicio' AND u.visibilidad = 'oculto')";
             $params = [];
             
             //==================================

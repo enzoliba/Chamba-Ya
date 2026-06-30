@@ -4,9 +4,7 @@
     require_once __DIR__ . '/../models/userModel.php';
 
 class AnuncioController {
-    //correccion desde aqui
     public function explorar() {
-        require_once __DIR__ . '/../models/anuncioModel.php';
         $model = new AnuncioModel();
         $tipo = $_GET['tipo'] ?? 'trabajo';
         
@@ -37,7 +35,6 @@ class AnuncioController {
     }
 
     public function verDetalle() {
-        require_once __DIR__ . '/../models/anuncioModel.php';
         $model = new AnuncioModel();
         $modeloUser = new UserModel();
         
