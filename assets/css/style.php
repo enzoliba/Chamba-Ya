@@ -6,7 +6,7 @@
         padding: 0;
         box-sizing: border-box;
         list-style: none;
-        font-family: 'Inter', Arial, Helvetica, sans-serif;
+        font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
     }
 
     :root{
@@ -24,6 +24,5 @@
         font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
         letter-spacing: -0.02em;
         line-height: 1.05;
-        color: var(--cy-ink);
     }
 </style>

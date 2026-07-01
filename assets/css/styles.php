@@ -1,8 +1,4 @@
 <style>
-    /* =====================================================================
-       CHAMBA YA — Landing (index). Diseño "al toque".
-       Firma: split verde/amarillo + buscador con cinta de peligro.
-       ===================================================================== */
 
     body{ background: var(--cy-paper); color: var(--cy-ink); }
 
@@ -24,10 +20,14 @@
         padding: 52px 50px 74px;
     }
 
-    .left_half { background-color: var(--cy-green); }
-    .right_half { background-color: var(--cy-yellow); }
+    .left_half { 
+        background-color: var(--cy-green); 
+    }
+    .right_half { 
+        background-color: var(--cy-yellow); 
+    }
 
-    /* Eyebrow: etiqueta que dice de qué lado del mercado estás */
+    /* Apartado de las etiquetas que diferencian que servicio es */
     .hero_eyebrow{
         display: inline-flex;
         align-items: center;
@@ -40,8 +40,15 @@
         border-radius: 999px;
         margin-bottom: 18px;
     }
-    .left_half .hero_eyebrow{ background: var(--cy-green-deep); color: #fff; }
-    .right_half .hero_eyebrow{ background: var(--cy-ink); color: var(--cy-yellow); }
+    .left_half .hero_eyebrow{ 
+        background: var(--cy-green-deep); 
+        color: #fff; 
+    }
+
+    .right_half .hero_eyebrow{ 
+        background: var(--cy-ink); 
+        color: var(--cy-yellow); 
+    }
 
     .left_half h1, .right_half h1{
         font-size: 42px;
@@ -138,7 +145,6 @@
         position: absolute;
         top: 0; left: 0; right: 0;
         height: 6px;
-        background: linear-gradient(to right, var(--cy-green) 0 50%, var(--cy-yellow) 50% 100%);
     }
 
     .search_card h2{
@@ -434,8 +440,12 @@
         background: var(--cy-mist);
         text-align: center;
     }
-    .why_chamba_ya .section_eyebrow{ text-align: center; }
-    .why_chamba_ya h2{ margin-bottom: 36px; }
+    .why_chamba_ya .section_eyebrow{ 
+        text-align: center; 
+    }
+    .why_chamba_ya h2{ 
+        margin-bottom: 36px; 
+    }
 
     .why_cards_container{
         display: flex;
@@ -469,45 +479,15 @@
         color: var(--cy-green-deep);
         font-size: 28px;
     }
-    .why_card h3{ font-size: 21px; font-weight: 700; margin-bottom: 10px; }
-    .why_card p{ font-size: 16px; color: #5b6b5f; line-height: 1.55; }
-
-    /*==================================*/
-    /*============== FOOTER ============*/
-    /*==================================*/
-
-    .footer{ background-color: #fff; padding: 40px 0; border-top: 1px solid var(--cy-line); }
-    .footer_container{ max-width: 1200px; margin: 0 auto; }
-    .footer_row{ display: flex; justify-content: center; gap: 120px; flex-wrap: wrap; }
-    .footer_links{ flex: none; width: auto; text-align: left; padding: 0 15px; }
-    .footer_links h4{
-        font-size: 1.13em;
-        color: var(--cy-ink);
-        margin-bottom: 25px;
-        font-weight: 600;
-        border-bottom: 3px solid var(--cy-green);
-        display: inline-block;
-        padding-bottom: 10px;
+    .why_card h3{ 
+        font-size: 21px; 
+        font-weight: 700; 
+        margin-bottom: 10px; 
     }
-    .footer_links ul li a{
-        font-size: 1.06em;
-        text-decoration: none;
-        color: rgb(85, 85, 85);
-        display: block;
-        margin-bottom: 15px;
-        transition: all .3s ease;
-    }
-    .footer_links ul li a:hover{ color: var(--cy-ink); transform: translateX(6px); }
-    .social_links a{
-        display: inline-block;
-        min-height: 40px;
-        width: 40px;
-        margin: 0 10px 10px 0;
-        text-align: center;
-        line-height: 40px;
-        border-radius: 50%;
-        color: var(--cy-ink);
-        transition: all .5s ease;
+    .why_card p{
+        font-size: 16px; 
+        color: #5b6b5f; 
+        line-height: 1.55; 
     }
 
     /*==================================*/
@@ -515,33 +495,63 @@
     /*==================================*/
 
     @media (max-width: 1000px){
-        .recientes_grid{ grid-template-columns: repeat(2, 1fr); }
+        .recientes_grid{ 
+            grid-template-columns: repeat(2, 1fr); 
+        }
     }
 
     @media (max-width: 900px){
-        .left_half h1, .right_half h1{ font-size: 34px; }
-        .categories h2, .recientes h2, .why_chamba_ya h2{ font-size: 26px; }
+        .left_half h1, .right_half h1{ 
+            font-size: 34px; 
+        }
+
+        .categories h2, .recientes h2, .why_chamba_ya h2{ 
+            font-size: 26px; 
+        }
     }
 
     @media (max-width: 768px){
-        .container_halfs{ flex-direction: column; }
-        .left_half, .right_half{ width: 100%; padding: 44px 26px 64px; }
-        .left_half img, .right_half img{ max-width: 340px; }
+        .container_halfs{ 
+            flex-direction: column; 
+        }
 
-        .search_card{ margin-top: -40px; padding: 24px 20px 22px; }
-        .search_form{ flex-direction: column; }
-        .search_form .btn_buscar{ padding: 15px; }
+        .left_half, .right_half{ 
+            width: 100%; 
+            padding: 44px 26px 64px; 
+        }
 
-        .categories, .recientes, .why_chamba_ya{ padding-left: 24px; padding-right: 24px; }
-        .footer_row{ flex-direction: column; align-items: center; gap: 30px; }
-        .footer_links{ text-align: center; }
+        .left_half img, .right_half img{ 
+            max-width: 340px; 
+        }
+
+        .search_card{ 
+            margin-top: -40px; 
+            padding: 24px 20px 22px; 
+        }
+
+        .search_form{ 
+            flex-direction: column; 
+        }
+
+        .search_form .btn_buscar{ 
+            padding: 15px; 
+        }
+
+        .categories, .recientes, .why_chamba_ya{ 
+            padding-left: 24px; 
+            padding-right: 24px; 
+        }
     }
 
     @media (max-width: 560px){
-        .recientes_grid{ grid-template-columns: 1fr; }
+        .recientes_grid{ 
+            grid-template-columns: 1fr; 
+        }
     }
 
     @media (prefers-reduced-motion: reduce){
-        *{ transition: none !important; scroll-behavior: auto !important; }
+        *{ transition: none !important; 
+        scroll-behavior: auto !important; 
+    }
     }
 </style>

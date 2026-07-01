@@ -21,11 +21,6 @@
         exit();
     }
 
-
-
-    // =========================================================================
-    // SI LA ACCIÓN ES HOME O REFRESH, CARGAMOS LAS CATEGORÍAS DE LA BASE DE DATOS
-    // =========================================================================
     require_once 'core/config/autoload.php';
     require_once 'core/config/config.php';
     require_once 'models/anuncioModel.php';
@@ -35,7 +30,6 @@
     // Últimos avisos publicados (para la sección "Avisos recientes")
     $anunciosRecientes = array_slice($model->obtenerAnuncios([]), 0, 4);
 
-    // SI LA ACCIÓN ES REFRESH O HOME, SE CORRE TU LANDING PAGE ORIGINAL:
     require_once 'assets/css/style.php';
     require_once 'assets/css/styles.php';
     require_once 'views/templates/head.php';
@@ -103,7 +97,6 @@
         <div class="categories_carousel">
             <button class="carousel_btn prev" onclick="scrollCarousel(-1)">&#10094;</button>
             <div class="carousel_wrapper" id="carouselWrapper">
-                
                 <?php if (!empty($categoriasBD)): ?>
                     <?php foreach ($categoriasBD as $cat):
                         // 1) Si la categoría tiene una imagen asignada en la BD, se usa esa.

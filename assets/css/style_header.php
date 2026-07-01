@@ -96,8 +96,7 @@
         border: 2px solid #000;
         border-radius: 10px;
         padding: 10px 0;
-        width: 200px;
-
+        width: 225px;
         opacity: 0;
         visibility: hidden;
         transition: .3s;
@@ -210,6 +209,7 @@
 
         .user_box{
             width: 100%;
+            display: grid;
         }
 
         .user_box button{

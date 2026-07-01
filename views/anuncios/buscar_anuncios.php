@@ -102,7 +102,7 @@
                         id="inputBuscadorTexto"
                         class="input-buscador"
                         placeholder="<?= ($tipo=='trabajo')
-                        ? 'Nombre del trabajo'
+                        ? 'Nombre del trabajo...'
                         : 'Nombre del servicio...' ?>"
                         value="<?= htmlspecialchars($_GET['search'] ?? ''); ?>">
                     </div>

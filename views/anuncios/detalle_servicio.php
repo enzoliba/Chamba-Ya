@@ -56,7 +56,7 @@ require_once __DIR__ . '/../templates/header.php';
                                 <span class="badge-item"><?= htmlspecialchars($hab) ?></span>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <span class="badge-item" style="background:#f2f4f4;color:#7f8c8d;">Aún no especificó habilidades</span>
+                            <span class="badge-item-noes">Aún no especificó habilidades</span>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ require_once __DIR__ . '/../templates/header.php';
                 <?php $wa = linkWhatsApp($anuncio['telefono'] ?? '', 'Hola ' . ($anuncio['nombres'] ?? '') . ', vi tu perfil de servicio en Chamba Ya y quiero contactarte.'); ?>
                 <?php if ($wa): ?>
                     <a href="<?= htmlspecialchars($wa) ?>" target="_blank" rel="noopener"
-                       style="display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 0;padding:11px 16px;background:#25D366;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+                        class="btn-contacto-whatsapp">
                         <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
                     </a>
                 <?php endif; ?>
@@ -105,14 +105,13 @@ require_once __DIR__ . '/../templates/header.php';
                     <input type="hidden" name="idAnuncio" value="<?= (int) $anuncio['idAnuncio'] ?>">
                     <button class="btn-solicitar-servicio" id="btn-solicitar-service" type="submit">Contratar Servicio</button>
                 </form>
-                <a class="btn-calificar-servicio" id="btn-calificar-service" href="#form-calificar">Calificar Usuario</a>
 
                 <?php $esTrabFav = $esTrabajadorFavorito ?? false; ?>
                 <?php if (!isset($_SESSION['idUsuario']) || $_SESSION['idUsuario'] != $anuncio['idUsuario']): ?>
                     <form action="<?= BASE_URL ?>controllers/TrabajadorFavoritoController.php" method="POST">
                         <input type="hidden" name="idTrabajador" value="<?= (int) $anuncio['idUsuario'] ?>">
                         <input type="hidden" name="idAnuncio" value="<?= (int) $anuncio['idAnuncio'] ?>">
-                        <button type="submit" style="width:100%;margin-top:10px;padding:11px;border:1px solid #7c3aed;background:#fff;color:#7c3aed;border-radius:8px;font-weight:600;cursor:pointer;">
+                        <button type="submit" class="button_guardar_user">
                             <i class="fa-regular fa-heart"></i> <?= $esTrabFav ? 'Quitar de mis trabajadores' : 'Guardar trabajador' ?>
                         </button>
                     </form>
@@ -134,7 +133,7 @@ require_once __DIR__ . '/../templates/header.php';
                                 <p><?= htmlspecialchars($otro['descripcion']) ?></p>
                             </div>
                             <div class="footer-mini-tarjeta">
-                                <span style="font-weight: bold; color: #d8a500;"><?= htmlspecialchars(formatearPago($otro['pagoReferencia'])) ?></span>
+                                <span class="pagoReferencia"><?= htmlspecialchars(formatearPago($otro['pagoReferencia'])) ?></span>
                                 <a href="<?= BASE_URL ?>index.php?action=detalle-anuncio&id=<?= $otro['idAnuncio'] ?>" class="btn-ver-detalle-mini">
                                     Ver Detalle
                                 </a>
@@ -142,27 +141,14 @@ require_once __DIR__ . '/../templates/header.php';
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p style="color: #64748b; font-style: italic;">El ofertante no cuenta con otros servicios activos en este momento.</p>
+                    <p>El ofertante no cuenta con otros servicios activos en este momento.</p>
                 <?php endif; ?>
             </div>
         </section>
 
         <div class="seccion-testimonios">
             <h2>Opiniones de los usuarios</h2>
-
             <!-- Formulario para dejar una calificación -->
-            <style>
-                .form-calificar{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;margin-bottom:22px;max-width:520px;}
-                .form-calificar .rating{display:inline-flex;flex-direction:row-reverse;justify-content:flex-end;}
-                .form-calificar .rating input{display:none;}
-                .form-calificar .rating label{font-size:32px;color:#d1d5db;cursor:pointer;padding:0 2px;transition:color .15s;}
-                .form-calificar .rating label:hover,
-                .form-calificar .rating label:hover ~ label,
-                .form-calificar .rating input:checked ~ label{color:#ffcc00;}
-                .form-calificar textarea{width:100%;box-sizing:border-box;margin-top:10px;padding:10px;border:1px solid #cbd5e1;border-radius:8px;resize:vertical;min-height:70px;font-family:inherit;}
-                .form-calificar button{margin-top:10px;padding:10px 18px;border:none;border-radius:8px;background:#7c3aed;color:#fff;font-weight:600;cursor:pointer;}
-                .form-calificar button:hover{background:#6d28d9;}
-            </style>
             <?php if (!isset($_SESSION['idUsuario'])): ?>
                 <p id="form-calificar" style="color:#64748b;">
                     <a href="<?= BASE_URL ?>views/auth/login.php">Inicia sesión</a> para dejar tu calificación.

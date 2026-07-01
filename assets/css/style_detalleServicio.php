@@ -105,6 +105,11 @@
             border: 1px solid #ffeeba;
         }
 
+        .badge-item-noes{
+            background:#f2f4f4;
+            color:#7f8c8d;
+        }
+
         /* COLUMNA DERECHA: Datos de contacto fijos */
         .col-sidebar-datos {
             flex: 1;
@@ -155,6 +160,20 @@
             font-weight: 500;
         }
 
+        .btn-contacto-whatsapp{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            margin:10px 0;
+            padding:11px 16px;
+            background:#25D366;
+            color:#fff;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:600;
+        }
+
         .btn-solicitar-servicio {
             width: 100%;
             background: #d8a500;
@@ -173,18 +192,64 @@
             background: #c39300;
         }
 
-        .btn-calificar-servicio {
-            width: 100%;
-            background: #128b09;
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 10px;
+        .form-calificar{
+            background:#f8fafc;
+            border:1px solid #e2e8f0;
+            border-radius:10px;
+            padding:18px;
+            margin-bottom:22px;
+            max-width:520px;
+
+        }
+        
+        .form-calificar .rating{
+            display:inline-flex;
+            flex-direction:row-reverse;
+            justify-content:flex-end;
+        }
+
+        .form-calificar .rating input{
+            display:none;
+        }
+
+        .form-calificar .rating label{font-size:32px;
+            color:#d1d5db;
+            cursor:pointer;
+            padding:0 2px;
+            transition:color .15s;
+        }
+
+        .form-calificar .rating label:hover,
+        .form-calificar .rating label:hover ~ label,
+        .form-calificar .rating input:checked ~ label{
+            color:#ffcc00;
+        }
+
+        .form-calificar textarea{
+            width:100%;
+            box-sizing:border-box;
+            margin-top:10px;
+            padding:10px;
+            border:1px solid #cbd5e1;
+            border-radius:8px;
+            resize:vertical;
+            min-height:70px;
+            font-family:inherit;
+        }
+
+        .form-calificar button{
+            margin-top:10px;
+            padding:10px 18px;
+            border:none;
+            border-radius:8px;
+            background:#7c3aed;
+            color:#fff;
+            font-weight:600;
+            cursor:pointer;
+        }
+
+        .form-calificar button:hover{
+            background:#6d28d9;
         }
 
         .btn-calificar-servicio:hover {
@@ -202,6 +267,23 @@
             font-size: 1.5rem;
             color: #0f172a;
             margin-bottom: 20px;
+        }
+
+        .button_guardar_user{
+            width:100%;
+            padding:11px;
+            border:1px solid #7c3aed;
+            background:#fff;
+            color:#7c3aed;
+            border-radius:8px;
+            font-weight:600;
+            cursor:pointer;
+            transition: 0.1s;
+        }
+
+        .button_guardar_user:hover{
+            background: #7c3aed;
+            color: white;
         }
 
         .grid-otros-servicios {
@@ -244,6 +326,11 @@
             justify-content: space-between;
             align-items: center;
             margin-top: auto;
+        }
+
+        .pagoReferencia{
+            font-weight: bold;
+            color: #d8a500;
         }
 
         .btn-ver-detalle-mini {

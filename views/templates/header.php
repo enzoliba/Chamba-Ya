@@ -92,9 +92,7 @@
 
                         <a href="<?= BASE_URL ?>controllers/AuthController.php?action=showMisDatos">Mis datos</a>
                         <a href="<?= BASE_URL ?>views/user/mis_postulaciones.php">Mis postulaciones</a>
-                        <a href="<?= BASE_URL ?>views/user/postulaciones_recibidas.php">Postulaciones recibidas</a>
                         <a href="<?= BASE_URL ?>views/user/mis_guardados.php">Anuncios guardados</a>
-                        <a href="<?= BASE_URL ?>views/user/trabajadores_favoritos.php">Trabajadores guardados</a>
                         <a href="<?= BASE_URL ?>views/user/mis_anuncios.php">Anuncios creados</a>
                         <a href="<?= BASE_URL; ?>views/auth/logout.php">Cerrar sesión</a>
                     </div>

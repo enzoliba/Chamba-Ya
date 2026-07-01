@@ -22,15 +22,23 @@
         gap: 56px;
         padding-bottom: 22px;
     }
-    .footer .footer_brand{ flex: 0 1 360px; }
+    .footer .footer_brand{ 
+        flex: 0 1 360px; 
+    }
+    
     .footer .footer_cols{
         display: flex;
         gap: 64px;
     }
 
     /* ---- Columna de marca ---- */
-    .footer .footer_logo{ display: inline-block; }
-    .footer .footer_logo img{ display: block; height: auto; }
+    .footer .footer_logo{ 
+        display: inline-block; 
+    }
+
+    .footer .footer_logo img{ 
+        display: block; height: auto; 
+    }
 
     .footer .footer_tagline{
         font-size: 14px;
@@ -53,9 +61,14 @@
         border-radius: 999px;
         transition: background .2s ease;
     }
-    .footer .footer_cta:hover{ background: #dbeafe; }
+    .footer .footer_cta:hover{ 
+        background: #dbeafe; 
+    }
 
-    .footer .footer_social{ margin-top: 14px; }
+    .footer .footer_social{
+        margin-top: 14px; 
+    }
+
     .footer .social_label{
         display: block;
         font-size: 14px;
@@ -63,7 +76,11 @@
         color: #0f172a;
         margin-bottom: 8px;
     }
-    .footer .social_links{ display: flex; gap: 10px; }
+    .footer .social_links{ 
+        display: flex; 
+        gap: 10px; 
+    }
+
     .footer .social_links a{
         width: 40px;
         height: 40px;
@@ -144,16 +161,34 @@
     }
 
     @media (max-width: 900px){
-        .footer .footer_top{ flex-direction: column; gap: 32px; }
-        .footer .footer_cols{ gap: 48px; }
+        .footer .footer_top{ 
+            flex-direction: column; 
+            gap: 32px; 
+        }
+
+        .footer .footer_cols{ 
+            gap: 48px; 
+        }
+
+        .footer .footer_brand{ 
+            flex: 0 1 0px; 
+        }
     }
 
     @media (max-width: 768px){
-        .footer .footer_container{ padding: 28px 22px 0; }
-        .footer .footer_bottom{ justify-content: center; text-align: center; }
+        .footer .footer_container{ 
+            padding: 28px 22px 0; 
+        }
+        .footer .footer_bottom{ 
+            justify-content: center; 
+            text-align: center; 
+        }
     }
 
     @media (max-width: 460px){
-        .footer .footer_cols{ flex-wrap: wrap; gap: 28px; }
+        .footer .footer_cols{ 
+            flex-wrap: wrap; 
+            gap: 28px; 
+        }
     }
 </style>

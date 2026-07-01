@@ -1,7 +1,7 @@
 <?php
-// Formulario de reporte (colapsable). Requiere $anuncio y opcional $tipoReporte.
-$esDueno = isset($_SESSION['idUsuario']) && $_SESSION['idUsuario'] == $anuncio['idUsuario'];
-if ($esDueno) return; // No tiene sentido reportar el propio anuncio.
+    // Formulario de reporte (colapsable). Requiere $anuncio y opcional $tipoReporte.
+    $esDueno = isset($_SESSION['idUsuario']) && $_SESSION['idUsuario'] == $anuncio['idUsuario'];
+    if ($esDueno) return; // No tiene sentido reportar el propio anuncio.
 ?>
 <?php if (isset($_SESSION['idUsuario'])): ?>
     <details style="margin-top:15px;">
@@ -17,7 +17,7 @@ if ($esDueno) return; // No tiene sentido reportar el propio anuncio.
                 <option value="Informacion falsa">Información falsa</option>
                 <option value="Otro">Otro</option>
             </select>
-            <textarea name="detalle" maxlength="300" placeholder="Detalle (opcional)" style="padding:8px;border:1px solid #cbd5e1;border-radius:6px;"></textarea>
+            <textarea name="detalle" maxlength="300" placeholder="Detalle (opcional)" style="padding:8px;border:1px solid #cbd5e1;border-radius:6px; resize:none"></textarea>
             <button type="submit" style="padding:9px;background:#dc2626;color:#fff;border:none;border-radius:6px;cursor:pointer;">Enviar reporte</button>
         </form>
     </details>
