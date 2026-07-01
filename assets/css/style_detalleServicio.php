@@ -348,6 +348,4 @@
         .btn-ver-detalle-mini:hover {
             background: #e2e8f0;
         }
-
-        
-    </style>
+</style>

@@ -143,16 +143,21 @@
         flex-wrap: wrap;
         gap: 10px;
     }
+    
     .footer .footer_bottom span{
         font-size: 13px;
         color: #94a3b8;
     }
+
     .footer .footer_made{
         display: inline-flex;
         align-items: center;
         gap: 6px;
     }
-    .footer .footer_made i{ color: #2563eb; }
+
+    .footer .footer_made i{ 
+        color: #2563eb; 
+    }
 
     .footer a:focus-visible{
         outline: 2px solid #2563eb;

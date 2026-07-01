@@ -251,14 +251,16 @@
             .layout-flex-detalle {
                 flex-direction: column;
             }
+
             .bloque-derecho-perfil {
                 width: 100%;
                 position: static;
                 box-sizing: border-box;
             }
+
             .fila-encabezados-mini {
                 flex-direction: column;
                 gap: 12px;
             }
         }
-    </style>
+</style>

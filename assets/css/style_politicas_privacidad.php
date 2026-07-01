@@ -36,7 +36,6 @@ body {
     line-height: 1.6;
 }
 
-
 ::-webkit-scrollbar {
     width: 8px;
 }

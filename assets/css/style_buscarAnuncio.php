@@ -141,7 +141,10 @@
         padding-top: 20px;
         border-top: 1px solid var(--by-line);
     }
-    .titulo-filtro-secundario{ margin-bottom: 10px; }
+    .titulo-filtro-secundario{ 
+        margin-bottom: 10px; 
+    }
+
     .info-precio{
         display: flex;
         justify-content: space-between;
@@ -149,6 +152,7 @@
         color: var(--by-muted);
         margin-bottom: 6px;
     }
+
     .indicador-precio{ 
         font-weight: 700; 
         color: var(--by-blue); 
@@ -179,7 +183,11 @@
         font-weight: 600;
         transition: all .15s ease;
     }
-    .limpiar-filtros:hover{ background: var(--by-mist); color: var(--by-ink); }
+
+    .limpiar-filtros:hover{ 
+        background: var(--by-mist); 
+        color: var(--by-ink); 
+    }
 
     /* ===================== MAIN ===================== */
     .main-feed-trabajos{ 
@@ -193,7 +201,11 @@
         gap: 12px;
         margin-bottom: 26px;
     }
-    .contenedor-input-buscador{ position: relative; flex-grow: 1; }
+    .contenedor-input-buscador{ 
+        position: relative; 
+        flex-grow: 1; 
+    }
+    
     .input-buscador{
         width: 100%;
         padding: 14px 20px;
@@ -238,7 +250,10 @@
         background: var(--by-amber-deep); 
     }
 
-    .resultados-header{ margin-bottom: 20px; }
+    .resultados-header{ 
+        margin-bottom: 20px; 
+    }
+
     .titulo-resultados{
         margin: 0;
         font-size: 1.4rem;
@@ -397,7 +412,9 @@
         font-size: .92rem; 
     }
 
-    form{ margin: 0; }
+    form{ 
+        margin: 0; 
+    }
 
     /* ===================== RESPONSIVE ===================== */
     @media (max-width: 900px){

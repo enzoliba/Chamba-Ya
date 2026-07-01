@@ -93,9 +93,18 @@ main.contenido {
     color: #9CA3AF;
 }
 
-.cuerpo-tarjeta { flex-grow: 1; }
-.cuerpo-tarjeta h3 { font-size: 1.1rem; margin-bottom: 5px; }
-.cuerpo-tarjeta p { color: var(--texto-secundario); font-size: 0.9rem; }
+.cuerpo-tarjeta { 
+    flex-grow: 1; 
+}
+
+.cuerpo-tarjeta h3 { 
+    font-size: 1.1rem; margin-bottom: 5px; 
+}
+
+.cuerpo-tarjeta p { 
+    color: var(--texto-secundario); 
+    font-size: 0.9rem;
+}
 
 .etiqueta-estado {
     padding: 4px 12px;
@@ -106,16 +115,52 @@ main.contenido {
     display: inline-block;
 }
 
-.estado-Disponible { background: #D1FAE5; color: var(--exito); }
-.estado-Cancelado { background: #FEE2E2; color: var(--error); }
-.estado-EnProceso { background: #DBEAFE; color: var(--info); }
-.estado-Finalizado { background: #E5E7EB; color: var(--texto-secundario); }
-.estado-info { background: #DBEAFE; color: var(--info); }
-.estado-Pendiente, .estado-pendiente { background: #FEF3C7; color: var(--advertencia); }
-.estado-Aceptado, .estado-aceptado { background: #D1FAE5; color: var(--exito); }
-.estado-Rechazado, .estado-rechazado { background: #FEE2E2; color: var(--error); }
+.estado-Disponible { 
+    background: #D1FAE5; 
+    color: var(--exito); 
+}
 
-.acciones-tarjeta { display: flex; gap: 10px; }
+.estado-Cancelado { 
+    background: #FEE2E2; 
+    color: var(--error); 
+}
+
+.estado-EnProceso { 
+    background: #DBEAFE; 
+    color: var(--info); 
+}
+
+.estado-Finalizado { 
+    background: #E5E7EB; 
+    color: var(--texto-secundario); 
+}
+
+.estado-info { 
+    background: #DBEAFE; 
+    color: var(--info); 
+}
+
+.estado-Pendiente, .estado-pendiente { 
+    background: #FEF3C7; 
+    color: var(--advertencia); 
+}
+
+.estado-Aceptado, .estado-aceptado { 
+    background: #D1FAE5; 
+    color: var(--exito); 
+}
+
+.estado-Rechazado, .estado-rechazado { 
+    background: #FEE2E2; 
+    color: var(--error); 
+}
+
+
+.acciones-tarjeta { 
+    display: flex; 
+    gap: 10px; 
+}
+
 .boton-accion {
     background: none;
     border: 1px solid var(--borde-color);
@@ -125,7 +170,11 @@ main.contenido {
     color: var(--texto-secundario);
     transition: all 0.2s;
 }
-.boton-accion:hover { border-color: var(--purpura-principal); color: var(--purpura-principal); }
+
+.boton-accion:hover { 
+    border-color: var(--purpura-principal); 
+    color: var(--purpura-principal); 
+}
 
 /* --- VENTANAS MODALES --- */
 .superposicion-modal {
@@ -145,7 +194,6 @@ main.contenido {
     max-width: 900px;
     max-height: 90vh;
     overflow-y: auto;
-
     padding: 30px;
     border-radius: 15px;
     position: relative;
@@ -171,11 +219,13 @@ main.contenido {
 .grupo-formulario { 
     margin-bottom: 15px; 
 }
+
 .grupo-formulario label { 
     display: block;
     margin-bottom: 5px; 
     font-weight: 600; 
     font-size: 0.9rem; }
+
 .grupo-formulario input, .grupo-formulario textarea, .grupo-formulario select {
     width: 100%; 
     padding: 10px; 
@@ -225,10 +275,12 @@ main.contenido {
     cursor: pointer; 
     transition: 0.2s; 
 }
+
 .opcion-etiqueta:hover { 
     border-color: var(--purpura-principal); 
     color: var(--purpura-principal); 
 }
+
 .etiqueta-seleccionada { 
     background: var(--purpura-principal); 
     color: white; 
@@ -245,7 +297,9 @@ main.contenido {
     position: fixed; 
     top: 20px; 
     right: 20px; 
-    z-index: 2000; }
+    z-index: 2000; 
+}
+
 .notificacion {
     background: white; 
     border-left: 4px solid var(--exito); 
@@ -255,7 +309,17 @@ main.contenido {
     margin-bottom: 10px;
     animation: deslizarDerecha 0.3s ease-out;
 }
-@keyframes deslizarDerecha { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+@keyframes deslizarDerecha { 
+    from { 
+        transform: translateX(100%); 
+        opacity: 0; 
+    } to { 
+        transform: translateX(0); 
+        opacity: 1; 
+    } 
+}
+
     @media (max-width: 1024px) {
         aside.barra-lateral {
             width: 200px;

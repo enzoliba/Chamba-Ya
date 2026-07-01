@@ -23,6 +23,7 @@
     background: radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, transparent 60%);
     pointer-events: none;
 }
+
 .about-hero::after {
     content: '';
     position: absolute;
@@ -30,6 +31,7 @@
     height: 6px;
     background: linear-gradient(90deg, #f59e0b, #f97316, #ef4444, #8b5cf6, #3b82f6);
 }
+
 .about-hero h1 {
     font-size: 48px;
     font-weight: 800;
@@ -37,6 +39,7 @@
     margin: 0 0 16px;
     letter-spacing: -1px;
 }
+
 .about-hero p {
     font-size: 18px;
     color: rgba(255,255,255,0.7);
@@ -72,18 +75,26 @@
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .mv-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
 }
+
 .mv-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 4px;
 }
-.mv-card.mission::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
-.mv-card.vision::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+
+.mv-card.mission::before { 
+    background: linear-gradient(90deg, #3b82f6, #60a5fa); 
+}
+
+.mv-card.vision::before { 
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa); 
+}
 
 .mv-icon {
     width: 60px;
@@ -99,16 +110,19 @@
     background: #eff6ff;
     color: #3b82f6;
 }
+
 .mv-card.vision .mv-icon {
     background: #f5f3ff;
     color: #8b5cf6;
 }
+
 .mv-card h2 {
     font-size: 24px;
     font-weight: 700;
     color: #0f172a;
     margin: 0 0 16px;
 }
+
 .mv-card p {
     font-size: 16px;
     line-height: 1.7;
@@ -121,23 +135,27 @@
     text-align: center;
     margin-bottom: 80px;
 }
+
 .values-section h2 {
     font-size: 32px;
     font-weight: 800;
     color: #0f172a;
     margin: 0 0 12px;
 }
+
 .values-section > p {
     font-size: 16px;
     color: #64748b;
     max-width: 600px;
     margin: 0 auto 40px;
 }
+
 .values-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
 }
+
 .value-card {
     background: #ffffff;
     border-radius: 16px;
@@ -147,11 +165,13 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     transition: all 0.3s;
 }
+
 .value-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba(0,0,0,0.06);
     border-color: rgba(59,130,246,0.2);
 }
+
 .value-icon {
     width: 64px;
     height: 64px;
@@ -165,17 +185,20 @@
     margin: 0 auto 20px;
     transition: all 0.3s;
 }
+
 .value-card:hover .value-icon {
     background: #eff6ff;
     color: #3b82f6;
     transform: scale(1.1);
 }
+
 .value-card h3 {
     font-size: 18px;
     font-weight: 700;
     color: #1e293b;
     margin: 0 0 12px;
 }
+
 .value-card p {
     font-size: 14px;
     color: #64748b;
@@ -193,6 +216,7 @@
     overflow: hidden;
     color: #fff;
 }
+
 .about-cta::before {
     content: '';
     position: absolute;
@@ -202,6 +226,7 @@
     border-radius: 50%;
     filter: blur(40px);
 }
+
 .about-cta h2 {
     font-size: 32px;
     font-weight: 800;
@@ -209,6 +234,7 @@
     position: relative;
     z-index: 2;
 }
+
 .about-cta p {
     font-size: 18px;
     color: rgba(255,255,255,0.7);
@@ -217,6 +243,7 @@
     position: relative;
     z-index: 2;
 }
+
 .cta-buttons {
     display: flex;
     gap: 16px;
@@ -224,6 +251,7 @@
     position: relative;
     z-index: 2;
 }
+
 .cta-btn-primary {
     background: #3b82f6;
     color: #fff;
@@ -233,11 +261,13 @@
     text-decoration: none;
     transition: all 0.3s;
 }
+
 .cta-btn-primary:hover {
     background: #2563eb;
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(37,99,235,0.3);
 }
+
 .cta-btn-outline {
     background: transparent;
     color: #fff;
@@ -248,6 +278,7 @@
     text-decoration: none;
     transition: all 0.3s;
 }
+
 .cta-btn-outline:hover {
     border-color: #fff;
     background: rgba(255,255,255,0.1);
@@ -258,15 +289,20 @@
     .mv-grid {
         grid-template-columns: 1fr;
     }
+    
     .values-grid {
         grid-template-columns: 1fr 1fr;
     }
-    .about-hero h1 { font-size: 36px; }
+
+    .about-hero h1 { 
+        font-size: 36px; 
+    }
 }
 @media (max-width: 600px) {
     .values-grid {
         grid-template-columns: 1fr;
     }
+
     .cta-buttons {
         flex-direction: column;
     }
