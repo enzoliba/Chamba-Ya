@@ -250,6 +250,7 @@
         @media (max-width: 900px) {
             .layout-flex-detalle {
                 flex-direction: column;
+                align-items: stretch;
             }
 
             .bloque-derecho-perfil {
