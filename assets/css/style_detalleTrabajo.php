@@ -263,4 +263,15 @@
                 gap: 12px;
             }
         }
+
+        @media (max-width: 560px) {
+            .container-detalle { margin: 24px auto; }
+            .main-titulo-anuncio { font-size: 1.6rem; }
+            .tarjeta-principal-cuerpo { padding: 22px 18px; }
+            .caja-info-mini { font-size: 1.05rem; padding: 14px 18px; }
+            .descripcion-texto { font-size: 1.05rem; }
+            .grid-detalles-secundarios { grid-template-columns: 1fr; }
+            .bloque-acciones { flex-direction: column; }
+            .bloque-derecho-perfil { padding: 24px 20px; }
+        }
 </style>
