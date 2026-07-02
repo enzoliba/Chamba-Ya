@@ -348,4 +348,24 @@
         .btn-ver-detalle-mini:hover {
             background: #e2e8f0;
         }
+
+        /* ===================== RESPONSIVE ===================== */
+        @media (max-width: 900px) {
+            .wrapper-layout-servicio { flex-direction: column; }
+            .col-sidebar-datos {
+                width: 100%;
+                position: static;
+                box-sizing: border-box;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .container-servicio { margin: 20px auto; }
+            .col-perfil-principal { padding: 24px 20px; }
+            .encabezado-usuario { flex-direction: column; text-align: center; gap: 14px; }
+            .foto-perfil-avatar { width: 90px; height: 90px; }
+            .info-usuario-titulo h1 { font-size: 1.5rem; }
+            .grid-otros-servicios { grid-template-columns: 1fr; }
+            .form-calificar .rating label { font-size: 28px; }
+        }
 </style>

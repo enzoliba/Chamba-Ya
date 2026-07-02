@@ -15,6 +15,7 @@ body{
 .container{
     position: relative;
     width: 850px;
+    max-width: calc(100vw - 40px);
     height: 650px;
     background: #fff;
     border-radius: 30px;
@@ -236,6 +237,14 @@ form{
     background: transparent;
     border: 2px solid #fff;
     box-shadow: none;
+}
+
+@media screen and (max-width:860px) and (min-width:651px) {
+    .container{
+        width: 95%;
+        height: auto;
+        min-height: 650px;
+    }
 }
 
 @media screen and (max-width:650px) {
