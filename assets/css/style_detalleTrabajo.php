@@ -163,68 +163,104 @@
             border: 1px solid #c5cae9;
         }
 
-        /* Botones de Acción */
-        .bloque-acciones {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
+/*=========================================
+            BOTONES DE ACCIÓN
+=========================================*/
+
+    .bloque-acciones{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:20px;
+        margin-top:25px;
+        width:100%;
+    }
+
+    .form-postular{
+        width:100%;
+    }
+
+    .form-postular .btn-postular,
+    .btn-favorito,
+    .btn-compartir-whatsapp{
+        width:100%;
+        height:60px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        border-radius:10px;
+        font-size:1rem;
+        font-weight:700;
+        cursor:pointer;
+        transition:.25s;
+    }
+
+    /*==============================
+            BOTÓN POSTULAR
+    ==============================*/
+
+    .btn-postular{
+        background:#0d6efd;
+        color:#fff;
+        border:none;
+        box-shadow:0 4px 12px rgba(13,110,253,.25);
+    }
+
+    .btn-postular:hover{
+        background:#0b5ed7;
+        transform:translateY(-2px);
+    }
+
+    /*==============================
+        BOTÓN FAVORITOS
+    ==============================*/
+
+    .btn-favorito{
+        background:#fff;
+        color:#495057;
+        border:1px solid #ced4da;
+    }
+
+    .btn-favorito:hover{
+        background:#f1f3f5;
+        color:#212529;
+    }
+
+    /*==============================
+        BOTÓN WHATSAPP
+    ==============================*/
+
+    .btn-compartir-whatsapp{
+        background:#25D366;
+        color:#fff;
+        text-decoration:none;
+        border:none;
+    }
+
+    .btn-compartir-whatsapp:hover{
+        background:#1ebe5a;
+        color:#fff;
+    }
+
+    .btn-compartir-whatsapp i{
+        margin-right:8px;
+    }
+
+    /*==============================
+            RESPONSIVE
+    ==============================*/
+
+    @media (max-width:900px){
+
+        .bloque-acciones{
+            grid-template-columns:1fr;
         }
 
-        .btn-postular {
-            flex: 2.2;
-            background: #007bff;
-            color: #ffffff;
-            border: none;
-            padding: 16px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+        .form-postular .btn-postular,
+        .btn-favorito,
+        .btn-compartir-whatsapp{
+            height:56px;
         }
-
-        .btn-postular:hover {
-            background: #0056b3;
-        }
-
-        .btn-favorito {
-            flex: 1;
-            background: #f8f9fa;
-            color: #495057;
-            border: 1px solid #ced4da;
-            padding: 16px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-favorito:hover {
-            background: #e2e6ea;
-            color: #212529;
-        }
-
-        .btn-compartir-whatsapp {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex: 1;
-            background: #25D366;
-            color: #fff;
-            padding: 16px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: background 0.2s ease;
-        }
-
-        .btn-compartir-whatsapp:hover {
-            background: #1ebe5a;
-        }
+    }
 
         /* Columna Derecha (Perfil del Ofertante) */
         .bloque-derecho-perfil {

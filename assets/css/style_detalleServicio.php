@@ -187,43 +187,89 @@
             font-weight:600;
         }
 
-        .btn-compartir-whatsapp {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            box-sizing: border-box;
-            margin-top: 10px;
-            padding: 12px;
-            background: #25D366;
-            color: #fff;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.2s ease;
+        /*=================================
+            BLOQUE DE BOTONES
+        =================================*/
+
+        .bloque-acciones-servicio{
+            display:grid;
+            gap:15px;
+            margin-top:20px;
         }
 
-        .btn-compartir-whatsapp:hover {
-            background: #1ebe5a;
+        .form-servicio{
+            width:100%;
+            margin:0;
+            padding:0;
+            border:0;
+            display:flex;
         }
 
-        .btn-solicitar-servicio {
-            width: 100%;
-            background: #d8a500;
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 10px;
+        /*=================================
+                BOTONES BASE
+        =================================*/
+
+        .form-servicio .btn-solicitar-servicio,
+        .btn-compartir-whatsapp,
+        .button_guardar_user{
+
+            width:100%;
+            height:50px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            border-radius:12px;
+            font-size:1.05rem;
+            font-weight:700;
+            cursor:pointer;
+            transition:.25s;
         }
 
-        .btn-solicitar-servicio:hover {
-            background: #c39300;
+        /*=================================
+            CONTRATAR SERVICIO
+        =================================*/
+
+        .btn-solicitar-servicio{
+            background:#d8a500;
+            color:#fff;
+            border:none;
+        }
+
+        .btn-solicitar-servicio:hover{
+            background:#c39300;
+            transform:translateY(-2px);
+        }
+
+        /*=================================
+            COMPARTIR WHATSAPP
+        =================================*/
+
+        .btn-compartir-whatsapp{
+            background:#25D366;
+            color:#fff;
+            text-decoration:none;
+            border:none;
+            gap:8px;
+        }
+
+        .btn-compartir-whatsapp:hover{
+            background:#1ebe5a;
+        }
+
+        /*=================================
+            GUARDAR TRABAJADOR
+        =================================*/
+
+        .button_guardar_user{
+            background:#fff;
+            color:#6b42ff;
+            border:2px solid #7b52ff;
+            gap:8px;
+        }
+
+        .button_guardar_user:hover{
+            background:#7b52ff;
+            color:#fff;
         }
 
         .form-calificar{
@@ -233,7 +279,6 @@
             padding:18px;
             margin-bottom:22px;
             max-width:520px;
-
         }
         
         .form-calificar .rating{
@@ -385,7 +430,10 @@
 
         /* ===================== RESPONSIVE ===================== */
         @media (max-width: 900px) {
-            .wrapper-layout-servicio { flex-direction: column; }
+            .wrapper-layout-servicio { 
+                flex-direction: column; 
+            }
+
             .col-sidebar-datos {
                 width: 100%;
                 position: static;
@@ -394,12 +442,35 @@
         }
 
         @media (max-width: 560px) {
-            .container-servicio { margin: 20px auto; }
-            .col-perfil-principal { padding: 24px 20px; }
-            .encabezado-usuario { flex-direction: column; text-align: center; gap: 14px; }
-            .foto-perfil-avatar { width: 90px; height: 90px; }
-            .info-usuario-titulo h1 { font-size: 1.5rem; }
-            .grid-otros-servicios { grid-template-columns: 1fr; }
-            .form-calificar .rating label { font-size: 28px; }
+            .container-servicio { 
+                margin: 20px auto; 
+            }
+
+            .col-perfil-principal { 
+                padding: 24px 20px; 
+            }
+
+            .encabezado-usuario { 
+                flex-direction: column; 
+                text-align: center; 
+                gap: 14px; 
+            }
+
+            .foto-perfil-avatar { 
+                width: 90px; 
+                height: 90px; 
+            }
+
+            .info-usuario-titulo h1 { 
+                font-size: 1.5rem; 
+            }
+            
+            .grid-otros-servicios { 
+                grid-template-columns: 1fr; 
+            }
+
+            .form-calificar .rating label { 
+                font-size: 28px; 
+            }
         }
 </style>

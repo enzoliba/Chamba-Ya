@@ -110,27 +110,44 @@ require_once __DIR__ . '/../templates/header.php';
                     <span>Vistas</span>
                     <p><i class="fa-regular fa-eye"></i> <?= (int) ($anuncio['vistas'] ?? 0) ?></p>
                 </div>
+                
+                <div class="bloque-acciones-servicio">
 
-                <form action="<?= BASE_URL ?>controllers/PostulacionController.php" method="POST">
+                <!-- Contratar servicio -->
+                <form action="<?= BASE_URL ?>controllers/PostulacionController.php"
+                    method="POST"
+                    class="form-servicio">
                     <input type="hidden" name="idAnuncio" value="<?= (int) $anuncio['idAnuncio'] ?>">
-                    <button class="btn-solicitar-servicio" id="btn-solicitar-service" type="submit">Contratar Servicio</button>
+                    <button class="btn-solicitar-servicio" type="submit">
+                        Contratar Servicio
+                    </button>
                 </form>
 
+                <!-- Compartir en WhatsApp -->
                 <?php
                     $urlServicio = BASE_URL . 'index.php?action=detalle-anuncio&id=' . (int) $anuncio['idAnuncio'] . '&tipo=servicio';
                     $mensajeCompartirServicio = 'Mira este servicio en Chamba Ya: "' . $anuncio['titulo'] . '" ' . $urlServicio;
                 ?>
-                <a class="btn-compartir-whatsapp" href="<?= htmlspecialchars(linkCompartirWhatsApp($mensajeCompartirServicio)) ?>" target="_blank" rel="noopener">
-                    <i class="fa-brands fa-whatsapp"></i> Compartir
+                <a class="btn-compartir-whatsapp"
+                href="<?= htmlspecialchars(linkCompartirWhatsApp($mensajeCompartirServicio)) ?>"
+                target="_blank"
+                rel="noopener">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Compartir
                 </a>
 
+                <!-- Guardar Trabajador como Favorito -->
                 <?php $esTrabFav = $esTrabajadorFavorito ?? false; ?>
                 <?php if (!isset($_SESSION['idUsuario']) || $_SESSION['idUsuario'] != $anuncio['idUsuario']): ?>
-                    <button type="button" class="button_guardar_user"
-                        onclick="toggleFavoritoTrabajador(<?= (int) $anuncio['idUsuario'] ?>, this, <?= (int) $anuncio['idAnuncio'] ?>)">
-                        <i class="fa-regular fa-heart"></i> <?= $esTrabFav ? 'Quitar de mis trabajadores' : 'Guardar trabajador' ?>
+                    <button
+                        type="button"
+                        class="button_guardar_user"
+                        onclick="toggleFavoritoTrabajador(<?= (int)$anuncio['idUsuario'] ?>, this, <?= (int)$anuncio['idAnuncio'] ?>)">
+                        <i class="fa-regular fa-heart"></i>
+                        <?= $esTrabFav ? 'Quitar de mis trabajadores' : 'Guardar trabajador' ?>
                     </button>
                 <?php endif; ?>
+            </div>
 
                 <?php $tipoReporte = 'servicio'; require __DIR__ . '/_form_reporte.php'; ?>
             </aside>
