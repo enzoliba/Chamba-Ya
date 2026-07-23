@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Chamba-Ya
 
 <div align="center">
@@ -57,3 +58,6 @@ Sin currículums, sin intermediarios: **contacto directo** entre las personas.
 Hecho con 💚💛 para que encontrar chamba sea **al toque**.
 
 </div>
+=======
+# Chamba-Ya
+>>>>>>> 3955e288b4b8f91d8fd94fd09e93b9499662d35e
